@@ -1,0 +1,58 @@
+/*
+ * Copyright (C) 2015 CK, Inc. All Rights Reserved.
+ */
+
+package cn.vansky.framework.core.bean;
+
+import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+
+import java.util.Map;
+
+/**
+ * Created by IntelliJ IDEA.
+ * Author: CK
+ * Date: 2015/6/24
+ */
+public class ServiceLocator {
+    private static final Logger LOGGER = Logger.getLogger(ServiceLocator.class);
+
+    private static ServiceLocator locator = null;
+
+    private static ApplicationContext factory = null;
+
+    public ApplicationContext getFactory() {
+        if (factory == null) {
+            LOGGER.error("ServiceLocator.factory is null maybe not config InitSystemListener correctly in web.xml");
+        }
+
+        return factory;
+    }
+
+    public void setFactory(ApplicationContext context) {
+        setToFactory(context);
+    }
+
+    private static void setToFactory(ApplicationContext context) {
+        factory = context;
+    }
+
+    public static ServiceLocator getInstance() {
+        if (locator == null) {
+            locator = new ServiceLocator();
+        }
+        return locator;
+    }
+
+    public Object getBean(String beanName) {
+        return getFactory().getBean(beanName);
+    }
+
+    public <T> Map<String, T> getBeansOfType(Class<T> type) {
+        return getFactory().getBeansOfType(type);
+    }
+
+    public <T> Map<String, T> getBeansOfType(Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) {
+        return getFactory().getBeansOfType(type, includeNonSingletons, allowEagerInit);
+    }
+}
