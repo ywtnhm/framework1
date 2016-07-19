@@ -3,10 +3,7 @@ package cn.vansky.framework.core.web.easyUI.service;
 import cn.vansky.framework.common.util.JsonUtil;
 import cn.vansky.framework.core.web.easyUI.model.EasyUITreeModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -80,6 +77,38 @@ public class EasyUITreeServiceImpl<T> implements EasyUITreeService<T> {
             }
         } else {
             fail.add(t);
+        }
+    }
+
+    public void setCheck(List<EasyUITreeModel> easyUITreeModels) {
+        Set<Integer> set = new HashSet<Integer>();
+        for (EasyUITreeModel model : easyUITreeModels) {
+            setCheck(set, model);
+        }
+    }
+
+    /**
+     * 判断当前菜单是否需要设置选择
+     * @param set
+     * @param model
+     */
+    private void setCheck(Set<Integer> set, EasyUITreeModel model) {
+        if (set.contains(model.getId())) {
+            return;
+        }
+        List<EasyUITreeModel> childrens = model.getChildren();
+        if (childrens != null && !childrens.isEmpty()) {
+            // 当前菜单没有被选择,直接跳过
+            if (model.isChecked()!= null && !model.isChecked()) {
+                return;
+            }
+            for (EasyUITreeModel children : childrens) {
+                setCheck(set, children);
+                if (children.isChecked() == null || !children.isChecked()) {
+                    model.setChecked(false);
+                    set.add(model.getId());
+                }
+            }
         }
     }
 }

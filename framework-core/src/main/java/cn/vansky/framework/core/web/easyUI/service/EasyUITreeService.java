@@ -26,6 +26,8 @@ public interface EasyUITreeService<T> {
      */
     public List<EasyUITreeModel> findChildren(List<T> list, ModelCall<T> mc);
 
+    public void setCheck(List<EasyUITreeModel> easyUITreeModels);
+
     /**
      * 具体业务实现接口
      * @param <T> 业务数据转换成EasyUITreeModel
