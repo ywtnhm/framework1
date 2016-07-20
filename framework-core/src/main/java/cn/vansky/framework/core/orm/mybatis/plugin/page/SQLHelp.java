@@ -114,7 +114,7 @@ public class SQLHelp {
      */
     public static int getCount(String sql, Connection connection, MappedStatement mappedStatement,
                                Object parameterObject, BoundSql boundSql) {
-        String countSql = "select count(1) from (" + sql + ") as tmp_count";
+        String countSql = "select count(1) from (" + excludeOrderBy(sql) + ") as tmp_count";
         log.debug("Pagination TotalCount SQL: " + countSql);
 
         PreparedStatement countStmt = null;
