@@ -30,8 +30,8 @@ public class EasyUITreeModel extends SimpleTreeModel {
     }
 
     /**
-     * E50 code
-     * @return
+     * E50 code（250的意思）
+     * @return 是否有子数据
      */
     public boolean isHasChildren() {
         return this.children != null && !this.children.isEmpty();
