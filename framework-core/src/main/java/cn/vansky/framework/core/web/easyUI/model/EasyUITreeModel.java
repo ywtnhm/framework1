@@ -34,6 +34,6 @@ public class EasyUITreeModel extends SimpleTreeModel {
      * @return
      */
     public boolean isHasChildren() {
-        return this.children == null || this.children.isEmpty();
+        return this.children != null && !this.children.isEmpty();
     }
 }
