@@ -117,6 +117,9 @@ public class AmountCountUtil {
     }
 
     public static BigDecimal div(BigDecimal v1, BigDecimal v2, int scale) {
+        if (BigDecimal.ZERO.compareTo(v2) == 0) {
+            return BigDecimal.ZERO;
+        }
         return v1.divide(v2, scale, BigDecimal.ROUND_HALF_UP);
     }
 
