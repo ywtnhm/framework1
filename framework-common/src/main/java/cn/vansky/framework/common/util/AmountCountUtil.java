@@ -117,7 +117,7 @@ public class AmountCountUtil {
     }
 
     public static BigDecimal div(BigDecimal v1, BigDecimal v2, int scale) {
-        return round1(v1.divide(v2, BigDecimal.ROUND_HALF_UP), scale);
+        return v1.divide(v2, scale, BigDecimal.ROUND_HALF_UP);
     }
 
     private static double round(BigDecimal value, int scale) {
@@ -125,7 +125,7 @@ public class AmountCountUtil {
     }
 
     private static BigDecimal round1(BigDecimal value, int scale) {
-        return value.divide(BigDecimal.ONE, scale, BigDecimal.ROUND_HALF_UP);
+        return value.setScale(scale, BigDecimal.ROUND_HALF_UP);
     }
 
     /**
