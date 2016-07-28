@@ -56,7 +56,7 @@
 > IDE 推荐使用idea 地址 http://pan.baidu.com/s/1mijcCM8
 
 ##JDK
-> 1.6
+> 1.6/1.7
 
 ## 本地安装
 
