@@ -4,6 +4,9 @@
 
 package cn.vansky.framework.core.orm.mybatis.plugin.page;
 
+import cn.vansky.framework.common.entity.callback.DefaultSearchCallback;
+import cn.vansky.framework.common.entity.callback.SearchCallback;
+import cn.vansky.framework.common.entity.search.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.Dialect;
 import cn.vansky.framework.common.util.ReflectUtil;
 import org.apache.commons.lang.StringUtils;
@@ -41,6 +44,7 @@ public class SQLHelp {
 
     protected static Log log = LogFactory.getLog(SQLHelp.class);
 
+    public static SearchCallback customCallback = new DefaultSearchCallback();
     /**
      * 对SQL参数(?)设值,
      * 参考org.apache.ibatis.executor.parameter.DefaultParameterHandler。
@@ -224,4 +228,38 @@ public class SQLHelp {
             return sql;
         }
     }
+
+
+
+
+    public static String generateRealSql(String originalSql, Searchable parameter, Dialect dialect) {
+        StringBuilder sb = new StringBuilder(originalSql);
+        //条件拼接
+        customCallback.prepareQL(sb, parameter);
+        //order拼接
+        customCallback.prepareOrder(sb,parameter);
+        //分页
+        originalSql= generateRealPageSql(sb.toString(),parameter,dialect);
+        return originalSql;
+    }
+
+    /**
+     * 分页字符串拼接
+     * @param sql
+     * @param searchable
+     * @param dialect
+     * @return
+     */
+
+    public static String generateRealPageSql(String sql, Searchable searchable, Dialect dialect) {
+        if (dialect.supportsLimit()) {
+            int pageSize = searchable.getPage().getPageSize();
+            int index = (searchable.getPage().getPageNumber() - 1) * pageSize;
+            int start = index < 0 ? 0 : index;
+            return dialect.getLimitString(sql, start, pageSize);
+        } else {
+            return sql;
+        }
+    }
+
 }

@@ -30,7 +30,7 @@ import java.util.Properties;
         args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }) })
 public class PaginationInterceptor extends BaseInterceptor {
 
-    @Override
+
     public Object intercept(Invocation invocation) throws Throwable {
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
         if (mappedStatement.getId().matches(_SQL_PATTERN)) {
@@ -83,12 +83,12 @@ public class PaginationInterceptor extends BaseInterceptor {
         return invocation.proceed();
     }
 
-    @Override
+
     public Object plugin(Object target) {
         return Plugin.wrap(target, this);
     }
 
-    @Override
+
     public void setProperties(Properties properties) {
 
     }

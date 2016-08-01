@@ -4,7 +4,11 @@
 
 package cn.vansky.framework.core.dao;
 
+import cn.vansky.framework.common.entity.search.Searchable;
+import org.springframework.data.domain.Sort;
+
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -84,4 +88,12 @@ public interface DaoMapper<T, ID extends Serializable> {
      * save batch
      */
     void insertBatch(List<T> list);
+
+    void deleteBantch(ID[] ids);
+
+    <T extends FieldAccessVo> List<T> findBySearchable(Searchable searchable) throws InvocationTargetException, IllegalAccessException ;
+
+    <T extends FieldAccessVo> List<T> findBySort(Sort sort);
+
+    long countBySearchable(Searchable searchable);
 }

@@ -4,7 +4,12 @@
 
 package cn.vansky.framework.core.service;
 
+import cn.vansky.framework.common.entity.search.Searchable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -19,6 +24,11 @@ public interface GenericService<T, ID extends Serializable> {
      * @param entity entity
      */
     void delete(T entity);
+
+    /**
+     * 批量删除对象
+     */
+    void deleteBantch(ID[] ids);
 
     /**
      * 查询所有对象
@@ -84,4 +94,27 @@ public interface GenericService<T, ID extends Serializable> {
      * @param entitys entitys
      */
     void saveBatch(List<T> entitys);
+
+    /**
+     * 条件查询 searchable
+     * @param searchable
+     * @return
+     */
+
+    public Page<T> findBySearchable(Searchable searchable) throws InvocationTargetException, IllegalAccessException;
+
+    /**
+     * 条件查询 sort
+     * @param sort
+     * @return
+     */
+    public List<T> findBySort(Sort sort);
+
+    /**
+     * 根据条件统计所有记录数
+     *
+     * @param searchable
+     * @return
+     */
+    public long countBySearchable(Searchable searchable);
 }

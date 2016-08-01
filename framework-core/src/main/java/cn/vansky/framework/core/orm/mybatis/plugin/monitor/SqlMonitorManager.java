@@ -93,7 +93,7 @@ public class SqlMonitorManager implements Interceptor {
     /* (non-Javadoc)
      * @see org.apache.ibatis.plugin.Interceptor#intercept(org.apache.ibatis.plugin.Invocation)
      */
-    @Override
+
     public Object intercept(Invocation invocation) throws Throwable {
         Date begin = new Date();
         Date end;
@@ -185,7 +185,7 @@ public class SqlMonitorManager implements Interceptor {
     /* (non-Javadoc)
      * @see org.apache.ibatis.plugin.Interceptor#plugin(java.lang.Object)
      */
-    @Override
+
     public Object plugin(Object target) {
         return Plugin.wrap(target, this);
     }
@@ -193,7 +193,7 @@ public class SqlMonitorManager implements Interceptor {
     /* (non-Javadoc)
      * @see org.apache.ibatis.plugin.Interceptor#setProperties(java.util.Properties)
      */
-    @Override
+
     public void setProperties(Properties properties) {
         if (properties == null) {
             return;

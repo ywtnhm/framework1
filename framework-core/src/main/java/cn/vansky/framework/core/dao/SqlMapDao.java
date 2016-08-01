@@ -5,9 +5,13 @@
 package cn.vansky.framework.core.dao;
 
 
+import cn.vansky.framework.common.entity.search.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -90,6 +94,14 @@ public interface SqlMapDao<T, ID extends Serializable> {
      * @param select 结果列表对象（SQL及条件）
      */
     Pagination page(Pagination pagination, SqlCallback selectCount, SqlCallback select);
+
+    void deleteBantch(ID[] ids);
+
+    <T extends FieldAccessVo> Page<T> findBySearchable(Searchable searchable) throws InvocationTargetException, IllegalAccessException;
+
+    <T extends FieldAccessVo> List<T> findBySort(Sort sort);
+
+    long countBySearchable(Searchable searchable);
 
     /**
      * sql call back interface.

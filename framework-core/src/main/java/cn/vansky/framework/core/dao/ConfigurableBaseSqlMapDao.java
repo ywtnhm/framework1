@@ -4,10 +4,16 @@
 
 package cn.vansky.framework.core.dao;
 
+import cn.vansky.framework.common.entity.search.Searchable;
 import cn.vansky.framework.core.orm.mybatis.SqlMapDaoSupport;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Sort;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -89,5 +95,27 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
         pagination.init(totalCount, pagination.getLimit(), pagination.getCurrentPage());
         pagination.setRows(dataList);
         return pagination;
+    }
+    public  void deleteBantch(ID[] ids){
+        getDaoMapper().deleteBantch(ids);
+    }
+
+    public <T extends FieldAccessVo> Page<T> findBySearchable(Searchable searchable) throws InvocationTargetException, IllegalAccessException {
+      List<T> content=   getDaoMapper().findBySearchable(searchable);
+        long total = searchable.hasPageable() ? countBySearchable(searchable) : content.size();
+        return new PageImpl<T>(
+                content,
+                searchable.getPage(),
+                total
+        );
+    }
+
+    public <T extends FieldAccessVo> List<T> findBySort(Sort sort){
+        return getDaoMapper().findBySort(sort);
+
+    }
+
+    public long countBySearchable(Searchable searchable){
+        return getDaoMapper().countBySearchable(searchable);
     }
 }
