@@ -8,6 +8,7 @@ import cn.vansky.framework.core.web.filter.auth.AuthWrapper;
 import cn.vansky.framework.core.web.util.RequestUtils;
 import cn.vansky.framework.core.web.util.SessionHelper;
 import cn.vansky.framework.core.web.util.UrlUtils;
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.*;
@@ -51,6 +52,7 @@ public class AuthFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         index = filterConfig.getInitParameter("index");
+        open = BooleanUtils.toBoolean(filterConfig.getInitParameter("open"));
         excludePath = filterConfig.getInitParameter("excludePath");
         excludePathv = new TreeSet<String>();
         if (excludePath != null) {
@@ -78,6 +80,7 @@ public class AuthFilter implements Filter {
         // 权限为null,说明session过期,返回自定义页面
         AuthWrapper authWrapper = SessionHelper.getAuthWrap();
         if (authWrapper == null) {
+            SessionHelper.logout((HttpServletRequest) request);
             printMessage((HttpServletResponse) response, RESP_HTML_TPL, index);
         }
     }

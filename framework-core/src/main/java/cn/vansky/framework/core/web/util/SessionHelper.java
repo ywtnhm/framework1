@@ -5,6 +5,8 @@ import cn.vansky.framework.core.web.filter.auth.AuthWrapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.SortedSet;
 
 /**
@@ -43,5 +45,12 @@ public class SessionHelper {
             return StringUtils.isNotBlank(UrlUtils.urlMatch(urls, path));
         }
         return false;
+    }
+
+    public static void logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
     }
 }
