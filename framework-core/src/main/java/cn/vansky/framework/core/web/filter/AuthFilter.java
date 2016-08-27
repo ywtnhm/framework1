@@ -82,7 +82,9 @@ public class AuthFilter implements Filter {
         if (authWrapper == null) {
             SessionHelper.logout((HttpServletRequest) request);
             printMessage((HttpServletResponse) response, RESP_HTML_TPL, index);
+            return;
         }
+        chain.doFilter(request, response);
     }
 
     @Override
