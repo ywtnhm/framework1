@@ -5,6 +5,7 @@
 package cn.vansky.framework.core.orm.mybatis.plugin.page;
 
 import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.Dialect;
+import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.DialectType;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -23,7 +24,7 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
 
     protected static final Log log = LogFactory.getLog(BaseInterceptor.class);
 
-    protected Dialect DIALECT;
+    protected Dialect DIALECT = DialectType.getDialect("mysql") ;
 
     /**
      * 拦截的ID，在mapper中的id，可以匹配正则

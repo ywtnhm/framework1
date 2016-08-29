@@ -252,7 +252,7 @@ public class SQLHelp {
      */
 
     public static String generateRealPageSql(String sql, Searchable searchable, Dialect dialect) {
-        if (dialect.supportsLimit()) {
+        if (dialect.supportsLimit()&&searchable.getPage()!=null) {
             int pageSize = searchable.getPage().getPageSize();
             int index = (searchable.getPage().getPageNumber() - 1) * pageSize;
             int start = index < 0 ? 0 : index;
