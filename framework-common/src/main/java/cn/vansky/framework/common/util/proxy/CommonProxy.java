@@ -13,11 +13,11 @@ import java.lang.reflect.Proxy;
  * Author: CK
  * Date: 2015/6/30.
  */
-public class CommonProxy implements InvocationHandler {
+public class CommonProxy<T> implements InvocationHandler {
 
     private ProxyInterface proxyInterface;
 
-    private Object target;
+    private T target;
 
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Object result = null;
@@ -27,9 +27,9 @@ public class CommonProxy implements InvocationHandler {
         return result;
     }
 
-    public Object bind(Object target, ProxyInterface proxyInterface) {
+    public T bind(T target, ProxyInterface proxyInterface) {
         this.proxyInterface = proxyInterface;
         this.target = target;
-        return Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), this);
+        return (T) Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), this);
     }
 }

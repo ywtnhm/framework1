@@ -6,7 +6,7 @@ import javax.servlet.*;
 import java.io.IOException;
 
 /**
- * Created by IntelliJ IDEA.
+ * 请求绑定到线程级别
  * Author: CK
  * Date: 2015/8/17
  */
