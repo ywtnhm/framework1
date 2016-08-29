@@ -8,7 +8,6 @@ import cn.vansky.framework.core.web.filter.auth.AuthWrapper;
 import cn.vansky.framework.core.web.util.RequestUtils;
 import cn.vansky.framework.core.web.util.SessionHelper;
 import cn.vansky.framework.core.web.util.UrlUtils;
-import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.*;
@@ -24,7 +23,7 @@ import java.util.TreeSet;
  * Auth: CK
  * Date: 2016/8/27
  */
-public class AuthFilter implements Filter {
+public class AuthFilter extends JndiSupportFilter {
 
     /**
      * 地址模版
@@ -50,10 +49,7 @@ public class AuthFilter implements Filter {
     private boolean open;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        index = filterConfig.getInitParameter("index");
-        open = BooleanUtils.toBoolean(filterConfig.getInitParameter("open"));
-        excludePath = filterConfig.getInitParameter("excludePath");
+    public void doInit(FilterConfig filterConfig) throws ServletException {
         excludePathv = new TreeSet<String>();
         if (excludePath != null) {
             String[] paths = excludePath.split(";");
@@ -85,11 +81,6 @@ public class AuthFilter implements Filter {
             return;
         }
         chain.doFilter(request, response);
-    }
-
-    @Override
-    public void destroy() {
-
     }
 
     /**
