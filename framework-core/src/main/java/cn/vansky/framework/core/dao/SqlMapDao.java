@@ -19,7 +19,7 @@ import java.util.List;
  * Author: CK
  * Date: 2015/6/5.
  */
-public interface SqlMapDao<T, ID extends Serializable> {
+public interface SqlMapDao<T , ID extends Serializable> {
     /**
      * 通过主键查询
      * @param id 主键
