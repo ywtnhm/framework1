@@ -1,6 +1,7 @@
 package cn.vansky.framework.core.orm.mybatis.plugin.search;
 
 import cn.vansky.framework.common.entity.search.Searchable;
+import cn.vansky.framework.core.orm.mybatis.plugin.page.BaseInterceptor;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.PaginationInterceptor;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.SQLHelp;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.DialectType;
@@ -25,10 +26,10 @@ import java.util.Properties;
  */
 @Intercepts({ @Signature(type = Executor.class, method = "query",
         args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }) })
-public class SearchableInterceptor extends BaseSearchInterceptor {
+public class SearchableInterceptor extends BaseInterceptor {
     public Object intercept(Invocation invocation) throws Throwable {
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
-        if(mappedStatement.getId().matches(_SQL_PATTERN)){
+        if(mappedStatement.getId().matches(_SQL_PATTERN_Search)){
             Object parameter = invocation.getArgs()[1];
             if(!Searchable.class.isAssignableFrom(parameter.getClass())){
                 invocation.proceed();

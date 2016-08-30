@@ -93,21 +93,7 @@ public class PaginationInterceptor extends BaseInterceptor {
 
     }
 
-    private MappedStatement copyFromMappedStatement(MappedStatement ms, SqlSource newSqlSource) {
-        MappedStatement.Builder builder = new MappedStatement.Builder(ms.getConfiguration(),
-                ms.getId(), newSqlSource, ms.getSqlCommandType());
-        builder.resource(ms.getResource());
-        builder.fetchSize(ms.getFetchSize());
-        builder.statementType(ms.getStatementType());
-        builder.keyGenerator(ms.getKeyGenerator());
-        String[] keyProperties = ms.getKeyProperties();
-        builder.keyProperty(StringUtils.join(keyProperties, ','));
-        builder.timeout(ms.getTimeout());
-        builder.parameterMap(ms.getParameterMap());
-        builder.resultMaps(ms.getResultMaps());
-        builder.cache(ms.getCache());
-        return builder.build();
-    }
+
 
     public static class BoundSqlSqlSource implements SqlSource {
         BoundSql boundSql;

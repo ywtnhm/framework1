@@ -35,7 +35,6 @@ public class WebXmlElement implements Element {
         this.end = end;
     }
 
-    @Override
     public String getFormattedContent(int indentLevel) {
         StringBuilder sb = new StringBuilder();
 
