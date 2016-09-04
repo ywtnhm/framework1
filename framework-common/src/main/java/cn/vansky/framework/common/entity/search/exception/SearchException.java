@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2005-2012 https://github.com/zhangkaitao
+ * Copyright (c) 2005-2012 https://github.com/yuqiangcui
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */

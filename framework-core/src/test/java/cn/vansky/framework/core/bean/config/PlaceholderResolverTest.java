@@ -4,6 +4,7 @@
 
 package cn.vansky.framework.core.bean.config;
 
+import org.springframework.util.Assert;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public class PlaceholderResolverTest {
         });
         resolver.setPlaceholderPrefix("${");
         resolver.setPlaceholderSuffix("}");
+
         System.out.println(resolver.doParse(testStr));
         testStr = "hello ${key${key2}}";
         System.out.println(resolver.doParse(testStr));

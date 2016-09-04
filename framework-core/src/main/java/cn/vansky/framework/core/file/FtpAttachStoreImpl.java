@@ -31,12 +31,10 @@ public class FtpAttachStoreImpl implements FileStore {
      */
     private FtpConfig fileStoreConfig;
 
-    @Override
     public String partitionDir(Object mountDir) {
         return fileStoreConfig.getDefaultDir() + File.separator + mountDir;
     }
 
-    @Override
     public String generateFilename(String rawName) {
         if (StringUtils.isBlank(rawName)) {
             throw new RuntimeException("Raw file name is blank");
@@ -46,7 +44,6 @@ public class FtpAttachStoreImpl implements FileStore {
         return Joiner.on(".").join(withoutExt, Long.toString(System.currentTimeMillis()), ext);
     }
 
-    @Override
     public void store(String dir, InputStream fileStream, String fileName) {
         try {
             fileName = new String(fileName.getBytes(Constant.UTF_8), Constant.ISO_8859_1);
@@ -56,7 +53,6 @@ public class FtpAttachStoreImpl implements FileStore {
         FtpUtils.store(fileStoreConfig, dir, fileStream, fileName);
     }
 
-    @Override
     public void fetch(String dir, String fileName, OutputStream output) {
         if (StringUtils.isBlank(dir)) {
             dir = fileStoreConfig.getDefaultDir();
