@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
+ * Copyright (C) 2016 CK, Inc. All Rights Reserved.
  */
 
 package cn.vansky.framework.core.vo;
