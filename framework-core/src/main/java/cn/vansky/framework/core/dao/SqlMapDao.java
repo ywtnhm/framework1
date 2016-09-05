@@ -5,7 +5,7 @@
 package cn.vansky.framework.core.dao;
 
 
-import cn.vansky.framework.common.entity.search.Searchable;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;

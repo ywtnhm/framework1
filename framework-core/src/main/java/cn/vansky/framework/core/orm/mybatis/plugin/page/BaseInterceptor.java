@@ -13,9 +13,11 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.plugin.Plugin;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * 1. 参数对象转换为Page对象。<br>
@@ -27,7 +29,7 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
 
     protected static final Log log = LogFactory.getLog(BaseInterceptor.class);
 
-    protected Dialect DIALECT = DialectType.getDialect("mysql") ;
+    protected Dialect DIALECT = DialectType.getDialect("mysql");
 
     /**
      * 拦截的ID，在mapper中的id，可以匹配正则
@@ -42,7 +44,7 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
      * 对参数进行转换和检查
      *
      * @param parameterObject 参数对象
-     * @param pagination 参数VO
+     * @param pagination      参数VO
      * @return 参数VO
      */
     protected static Pagination convertParameter(Object parameterObject, Pagination pagination) {
@@ -59,6 +61,7 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
         return pagination;
     }
 
+
     public MappedStatement copyFromMappedStatement(MappedStatement ms, SqlSource newSqlSource) {
         MappedStatement.Builder builder = new MappedStatement.Builder(ms.getConfiguration(),
                 ms.getId(), newSqlSource, ms.getSqlCommandType());
@@ -73,5 +76,11 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
         builder.resultMaps(ms.getResultMaps());
         builder.cache(ms.getCache());
         return builder.build();
+    }
+    public Object plugin(Object target) {
+        return Plugin.wrap(target, this);
+    }
+    public void setProperties(Properties properties) {
+
     }
 }

@@ -4,9 +4,9 @@
 
 package cn.vansky.framework.core.orm.mybatis.plugin.page;
 
-import cn.vansky.framework.common.entity.callback.DefaultSearchCallback;
-import cn.vansky.framework.common.entity.callback.SearchCallback;
-import cn.vansky.framework.common.entity.search.Searchable;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback.DefaultSearchCallback;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback.SearchCallback;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.Dialect;
 import cn.vansky.framework.common.util.ReflectUtil;
 import org.apache.commons.lang.StringUtils;
@@ -235,7 +235,7 @@ public class SQLHelp {
     public static String generateRealSql(String originalSql, Searchable parameter, Dialect dialect) {
         StringBuilder sb = new StringBuilder(originalSql);
         //条件拼接
-        customCallback.prepareQL(sb, parameter);
+        customCallback.prepareSQL(sb, parameter);
         //order拼接
         customCallback.prepareOrder(sb,parameter);
         //分页

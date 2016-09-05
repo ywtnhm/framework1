@@ -83,18 +83,6 @@ public class PaginationInterceptor extends BaseInterceptor {
         return invocation.proceed();
     }
 
-
-    public Object plugin(Object target) {
-        return Plugin.wrap(target, this);
-    }
-
-
-    public void setProperties(Properties properties) {
-
-    }
-
-
-
     public static class BoundSqlSqlSource implements SqlSource {
         BoundSql boundSql;
 

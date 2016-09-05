@@ -4,7 +4,7 @@
 
 package cn.vansky.framework.core.service;
 
-import cn.vansky.framework.common.entity.search.Searchable;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.Searchable;
 import cn.vansky.framework.core.dao.SqlMapDao;
 import cn.vansky.framework.core.dao.FieldAccessVo;
 import org.springframework.data.domain.Page;
