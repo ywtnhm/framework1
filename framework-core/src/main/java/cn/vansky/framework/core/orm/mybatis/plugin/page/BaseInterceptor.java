@@ -34,11 +34,16 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
 
     protected static String MAP_PAGE_FIELD = Pagination.MAP_PAGE_FIELD;
 
-    protected String _SQL_PATTERN ;
+    private String sqlPattern ;
 
     public BaseInterceptor(String _SQL_PATTERN){
-        this._SQL_PATTERN = _SQL_PATTERN;
+        setSqlPattern(_SQL_PATTERN);
     }
+
+    public void setSqlPattern(String sqlPattern) {
+        this.sqlPattern = sqlPattern;
+    }
+
     /**
      * 对参数进行转换和检查
      *
@@ -83,6 +88,11 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
     public void setProperties(Properties properties) {
 
     }
+
+    public String getSqlPattern() {
+        return sqlPattern;
+    }
+
     public static class BoundSqlSqlSource implements SqlSource {
         BoundSql boundSql;
 

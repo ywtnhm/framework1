@@ -36,7 +36,7 @@ public class PaginationInterceptor extends BaseInterceptor {
 
     public Object intercept(Invocation invocation) throws Throwable {
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
-        if (mappedStatement.getId().matches(_SQL_PATTERN)) {
+        if (mappedStatement.getId().matches(super.getSqlPattern())) {
             // 拦截需要分页的SQL
             Object parameter = invocation.getArgs()[1];
             BoundSql boundSql = mappedStatement.getBoundSql(parameter);

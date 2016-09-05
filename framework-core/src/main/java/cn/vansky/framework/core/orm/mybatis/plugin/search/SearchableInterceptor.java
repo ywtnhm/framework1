@@ -35,7 +35,7 @@ public class SearchableInterceptor extends BaseInterceptor {
 
          MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
 
-        if (mappedStatement.getId().matches(_SQL_PATTERN)) {
+        if (mappedStatement.getId().matches(super.getSqlPattern())) {
 
             Object parameter = invocation.getArgs()[1];
 

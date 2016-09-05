@@ -9,6 +9,7 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback.Search
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.Dialect;
 import cn.vansky.framework.common.util.ReflectUtil;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -229,9 +230,6 @@ public class SQLHelp {
         }
     }
 
-
-
-
     public static String generateRealSql(String originalSql, Searchable parameter, Dialect dialect) {
         StringBuilder sb = new StringBuilder(originalSql);
         //条件拼接
@@ -252,7 +250,7 @@ public class SQLHelp {
      */
 
     public static String generateRealPageSql(String sql, Searchable searchable, Dialect dialect) {
-        if (dialect.supportsLimit()&&searchable.getPage()!=null) {
+        if (dialect.supportsLimit()&&searchable.getPage()!=null&& !ObjectUtils.equals(searchable.getPage(),ObjectUtils.NULL)) {
             int pageSize = searchable.getPage().getPageSize();
             int index = (searchable.getPage().getPageNumber() - 1) * pageSize;
             int start = index < 0 ? 0 : index;
