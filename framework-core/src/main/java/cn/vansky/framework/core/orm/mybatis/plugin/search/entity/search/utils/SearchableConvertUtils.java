@@ -15,6 +15,7 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.A
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.Condition;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.OrCondition;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.SearchFilter;
+import cn.vansky.framework.core.util.SpringUtils;
 import com.google.common.collect.Lists;
 
 import org.apache.commons.lang3.ArrayUtils;
