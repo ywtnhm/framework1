@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package cn.vansky.framework.common.entity.search.utils;
+package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;

@@ -3,25 +3,24 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package cn.vansky.framework.common.entity.search;
+package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search;
 
 
 
-import cn.vansky.framework.common.entity.search.exception.InvalidSearchPropertyException;
-import cn.vansky.framework.common.entity.search.exception.InvalidSearchValueException;
-import cn.vansky.framework.common.entity.search.exception.SearchException;
-import cn.vansky.framework.common.entity.search.filter.SearchFilter;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception.InvalidSearchPropertyException;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception.InvalidSearchValueException;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception.SearchException;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.SearchFilter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
 /**
  * <p>查询条件接口</p>
  * <p>User: hyssop
- * <p>Date: 13-1-16 上午8:47
+ * <p>Date: 16-1-16 上午8:47
  * <p>Version: 1.0
  */
 public abstract class Searchable {

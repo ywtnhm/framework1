@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package cn.vansky.framework.common.entity.validate.group;
+package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.validate.group;
 
 /**
  * java bean validation 分组验证使用（表示新增分组）

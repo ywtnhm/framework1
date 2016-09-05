@@ -3,34 +3,50 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package cn.vansky.framework.common.entity.search.utils;
+package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.utils;
 
-import cn.vansky.framework.common.entity.search.SearchOperator;
-import cn.vansky.framework.common.entity.search.Searchable;
-import cn.vansky.framework.common.entity.search.exception.InvalidSearchPropertyException;
-import cn.vansky.framework.common.entity.search.exception.InvalidSearchValueException;
-import cn.vansky.framework.common.entity.search.exception.SearchException;
-import cn.vansky.framework.common.entity.search.filter.AndCondition;
-import cn.vansky.framework.common.entity.search.filter.Condition;
-import cn.vansky.framework.common.entity.search.filter.OrCondition;
-import cn.vansky.framework.common.entity.search.filter.SearchFilter;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.SearchOperator;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.SearchRequest;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.Searchable;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception.InvalidSearchPropertyException;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception.InvalidSearchValueException;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception.SearchException;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.AndCondition;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.Condition;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.OrCondition;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.SearchFilter;
 import com.google.common.collect.Lists;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.InvalidPropertyException;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
  * <p>User: hyssop
- * <p>Date: 13-1-15 上午11:46
+ * <p>Date: 16-1-15 上午11:46
  * <p>Version: 1.0
  */
 public final class SearchableConvertUtils {
 
+
+    /**
+     * 设置用于类型转换的conversionService
+     * 把如下代码放入spring配置文件即可
+     * <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+     * <property name="staticMethod"
+     * value="com.sishuok.es.common.entity.search.utils.SearchableConvertUtils.setConversionService"/>
+     * <property name="arguments" ref="conversionService"/>
+     * </bean>
+     *
+     * @param conversionService
+     */
     private static volatile ConversionService conversionService;
 
     /**
@@ -84,10 +100,10 @@ public final class SearchableConvertUtils {
 
         for (SearchFilter searchFilter : searchFilters) {
             convertSearchValueToEntityValue(beanWrapper, searchFilter);
-
-
         }
+
     }
+
 
     private static void convertSearchValueToEntityValue(BeanWrapperImpl beanWrapper, SearchFilter searchFilter) {
         if (searchFilter instanceof Condition) {
@@ -172,44 +188,6 @@ public final class SearchableConvertUtils {
         return newValue;
     }
 
-/*    public static <T> void convertSearchValueToEntityValue(SearchRequest search, Class<T> domainClass) {
-        List<Condition> searchFilters = search.getSearchFilters();
-        for (Condition searchFilter : searchFilters) {
-            String property = searchFilter.getSearchProperty();
-            Class<? extends Comparable> targetPropertyType = getPropertyType(domainClass, property);
-            Object value = searchFilter.getValue();
-            Comparable newValue = convert(value, targetPropertyType);
-            searchFilter.setValue(newValue);
-        }
-    }*/
-/*
-    private static <T> Class getPropertyType(Class<T> domainClass, String property) {
-        String[] names = StringUtils.split(property, ".");
-        Class<?> clazz = null;
-
-        for (String name : names) {
-            if (clazz == null) {
-                clazz = BeanUtils.findPropertyType(name, ArrayUtils.toArray(domainClass));
-            } else {
-                clazz = BeanUtils.findPropertyType(name, ArrayUtils.toArray(clazz));
-            }
-        }
-
-        return clazz;
-    }*/
-
-/*
-
-    public static <S, T> T convert(S sourceValue, Class<T> targetClass) {
-        ConversionService conversionService = getConversionService();
-        if (!conversionService.canConvert(sourceValue.getClass(), targetClass)) {
-            throw new IllegalArgumentException(
-                    "search param can not convert value:[" + sourceValue + "] to target type:[" + targetClass + "]");
-        }
-
-        return conversionService.convert(sourceValue, targetClass);
-    }
-*/
 
 
 }

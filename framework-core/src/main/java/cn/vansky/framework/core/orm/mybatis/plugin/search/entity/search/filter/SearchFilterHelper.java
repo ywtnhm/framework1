@@ -3,18 +3,18 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package cn.vansky.framework.common.entity.search.filter;
+package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter;
 
 
-import cn.vansky.framework.common.entity.search.SearchOperator;
-import cn.vansky.framework.common.entity.search.exception.SearchException;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.SearchOperator;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception.SearchException;
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.Arrays;
 
 /**
  * <p>User: hyssop
- * <p>Date: 13-5-24 下午4:10
+ * <p>Date: 16-5-24 下午4:10
  * <p>Version: 1.0
  */
 public final class SearchFilterHelper {

@@ -1,13 +1,13 @@
 /**
  * Copyright (c) 2005-2012 https://github.com/yuqiangcui
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package cn.vansky.framework.common.entity.search.exception;
+package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception;
 
 /**
  * <p>User: hyssop
- * <p>Date: 13-1-17 上午11:44
+ * <p>Date: 16-1-17 上午11:44
  * <p>Version: 1.0
  */
 public final class InvalidSearchPropertyException extends SearchException {

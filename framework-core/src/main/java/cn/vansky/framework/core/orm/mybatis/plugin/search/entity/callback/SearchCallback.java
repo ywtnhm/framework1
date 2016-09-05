@@ -3,10 +3,10 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package cn.vansky.framework.common.entity.callback;
+package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback;
 
 
-import cn.vansky.framework.common.entity.search.Searchable;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.Searchable;
 
 /**
  * <p>User: hyssop
@@ -25,7 +25,7 @@ public interface SearchCallback {
      * @param ql
      * @param search
      */
-    public void prepareQL(StringBuilder ql, Searchable search);
+    public void prepareSQL(StringBuilder ql, Searchable search);
 
     public void prepareOrder(StringBuilder ql, Searchable search);
 

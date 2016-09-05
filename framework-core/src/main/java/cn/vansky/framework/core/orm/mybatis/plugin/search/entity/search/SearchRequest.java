@@ -1,13 +1,13 @@
 /**
  * Copyright (c) 2005-2012 https://github.com/yuqiangcui
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package cn.vansky.framework.common.entity.search;
+package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search;
 
-import cn.vansky.framework.common.entity.search.exception.SearchException;
-import cn.vansky.framework.common.entity.search.filter.*;
-import cn.vansky.framework.common.entity.search.utils.SearchableConvertUtils;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception.SearchException;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.*;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.utils.SearchableConvertUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * <p>查询条件（包括分页和排序）</p>
  * <p>User: hyssop
- * <p>Date: 13-1-15 上午7:29
+ * <p>Date: 16-1-15 上午7:29
  * <p>Version: 1.0
  */
 
@@ -62,7 +62,6 @@ public final class SearchRequest extends Searchable {
     public SearchRequest(final Map<String, Object> searchParams, final Pageable page) {
         this(searchParams, page, null);
     }
-
     /**
      * @param searchParams
      * @see SearchRequest#SearchRequest(java.util.Map<java.lang.String,java.lang.Object>)
@@ -70,8 +69,6 @@ public final class SearchRequest extends Searchable {
     public SearchRequest(final Map<String, Object> searchParams, final Sort sort) throws SearchException {
         this(searchParams, null, sort);
     }
-
-
     /**
      * <p>根据查询参数拼Search<br/>
      * 查询参数格式：property_op=value 或 customerProperty=value<br/>
@@ -117,14 +114,11 @@ public final class SearchRequest extends Searchable {
         toSearchFilters(searchParams);
         return this;
     }
-
-
     @Override
     public Searchable addSearchFilter(final String searchProperty, final SearchOperator operator, final Object value) {
         SearchFilter searchFilter = SearchFilterHelper.newCondition(searchProperty, operator, value);
         return addSearchFilter(searchFilter);
     }
-
     public Searchable addSearchFilter(SearchFilter searchFilter) {
         if (searchFilter == null) {
             return this;
@@ -135,7 +129,7 @@ public final class SearchRequest extends Searchable {
             searchFilterMap.put(key, condition);
         }
         int index = searchFilters.indexOf(searchFilter);
-        if(index != -1) {
+        if (index != -1) {
             searchFilters.set(index, searchFilter);
         } else {
             searchFilters.add(searchFilter);
@@ -143,8 +137,6 @@ public final class SearchRequest extends Searchable {
         return this;
 
     }
-
-
     public Searchable addSearchFilters(Collection<? extends SearchFilter> searchFilters) {
         if (CollectionUtils.isEmpty(searchFilters)) {
             return this;
@@ -161,11 +153,9 @@ public final class SearchRequest extends Searchable {
     }
 
     public Searchable and(final SearchFilter first, final SearchFilter... others) {
-
         addSearchFilter(SearchFilterHelper.and(first, others));
         return this;
     }
-
 
 
     @Override
@@ -173,6 +163,7 @@ public final class SearchRequest extends Searchable {
         this.removeSearchFilter(searchProperty + Condition.separator + operator);
         return this;
     }
+
     /**
      * @param key
      * @return
@@ -293,7 +284,7 @@ public final class SearchRequest extends Searchable {
                 searchFilterMap.containsKey(key) ||
                         searchFilterMap.containsKey(getCustomKey(key));
 
-        if(contains) {
+        if (contains) {
             return true;
         }
 
@@ -303,22 +294,22 @@ public final class SearchRequest extends Searchable {
 
     private boolean containsSearchKey(List<SearchFilter> searchFilters, String key) {
         boolean contains = false;
-        for(SearchFilter searchFilter : searchFilters) {
-            if(searchFilter instanceof OrCondition) {
+        for (SearchFilter searchFilter : searchFilters) {
+            if (searchFilter instanceof OrCondition) {
                 OrCondition orCondition = (OrCondition) searchFilter;
                 contains = containsSearchKey(orCondition.getOrFilters(), key);
             }
-            if(searchFilter instanceof AndCondition) {
+            if (searchFilter instanceof AndCondition) {
                 AndCondition andCondition = (AndCondition) searchFilter;
                 contains = containsSearchKey(andCondition.getAndFilters(), key);
             }
 
-            if(searchFilter instanceof Condition) {
+            if (searchFilter instanceof Condition) {
                 Condition condition = (Condition) searchFilter;
                 contains = condition.getKey().equals(key) || condition.getSearchProperty().equals(key);
             }
 
-            if(contains) {
+            if (contains) {
                 return true;
             }
         }
