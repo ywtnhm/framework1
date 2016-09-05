@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.exceptions.PersistenceException;
+import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.plugin.Interceptor;
@@ -29,17 +30,15 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
 
     protected static final Log log = LogFactory.getLog(BaseInterceptor.class);
 
-    protected Dialect DIALECT = DialectType.getDialect("mysql");
-
-    /**
-     * 拦截的ID，在mapper中的id，可以匹配正则
-     */
-    protected String _SQL_PATTERN = ".*findPage*.*";
-
-    protected String _SQL_PATTERN_Search = ".*BySearchable*.*";
+    protected static Dialect DIALECT ;
 
     protected static String MAP_PAGE_FIELD = Pagination.MAP_PAGE_FIELD;
 
+    protected String _SQL_PATTERN ;
+
+    public BaseInterceptor(String _SQL_PATTERN){
+        this._SQL_PATTERN = _SQL_PATTERN;
+    }
     /**
      * 对参数进行转换和检查
      *
@@ -80,7 +79,19 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
     public Object plugin(Object target) {
         return Plugin.wrap(target, this);
     }
+
     public void setProperties(Properties properties) {
 
+    }
+    public static class BoundSqlSqlSource implements SqlSource {
+        BoundSql boundSql;
+
+        public BoundSqlSqlSource(BoundSql boundSql) {
+            this.boundSql = boundSql;
+        }
+
+        public BoundSql getBoundSql(Object parameterObject) {
+            return boundSql;
+        }
     }
 }

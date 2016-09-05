@@ -30,6 +30,11 @@ import java.util.Properties;
         args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }) })
 public class PaginationInterceptor extends BaseInterceptor {
 
+    protected static  String _SQL_PATTERN = ".*findPage*.*";
+
+    public PaginationInterceptor() {
+        super(_SQL_PATTERN);
+    }
 
     public Object intercept(Invocation invocation) throws Throwable {
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
@@ -83,15 +88,5 @@ public class PaginationInterceptor extends BaseInterceptor {
         return invocation.proceed();
     }
 
-    public static class BoundSqlSqlSource implements SqlSource {
-        BoundSql boundSql;
 
-        public BoundSqlSqlSource(BoundSql boundSql) {
-            this.boundSql = boundSql;
-        }
-
-        public BoundSql getBoundSql(Object parameterObject) {
-            return boundSql;
-        }
-    }
 }
