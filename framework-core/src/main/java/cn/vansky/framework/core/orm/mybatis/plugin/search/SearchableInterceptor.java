@@ -27,17 +27,15 @@ import java.util.Properties;
         args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
 public class SearchableInterceptor extends BaseInterceptor {
 
-    protected static String _SQL_PATTERN_Search = ".*BySearchable*.*";
-
     public SearchableInterceptor() {
-        super(_SQL_PATTERN_Search);
+        super(".*BySearchable*.*");
     }
 
     public Object intercept(Invocation invocation) throws Throwable {
 
          MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
 
-        if (mappedStatement.getId().matches(_SQL_PATTERN_Search)) {
+        if (mappedStatement.getId().matches(_SQL_PATTERN)) {
 
             Object parameter = invocation.getArgs()[1];
 

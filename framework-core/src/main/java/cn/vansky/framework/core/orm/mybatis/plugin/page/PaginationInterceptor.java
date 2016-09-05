@@ -30,10 +30,8 @@ import java.util.Properties;
         args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }) })
 public class PaginationInterceptor extends BaseInterceptor {
 
-    protected static  String _SQL_PATTERN = ".*findPage*.*";
-
     public PaginationInterceptor() {
-        super(_SQL_PATTERN);
+        super(".*findPage*.*");
     }
 
     public Object intercept(Invocation invocation) throws Throwable {
