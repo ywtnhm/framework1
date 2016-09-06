@@ -5,6 +5,7 @@
  */
 package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback;
 
+import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.Dialect;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback.adaptor.*;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.SearchOperator;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.Searchable;
@@ -12,6 +13,7 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.A
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.Condition;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.OrCondition;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.SearchFilter;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 
@@ -82,6 +84,7 @@ public class DefaultSearchCallback  implements SearchCallback {
 
 
 
+
     private void genCondition(StringBuilder ql, SearchFilter searchFilter) {
         boolean needAppendBracket = searchFilter instanceof OrCondition || searchFilter instanceof AndCondition;
         if (needAppendBracket) {
@@ -100,13 +103,16 @@ public class DefaultSearchCallback  implements SearchCallback {
             paramIndex = conditionDelegate.setValues(query,searchFilter,paramIndex);
         }
     }
-    public void setPageable(StringBuilder query, Searchable search) {
-        if (search.hasPageable()) {
-          /*  Pageable pageable = search.getPage();
-            query.setFirstResult(pageable.getOffset());
-            query.setMaxResults(pageable.getPageSize());*/
+
+    public void setPageable(StringBuilder sql, Searchable searchable, Dialect dialect) {
+        if (dialect.supportsLimit()&&searchable.getPage()!=null&& !ObjectUtils.equals(searchable.getPage(), ObjectUtils.NULL)) {
+            int pageSize = searchable.getPage().getPageSize();
+            int index = (searchable.getPage().getPageNumber() - 1) * pageSize;
+            int start = index < 0 ? 0 : index;
+             dialect.getLimitString(sql, start, pageSize);
         }
     }
+
 
     public void prepareOrder(StringBuilder ql, Searchable search) {
         if (search.hashSort()) {
