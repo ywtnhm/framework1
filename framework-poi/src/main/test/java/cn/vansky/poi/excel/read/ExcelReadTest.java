@@ -19,7 +19,6 @@ public class ExcelReadTest {
     public void testRead() throws Exception {
         ExcelRead<ExcelDto> excelRead = new ExcelRead<ExcelDto>();
         excelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), "a.xls", new ExcelRead.DefaultExcelReadDeal<ExcelDto>() {
-            @Override
             public ExcelDto dealBean(Row row) {
                 ExcelDto dto = new ExcelDto();
                 dto.setId(Long.valueOf(row.getCell(0).toString()));
@@ -28,7 +27,6 @@ public class ExcelReadTest {
                 return dto;
             }
 
-            @Override
             public void dealBatchBean(List<ExcelDto> list) {
                 System.out.println(list.size());
             }

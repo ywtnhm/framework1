@@ -17,13 +17,11 @@ import javax.servlet.ServletContextListener;
  * Date: 2015/6/24
  */
 public class InitSystemListener implements ServletContextListener {
-    @Override
     public void contextInitialized(ServletContextEvent event) {
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
         ServiceLocator.getInstance().setFactory(context);
     }
 
-    @Override
     public void contextDestroyed(ServletContextEvent event) {
         ServiceLocator.getInstance().setFactory(null);
     }

@@ -31,7 +31,6 @@ public class ProcessTimeFilter implements Filter {
 
     private SortedSet<String> excludePathSet;
 
-    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         excludePath = filterConfig.getInitParameter("excludePath");
         excludePathSet = new TreeSet<String>();
@@ -46,7 +45,6 @@ public class ProcessTimeFilter implements Filter {
         logger.info("ProcessTimeFilter init");
     }
 
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -65,7 +63,6 @@ public class ProcessTimeFilter implements Filter {
         }
     }
 
-    @Override
     public void destroy() {
         logger.info("ProcessTimeFilter destroy");
     }

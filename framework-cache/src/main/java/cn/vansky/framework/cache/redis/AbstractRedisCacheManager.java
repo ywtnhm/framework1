@@ -44,14 +44,12 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
      */
     private boolean nullValueReGet = false;
 
-    @Override
     public void afterPropertiesSet() throws Exception {
         if (CollectionUtils.isEmpty(getClientList())) {
             throw new IllegalArgumentException("client list is empty!");
         }
     }
 
-    @Override
     public void shutdown() {
         if (clientList == null) {
             return;
@@ -79,12 +77,10 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return true;
     }
 
-    @Override
     public String put(final Object key, final Object obj) {
         return put(key, -1, obj);
     }
 
-    @Override
     public String put(final Object key, final Integer expiration, final Object obj) {
         List<RedisClient> clients = this.getClients(key);
         String cacheName = null;
@@ -102,17 +98,14 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return cacheName;
     }
 
-    @Override
     public String replace(final Object key, final Object obj) {
         return replace(key, -1, obj);
     }
 
-    @Override
     public String replace(final Object key, final Integer expiration, final Object obj) {
         return put(key, expiration, obj);
     }
 
-    @Override
     public Object get(final Object key) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -129,7 +122,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return null;
     }
 
-    @Override
     public String remove(final Object key) {
         List<RedisClient> clients = this.getClients(key);
         String cacheName = null;
@@ -148,7 +140,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return cacheName;
     }
 
-    @Override
     public boolean existsKey(final String key) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -165,7 +156,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return false;
     }
 
-    @Override
     public boolean extendTime(final String key, final Integer expirationMs) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -181,7 +171,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return false;
     }
 
-    @Override
     public void hput(final String key, final String field, final Serializable fieldValue) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -197,7 +186,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         }
     }
 
-    @Override
     public Object hget(final String key, final String field) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -214,7 +202,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return null;
     }
 
-    @Override
     public boolean hdel(final String key, final String field) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -232,7 +219,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return false;
     }
 
-    @Override
     public Set<String> hKeys(final String key) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -250,7 +236,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return Collections.emptySet();
     }
 
-    @Override
     public List<Object> hValues(final String key) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -267,7 +252,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return Collections.emptyList();
     }
 
-    @Override
     public boolean hExists(final String key, final String field) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -284,7 +268,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return false;
     }
 
-    @Override
     public long hLen(final String key) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -301,7 +284,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return 0;
     }
 
-    @Override
     public void hmSet(final String key, final Map<String, Serializable> values) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -317,7 +299,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         }
     }
 
-    @Override
     public List<Object> hmGet(final String key, final String... fields) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -334,7 +315,6 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
         return Collections.emptyList();
     }
 
-    @Override
     public Map<String, Object> hGetAll(final String key) {
         List<RedisClient> clients = this.getClients(key);
         if (checkClients(clients)) {
@@ -379,11 +359,9 @@ public abstract class AbstractRedisCacheManager implements ExtCacheManager, Redi
 
     protected abstract List<RedisClient> getClients(Object key);
 
-    @Override
     public void onFaild(RedisClient client) {
     }
 
-    @Override
     public void onOk(RedisClient client) {
     }
 

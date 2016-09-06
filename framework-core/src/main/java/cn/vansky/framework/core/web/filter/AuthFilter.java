@@ -48,7 +48,6 @@ public class AuthFilter extends JndiSupportFilter {
      */
     private boolean open;
 
-    @Override
     public void doInit(FilterConfig filterConfig) throws ServletException {
         excludePathv = new TreeSet<String>();
         if (excludePath != null) {

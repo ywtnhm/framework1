@@ -25,7 +25,6 @@ public class DESCBC extends SymmetrySecurity {
         this.key = key;
     }
 
-    @Override
     public void validation(byte[] data, byte[] key) {
         if (key.length != 8) {
             throw new RuntimeException("Invalid DESCBC key length (must be 8 bytes)");

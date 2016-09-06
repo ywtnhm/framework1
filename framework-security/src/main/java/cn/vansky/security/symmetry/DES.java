@@ -25,7 +25,6 @@ public class DES extends SymmetrySecurity {
         this.key = key;
     }
 
-    @Override
     public void validation(byte[] data, byte[] key) {
         if (key.length != 8) {
             throw new RuntimeException("Invalid DES key length (must be 8 bytes)");

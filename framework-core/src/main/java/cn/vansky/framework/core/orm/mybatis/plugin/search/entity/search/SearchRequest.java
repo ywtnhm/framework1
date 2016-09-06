@@ -103,18 +103,15 @@ public final class SearchRequest extends Searchable {
     }
 
 
-    @Override
     public Searchable addSearchParam(final String key, final Object value) throws SearchException {
         addSearchFilter(SearchFilterHelper.newCondition(key, value));
         return this;
     }
 
-    @Override
     public Searchable addSearchParams(Map<String, Object> searchParams) throws SearchException {
         toSearchFilters(searchParams);
         return this;
     }
-    @Override
     public Searchable addSearchFilter(final String searchProperty, final SearchOperator operator, final Object value) {
         SearchFilter searchFilter = SearchFilterHelper.newCondition(searchProperty, operator, value);
         return addSearchFilter(searchFilter);
@@ -157,8 +154,6 @@ public final class SearchRequest extends Searchable {
         return this;
     }
 
-
-    @Override
     public Searchable removeSearchFilter(final String searchProperty, final SearchOperator operator) {
         this.removeSearchFilter(searchProperty + Condition.separator + operator);
         return this;
@@ -168,7 +163,6 @@ public final class SearchRequest extends Searchable {
      * @param key
      * @return
      */
-    @Override
     public Searchable removeSearchFilter(final String key) {
         if (key == null) {
             return this;
@@ -193,32 +187,27 @@ public final class SearchRequest extends Searchable {
         return key + Condition.separator + SearchOperator.custom;
     }
 
-    @Override
     public Searchable setPage(final Pageable page) {
         merge(sort, page);
         return this;
     }
 
-    @Override
     public Searchable setPage(int pageNumber, int pageSize) {
         merge(sort, new PageRequest(pageNumber, pageSize));
         return this;
     }
 
-    @Override
     public Searchable addSort(final Sort sort) {
         merge(sort, page);
         return this;
     }
 
-    @Override
     public Searchable addSort(final Sort.Direction direction, final String property) {
         merge(new Sort(direction, property), page);
         return this;
     }
 
 
-    @Override
     public <T> Searchable convert(final Class<T> entityClass) {
         SearchableConvertUtils.convertSearchValueToEntityValue(this, entityClass);
         markConverted();
@@ -226,7 +215,6 @@ public final class SearchRequest extends Searchable {
     }
 
 
-    @Override
     public Searchable markConverted() {
         this.converted = true;
         return this;
@@ -237,27 +225,22 @@ public final class SearchRequest extends Searchable {
         return Collections.unmodifiableCollection(searchFilters);
     }
 
-    @Override
     public boolean isConverted() {
         return converted;
     }
 
-    @Override
     public boolean hasSearchFilter() {
         return searchFilters.size() > 0;
     }
 
-    @Override
     public boolean hashSort() {
         return this.sort != null && this.sort.iterator().hasNext();
     }
 
-    @Override
     public boolean hasPageable() {
         return this.page != null && this.page.getPageSize() > 0;
     }
 
-    @Override
     public void removeSort() {
         this.sort = null;
         if (this.page != null) {
@@ -265,7 +248,6 @@ public final class SearchRequest extends Searchable {
         }
     }
 
-    @Override
     public void removePageable() {
         this.page = null;
     }
@@ -278,7 +260,6 @@ public final class SearchRequest extends Searchable {
         return sort;
     }
 
-    @Override
     public boolean containsSearchKey(String key) {
         boolean contains =
                 searchFilterMap.containsKey(key) ||
@@ -317,7 +298,6 @@ public final class SearchRequest extends Searchable {
         return contains;
     }
 
-    @Override
     public Object getValue(String key) {
         SearchFilter searchFilter = searchFilterMap.get(key);
         if (searchFilter == null) {
@@ -359,7 +339,6 @@ public final class SearchRequest extends Searchable {
     }
 
 
-    @Override
     public String toString() {
         return "SearchRequest{" +
                 "searchFilterMap=" + searchFilterMap +

@@ -19,7 +19,6 @@ public class ExcelWriteTest {
         title[1] = "名称";
         title[2] = "年龄";
         excelWrite.writeExcelXls(title, getList(), new ExcelWrite.WriteDeal<ExcelDto>() {
-            @Override
             public String[] dealBean(ExcelDto obj) {
                 String [] result = new String [3];
                 result[0] = obj.getId().toString();

@@ -32,7 +32,6 @@ public abstract class BaseRedisCallBack<T> implements RedisCallBack<T> {
      */
     private boolean nullValueReGet;
 
-    @Override
     public final boolean operation(List<RedisClient> clients, boolean read, Object key,
                                    RedisClientStatusNotifier notifier) {
         boolean success = false;
@@ -83,22 +82,18 @@ public abstract class BaseRedisCallBack<T> implements RedisCallBack<T> {
      */
     protected abstract T doOperation(RedisClient client) throws Exception;
 
-    @Override
     public T getResult() {
         return result;
     }
 
-    @Override
     public Exception getException() {
         return e;
     }
 
-    @Override
     public boolean isNullValueReGet() {
         return nullValueReGet;
     }
 
-    @Override
     public void setNullValueReGet(boolean nullValueReGet) {
         this.nullValueReGet = nullValueReGet;
     }

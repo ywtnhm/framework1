@@ -52,7 +52,6 @@ public class RedisCacheManager extends AbstractRedisCacheManager {
      */
     private final Log LOGGER = LogFactory.getLog(getClass());
 
-    @Override
     public String toString() {
         int size = 0;
         if (CollectionUtils.isNotEmpty(getClientList())) {
@@ -61,7 +60,6 @@ public class RedisCacheManager extends AbstractRedisCacheManager {
         return "RedisCacheManager clientSize[" + size + "]";
     }
 
-    @Override
     protected List<RedisClient> getClients(Object key) {
         RedisClient client = getClient(key);
         if (client == null) {

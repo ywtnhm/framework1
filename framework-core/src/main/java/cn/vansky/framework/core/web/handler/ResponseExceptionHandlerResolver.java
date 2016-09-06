@@ -26,7 +26,6 @@ public class ResponseExceptionHandlerResolver extends CustomizeExceptionHandlerR
 
     private static final Logger logger = LoggerFactory.getLogger(ForwardExceptionHandlerResolver.class);
 
-    @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
                                          Object handler, Exception ex) {
         // 把漏网的异常信息记入日志

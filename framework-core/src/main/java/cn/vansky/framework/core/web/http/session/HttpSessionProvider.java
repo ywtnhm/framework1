@@ -13,7 +13,6 @@ import java.io.Serializable;
  * Date:2014/10/6
  */
 public class HttpSessionProvider implements SessionProvider {
-    @Override
     public Serializable getAttribute(HttpServletRequest request, String name) {
         HttpSession session = request.getSession(false);
         if (session != null) {
@@ -38,13 +37,11 @@ public class HttpSessionProvider implements SessionProvider {
 		session.setAttribute(name, value);
 	}
 
-    @Override
     public void setAttribute(String name, Serializable value) {
         HttpSession session = ThreadLocalInfo.currentHttpServletSession();
         session.setAttribute(name, value);
     }
 
-    @Override
     public void setAttribute(String name, Object value) {
         HttpSession session = ThreadLocalInfo.currentHttpServletSession();
         session.setAttribute(name, value);
@@ -54,7 +51,6 @@ public class HttpSessionProvider implements SessionProvider {
 		return request.getSession().getId();
 	}
 
-    @Override
     public String getSessionId() {
         return ThreadLocalInfo.currentHttpServletSession().getId();
     }
@@ -66,7 +62,6 @@ public class HttpSessionProvider implements SessionProvider {
 		}
 	}
 
-    @Override
     public void logout() {
         HttpSession session = ThreadLocalInfo.currentHttpServletSession(false);
         if (session != null) {

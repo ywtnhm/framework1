@@ -325,7 +325,6 @@ public class BatchSqlSessionTemplateWrapper implements BatchSqlSupportSession {
      * {@code PersistenceExceptionTranslator}.
      */
     private class SqlSessionInterceptor implements InvocationHandler {
-        @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             SqlSession sqlSession = getSqlSession(
                     BatchSqlSessionTemplateWrapper.this.sqlSessionFactory,

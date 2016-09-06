@@ -78,7 +78,6 @@ public class HaRedisCacheManager extends AbstractRedisCacheManager implements Di
      */
     private RedisClientStatusChecker redisClientStatusChecker;
 
-    @Override
     public void afterPropertiesSet() throws Exception {
         super.afterPropertiesSet();
 
@@ -97,7 +96,6 @@ public class HaRedisCacheManager extends AbstractRedisCacheManager implements Di
         }
     }
 
-    @Override
     public void onFaild(RedisClient client) {
         // add to failed status
         failedClients.add(client);
@@ -106,7 +104,6 @@ public class HaRedisCacheManager extends AbstractRedisCacheManager implements Di
         executeHeartBeat();
     }
 
-    @Override
     public void onOk(RedisClient client) {
         // recover to client list
         if (!getClientList().contains(client)) {
@@ -116,7 +113,6 @@ public class HaRedisCacheManager extends AbstractRedisCacheManager implements Di
         failedClients.remove(client);
     }
 
-    @Override
     public void destroy() throws Exception {
         if (rchb != null) {
             // 关闭心跳类
@@ -162,7 +158,6 @@ public class HaRedisCacheManager extends AbstractRedisCacheManager implements Di
         }
     }
 
-    @Override
     public String toString() {
         int size = 0;
         if (CollectionUtils.isNotEmpty(getClientList())) {
@@ -171,7 +166,6 @@ public class HaRedisCacheManager extends AbstractRedisCacheManager implements Di
         return "HaRedisCacheManager clientSize[" + size + "]";
     }
 
-    @Override
     protected List<RedisClient> getClients(Object key) {
         return new ArrayList<RedisClient>(getClientList());
     }
@@ -216,7 +210,6 @@ public class HaRedisCacheManager extends AbstractRedisCacheManager implements Di
             close = true;
         }
 
-        @Override
         public void run() {
             runing = true;
 

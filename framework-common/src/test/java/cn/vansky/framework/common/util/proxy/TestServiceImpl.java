@@ -11,7 +11,6 @@ package cn.vansky.framework.common.util.proxy;
  */
 public class TestServiceImpl implements TestService {
 
-    @Override
     public void test() {
         System.out.println("测试");
     }

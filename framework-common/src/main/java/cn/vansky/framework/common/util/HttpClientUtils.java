@@ -47,7 +47,6 @@ public class HttpClientUtils {
             post.setConfig(requestConfig);
             HttpClient client = HttpClientBuilder.create().build();
             return client.execute(post, new ResponseHandler<String>() {
-                @Override
                 public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
                     HttpEntity entity = response.getEntity();
                     return EntityUtils.toString(entity, "utf-8");
@@ -69,7 +68,6 @@ public class HttpClientUtils {
             post.setConfig(requestConfig);
             HttpClient client = HttpClientBuilder.create().build();
             return client.execute(post, new ResponseHandler<String>() {
-                @Override
                 public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
                     HttpEntity entity = response.getEntity();
                     return EntityUtils.toString(entity, "utf-8");

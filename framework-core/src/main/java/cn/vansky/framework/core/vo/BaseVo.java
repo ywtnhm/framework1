@@ -64,7 +64,6 @@ public class BaseVo<T> extends BasePagination {
         return m;
     }
 
-    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }

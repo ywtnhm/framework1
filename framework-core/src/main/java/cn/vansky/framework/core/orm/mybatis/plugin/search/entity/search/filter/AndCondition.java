@@ -31,7 +31,6 @@ public class AndCondition implements SearchFilter {
         return andFilters;
     }
 
-    @Override
     public String toString() {
         return "AndCondition{" + andFilters + '}';
     }

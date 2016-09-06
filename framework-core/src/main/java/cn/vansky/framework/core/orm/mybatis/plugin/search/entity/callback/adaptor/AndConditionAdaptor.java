@@ -36,7 +36,6 @@ public class AndConditionAdaptor extends AbstractConditionAdaptor implements Ser
         }
     }
 
-    @Override
     public int setValues(StringBuilder query, SearchFilter searchFilter, int paramIndex) {
         for (SearchFilter andSearchFilter : ((AndCondition) searchFilter).getAndFilters()) {
             paramIndex = setValues(query, andSearchFilter, paramIndex);

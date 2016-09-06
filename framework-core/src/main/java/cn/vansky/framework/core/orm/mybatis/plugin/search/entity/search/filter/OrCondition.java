@@ -36,9 +36,7 @@ public class OrCondition implements SearchFilter {
         return orFilters;
     }
 
-    @Override
     public String toString() {
         return "OrCondition{" + orFilters + '}';
     }
-
 }

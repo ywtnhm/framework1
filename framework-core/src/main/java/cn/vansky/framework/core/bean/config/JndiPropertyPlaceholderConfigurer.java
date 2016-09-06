@@ -126,7 +126,7 @@ public class JndiPropertyPlaceholderConfigurer extends PropertyPlaceholderConfig
      * The default implementation delegates to {@code resolvePlaceholder
      * (placeholder, props)} before/after the system properties check.
      * <p>
-     * Subclasses can override this for custom resolution strategies, including
+     * Subclasses can this for custom resolution strategies, including
      * customized points for the system properties check.
      *
      * @param placeholder
@@ -141,7 +141,6 @@ public class JndiPropertyPlaceholderConfigurer extends PropertyPlaceholderConfig
      * @see System#getProperty
      * @see #resolvePlaceholder(String, java.util.Properties)
      */
-    @Override
     protected String resolvePlaceholder(String placeholder, Properties props, int systemPropertiesMode) {
         String value = super.resolvePlaceholder(placeholder, props, systemPropertiesMode);
         if (getPropertyResolvedInterceptor() != null) {
@@ -160,7 +159,6 @@ public class JndiPropertyPlaceholderConfigurer extends PropertyPlaceholderConfig
      * @see #setLocations
      * @see #setJndiLocations
      */
-    @Override
     protected void loadProperties(Properties props) throws IOException {
         super.loadProperties(props);
         try {

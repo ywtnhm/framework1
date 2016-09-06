@@ -17,7 +17,6 @@ public class TextElement implements Element {
         this.content = content;
     }
 
-    @Override
     public String getFormattedContent(int indentLevel) {
         StringBuilder sb = new StringBuilder();
         OutputUtils.xmlIndent(sb, indentLevel);

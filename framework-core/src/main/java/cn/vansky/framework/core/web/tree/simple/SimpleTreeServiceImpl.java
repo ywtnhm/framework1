@@ -17,12 +17,10 @@ import java.util.List;
  * Date: 2016/8/27
  */
 public class SimpleTreeServiceImpl<T> implements SimpleTreeService<T> {
-    @Override
     public String findTreeStr(List<T> list, ModelCall<T> mc) {
         return JsonUtil.toJson(findTree(list, mc));
     }
 
-    @Override
     public List<SimpleTreeModel> findTree(List<T> list, ModelCall<T> mc) {
         List<SimpleTreeModel> simpleTreeModels = new ArrayList<SimpleTreeModel>(list.size());
         for (T t : list){

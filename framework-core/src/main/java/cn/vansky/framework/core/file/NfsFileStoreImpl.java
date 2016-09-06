@@ -68,7 +68,6 @@ public class NfsFileStoreImpl implements FileStore {
         }
     }
 
-    @Override
     public void fetch(String dir, String fileName, OutputStream output) {
         File f = new File(PathUtils.join(dir, fileName));
         if (!f.exists()) {
@@ -91,7 +90,6 @@ public class NfsFileStoreImpl implements FileStore {
         }
     }
 
-    @Override
     public FileStoreConfig getFileStoreConfig() {
         return fileStoreConfig;
     }

@@ -33,7 +33,6 @@ public class MailAuthenticator extends Authenticator {
         return password;
     }
 
-    @Override
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(username, password);
     }

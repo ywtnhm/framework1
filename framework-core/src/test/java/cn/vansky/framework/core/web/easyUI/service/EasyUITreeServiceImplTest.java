@@ -23,7 +23,6 @@ public class EasyUITreeServiceImplTest {
     @Test
     public void testFindModel() throws Exception {
         String json = service.findTreeStr(getList(), new EasyUITreeService.ModelCall<Param>() {
-            @Override
             public EasyUITreeModel convert(Param p) {
                 EasyUITreeModel m = new EasyUITreeModel();
                 m.setId(p.getParamId());

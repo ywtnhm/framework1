@@ -49,7 +49,6 @@ public class ConditionAdaptor extends AbstractConditionAdaptor {
         }
     }
 
-    @Override
     public int setValues(StringBuilder query, SearchFilter searchFilter, int paramIndex) {
         Condition condition = (Condition) searchFilter;
         if (condition.getOperator() == SearchOperator.custom) {

@@ -69,7 +69,6 @@ public class AuthTag extends ConditionalTagSupport {
         return false;
     }
 
-    @Override
     protected boolean condition() throws JspTagException {
         return hasAuth(test);
     }

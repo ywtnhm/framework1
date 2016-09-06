@@ -813,7 +813,6 @@ public class RedisClient implements InitializingBean, DisposableBean {
         }
     }
 
-    @Override
     public void destroy() throws Exception {
         shutdown();
     }

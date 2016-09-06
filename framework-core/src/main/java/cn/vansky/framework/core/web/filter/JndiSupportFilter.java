@@ -71,10 +71,6 @@ public abstract class JndiSupportFilter implements Filter {
      */
     private final Set requiredProperties = new HashSet();
 
-    /* (non-Javadoc)
-     * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
-     */
-    @Override
     public final void init(FilterConfig filterConfig) throws ServletException {
         Assert.notNull(filterConfig, "FilterConfig must not be null");
         if (LOGGER.isDebugEnabled()) {
@@ -135,7 +131,7 @@ public abstract class JndiSupportFilter implements Filter {
     }
 
     /**
-     * Subclasses may override this to perform custom filter shutdown.
+     * Subclasses may this to perform custom filter shutdown.
      * <p>Note: This method will be called from standard filter destruction
      * as well as filter bean destruction in a Spring application context.
      * <p>This default implementation is empty.
