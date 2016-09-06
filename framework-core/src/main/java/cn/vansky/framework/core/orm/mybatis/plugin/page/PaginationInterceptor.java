@@ -4,22 +4,19 @@
 
 package cn.vansky.framework.core.orm.mybatis.plugin.page;
 
-import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.DialectType;
-import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
-import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
 import java.io.Serializable;
 import java.sql.Connection;
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * 数据库分页插件，只拦截查询语句.
@@ -30,21 +27,22 @@ import java.util.Properties;
         args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }) })
 public class PaginationInterceptor extends BaseInterceptor {
 
+    public static final String MAP_PAGE_FIELD = Pagination.MAP_PAGE_FIELD;
+
+    public static final String PAGE = ".*findPage*.*";
+
     public PaginationInterceptor() {
-        super(".*findPage*.*");
+        sqlPattern = PAGE;
     }
 
     public Object intercept(Invocation invocation) throws Throwable {
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
-        if (mappedStatement.getId().matches(super.getSqlPattern())) {
+        if (mappedStatement.getId().matches(sqlPattern)) {
             // 拦截需要分页的SQL
             Object parameter = invocation.getArgs()[1];
             BoundSql boundSql = mappedStatement.getBoundSql(parameter);
             String originalSql = boundSql.getSql().trim();
             Object parameterObject = boundSql.getParameterObject();
-            if (StringUtils.isBlank(boundSql.getSql())) {
-                return null;
-            }
 
             // 分页参数--上下文传参
             Pagination<Serializable> page = null;
@@ -67,13 +65,7 @@ public class PaginationInterceptor extends BaseInterceptor {
                 // 分页计算
                 page.init(totPage, page.getLimit(), page.getCurrentPage());
 
-                // 分页查询 本地化对象 修改数据库注意修改实现
-                if (null == DIALECT) {
-                    String databaseId = mappedStatement.getConfiguration().getDatabaseId();
-                    DIALECT = DialectType.getDialect(databaseId);
-                }
-
-                String pageSql = SQLHelp.generatePageSql(originalSql, page, DIALECT);
+                String pageSql = SQLHelp.generatePageSql(originalSql, page, dialect);
                 log.info("分页SQL:" + pageSql);
                 invocation.getArgs()[2] = new RowBounds(RowBounds.NO_ROW_OFFSET, RowBounds.NO_ROW_LIMIT);
                 BoundSql newBoundSql = SQLHelp.createNewBoundSql(mappedStatement, boundSql.getParameterObject(),
@@ -86,5 +78,24 @@ public class PaginationInterceptor extends BaseInterceptor {
         return invocation.proceed();
     }
 
-
+    /**
+     * 对参数进行转换和检查
+     *
+     * @param parameterObject 参数对象
+     * @param pagination      参数VO
+     * @return 参数VO
+     */
+    private Pagination convertParameter(Object parameterObject, Pagination pagination) {
+        if (parameterObject instanceof Pagination) {
+            pagination = (Pagination) parameterObject;
+        } else if (parameterObject instanceof Map) {
+            Map parameterMap = (Map) parameterObject;
+            pagination = (Pagination) parameterMap.get(MAP_PAGE_FIELD);
+            if (pagination == null) {
+                throw new PersistenceException("分页参数不能为空");
+            }
+            parameterMap.put(MAP_PAGE_FIELD, pagination);
+        }
+        return pagination;
+    }
 }

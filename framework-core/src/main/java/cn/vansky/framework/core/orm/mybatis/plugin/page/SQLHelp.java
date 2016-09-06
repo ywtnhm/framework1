@@ -45,7 +45,6 @@ public class SQLHelp {
 
     protected static Log log = LogFactory.getLog(SQLHelp.class);
 
-    public static SearchCallback customCallback = new DefaultSearchCallback();
     /**
      * 对SQL参数(?)设值,
      * 参考org.apache.ibatis.executor.parameter.DefaultParameterHandler。
@@ -230,6 +229,8 @@ public class SQLHelp {
         }
     }
 
+    public static SearchCallback customCallback = new DefaultSearchCallback();
+
     public static String generateRealSql(String originalSql, Searchable parameter, Dialect dialect) {
         StringBuilder sb = new StringBuilder(originalSql);
         //条件拼接
@@ -248,7 +249,6 @@ public class SQLHelp {
      * @param dialect
      * @return
      */
-
     public static String generateRealPageSql(String sql, Searchable searchable, Dialect dialect) {
         if (dialect.supportsLimit()&&searchable.getPage()!=null&& !ObjectUtils.equals(searchable.getPage(),ObjectUtils.NULL)) {
             int pageSize = searchable.getPage().getPageSize();
@@ -259,5 +259,4 @@ public class SQLHelp {
             return sql;
         }
     }
-
 }
