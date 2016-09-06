@@ -238,8 +238,8 @@ public class SQLHelp {
         //order拼接
         customCallback.prepareOrder(sb,parameter);
         //分页
-        originalSql= generateRealPageSql(sb.toString(),parameter,dialect);
-        return originalSql;
+        customCallback.setPageable(sb,parameter,dialect);
+        return sb.toString();
     }
 
     /**
