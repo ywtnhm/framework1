@@ -6,6 +6,7 @@
 package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback;
 
 
+import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.Dialect;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.Searchable;
 
 /**
@@ -37,6 +38,6 @@ public interface SearchCallback {
      */
     public void setValues(StringBuilder query, Searchable search);
 
-    public void setPageable(StringBuilder query, Searchable search);
+    public void setPageable(StringBuilder query, Searchable search , Dialect dialect);
 
 }
