@@ -21,6 +21,16 @@ public class MySQLDialect implements Dialect {
         }
         return sb.toString();
     }
+    public void getLimitString(StringBuilder sb,int offset,int pageSize) {
+        sb.append(" limit ");
+        if (offset > 0) {
+            sb.append(offset).append(",").append(pageSize);
+        } else {
+            sb.append(pageSize);
+        }
+
+
+    }
 
     public boolean supportsLimit() {
         return true;

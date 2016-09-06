@@ -29,7 +29,7 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
 
     protected final Log log = LogFactory.getLog(this.getClass());
 
-    protected Dialect dialect = DialectType.getDialect("mysql");
+    protected static Dialect dialect = DialectType.getDialect("mysql");
 
     protected String dialectClass;
 
@@ -59,6 +59,8 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
         if (properties.keySet().isEmpty()) {
             return;
         }
+        /*   this.sqlPattern = properties.getProperty("sqlPattern");*/
+
         BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(this);
         MutablePropertyValues mutablePropertyValues = new MutablePropertyValues();
         for (Object o : properties.keySet()) {
@@ -66,7 +68,6 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
             mutablePropertyValues.addPropertyValue(propertyValue);
         }
         beanWrapper.setPropertyValues(mutablePropertyValues);
-
         if (StringUtils.isNotBlank(dialectClass)) {
             dialect = DialectType.getDialect(dialectClass);
             if (dialect == null) {

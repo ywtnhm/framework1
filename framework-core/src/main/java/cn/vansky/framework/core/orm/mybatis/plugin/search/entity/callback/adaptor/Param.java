@@ -1,7 +1,7 @@
 package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback.adaptor;
 
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.SearchOperator;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.Condition;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.CustomCondition;
 
 /**
  * @author hassop
@@ -14,8 +14,8 @@ public class Param {
     public String alias = "";
     public String aliasWithDot = " ";
 
-    public Object formtValue(Condition condition, Object value) {
-        SearchOperator operator = condition.getOperator();
+    public Object formtValue(CustomCondition customCondition, Object value) {
+        SearchOperator operator = customCondition.getOperator();
         if (operator == SearchOperator.like || operator == SearchOperator.notLike) {
             return "%" + value + "%";
         }

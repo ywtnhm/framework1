@@ -26,7 +26,7 @@ public final class SearchFilterHelper {
      * @return
      */
     public static SearchFilter newCondition(final String key, final Object value) throws SearchException {
-        return Condition.newCondition(key, value);
+        return CustomCondition.newCondition(key, value);
     }
 
     /**
@@ -38,7 +38,7 @@ public final class SearchFilterHelper {
      * @return
      */
     public static SearchFilter newCondition(final String searchProperty, final SearchOperator operator, final Object value) {
-        return Condition.newCondition(searchProperty, operator, value);
+        return CustomCondition.newCondition(searchProperty, operator, value);
     }
 
 

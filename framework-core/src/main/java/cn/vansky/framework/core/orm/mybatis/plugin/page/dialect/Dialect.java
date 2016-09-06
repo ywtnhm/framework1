@@ -27,4 +27,6 @@ public interface Dialect {
      * @return 分页查询的sql
      */
     public String getLimitString(String sql, int offset, int pageSize);
+
+    public void getLimitString(StringBuilder sb, int offset, int pageSize);
 }

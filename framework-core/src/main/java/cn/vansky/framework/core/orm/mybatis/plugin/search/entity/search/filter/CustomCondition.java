@@ -20,7 +20,7 @@ import java.util.List;
  * <p>Date: 16-1-15 上午7:12
  * <p>Version: 1.0
  */
-public final class Condition implements SearchFilter {
+public final class CustomCondition implements SearchFilter {
 
     //查询参数分隔符
     public static final String separator = "_";
@@ -37,14 +37,14 @@ public final class Condition implements SearchFilter {
      * @param value
      * @return
      */
-    static Condition newCondition(final String key, final Object value) throws SearchException {
+    static CustomCondition newCondition(final String key, final Object value) throws SearchException {
 
-        Assert.notNull(key, "Condition key must not null");
+        Assert.notNull(key, "CustomCondition key must not null");
 
         String[] searchs = StringUtils.split(key, separator);
 
         if (searchs.length == 0) {
-            throw new SearchException("Condition key format must be : property or property_op");
+            throw new SearchException("CustomCondition key format must be : property or property_op");
         }
 
         String searchProperty = searchs[0];
@@ -69,7 +69,7 @@ public final class Condition implements SearchFilter {
             return null;
         }
 
-        Condition searchFilter = newCondition(searchProperty, operator, value);
+        CustomCondition searchFilter = newCondition(searchProperty, operator, value);
 
         return searchFilter;
     }
@@ -83,8 +83,8 @@ public final class Condition implements SearchFilter {
      * @param value
      * @return
      */
-    static Condition newCondition(final String searchProperty, final SearchOperator operator, final Object value) {
-        return new Condition(searchProperty, operator, value);
+    static CustomCondition newCondition(final String searchProperty, final SearchOperator operator, final Object value) {
+        return new CustomCondition(searchProperty, operator, value);
     }
 
     /**
@@ -92,7 +92,7 @@ public final class Condition implements SearchFilter {
      * @param operator       操作
      * @param value          值
      */
-    private Condition(final String searchProperty, final SearchOperator operator, final Object value) {
+    private CustomCondition(final String searchProperty, final SearchOperator operator, final Object value) {
         this.searchProperty = searchProperty;
         this.operator = operator;
         this.value = value;
@@ -173,7 +173,7 @@ public final class Condition implements SearchFilter {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Condition that = (Condition) o;
+        CustomCondition that = (CustomCondition) o;
 
         if (key != null ? !key.equals(that.key) : that.key != null) return false;
 
@@ -185,7 +185,7 @@ public final class Condition implements SearchFilter {
     }
 
     public String toString() {
-        return "Condition{" +
+        return "CustomCondition{" +
                 "searchProperty='" + searchProperty + '\'' +
                 ", operator=" + operator +
                 ", value=" + value +

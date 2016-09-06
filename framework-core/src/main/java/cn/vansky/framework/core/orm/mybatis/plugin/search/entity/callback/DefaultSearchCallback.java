@@ -10,7 +10,7 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback.adapto
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.SearchOperator;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.AndCondition;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.Condition;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.CustomCondition;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.OrCondition;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.SearchFilter;
 import org.apache.commons.lang.ObjectUtils;
@@ -36,7 +36,7 @@ public class DefaultSearchCallback  implements SearchCallback {
         this("");
 
         List<AbstractConditionAdaptor> conditionAdaptors = new ArrayList<AbstractConditionAdaptor>();
-        conditionAdaptors.add(new ConditionAdaptor(param));
+        conditionAdaptors.add(new CustomConditionAdaptor(param));
         conditionAdaptors.add(new OrConditionAdaptor(param));
         conditionAdaptors.add(new AndConditionAdaptor(param));
         conditionDelegate.setConditionAdaptor(conditionAdaptors);
@@ -51,7 +51,7 @@ public class DefaultSearchCallback  implements SearchCallback {
             param.aliasWithDot = "";
         }
         List<AbstractConditionAdaptor> conditionAdaptors = new ArrayList<AbstractConditionAdaptor>();
-        conditionAdaptors.add(new ConditionAdaptor(param));
+        conditionAdaptors.add(new CustomConditionAdaptor(param));
         conditionAdaptors.add(new OrConditionAdaptor(param));
         conditionAdaptors.add(new AndConditionAdaptor(param));
         conditionDelegate.setConditionAdaptor(conditionAdaptors);
@@ -71,9 +71,9 @@ public class DefaultSearchCallback  implements SearchCallback {
         }
         int paramIndex = 1;
         for (SearchFilter searchFilter : search.getSearchFilters()) {
-            if (searchFilter instanceof Condition) {
-                Condition condition = (Condition) searchFilter;
-                if (condition.getOperator() == SearchOperator.custom) {
+            if (searchFilter instanceof CustomCondition) {
+                CustomCondition customCondition = (CustomCondition) searchFilter;
+                if (customCondition.getOperator() == SearchOperator.custom) {
                     continue;
                 }
             }

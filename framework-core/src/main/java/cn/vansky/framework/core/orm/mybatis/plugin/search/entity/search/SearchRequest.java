@@ -120,10 +120,10 @@ public final class SearchRequest extends Searchable {
         if (searchFilter == null) {
             return this;
         }
-        if (searchFilter instanceof Condition) {
-            Condition condition = (Condition) searchFilter;
-            String key = condition.getKey();
-            searchFilterMap.put(key, condition);
+        if (searchFilter instanceof CustomCondition) {
+            CustomCondition customCondition = (CustomCondition) searchFilter;
+            String key = customCondition.getKey();
+            searchFilterMap.put(key, customCondition);
         }
         int index = searchFilters.indexOf(searchFilter);
         if (index != -1) {
@@ -155,7 +155,7 @@ public final class SearchRequest extends Searchable {
     }
 
     public Searchable removeSearchFilter(final String searchProperty, final SearchOperator operator) {
-        this.removeSearchFilter(searchProperty + Condition.separator + operator);
+        this.removeSearchFilter(searchProperty + CustomCondition.separator + operator);
         return this;
     }
 
@@ -184,7 +184,7 @@ public final class SearchRequest extends Searchable {
     }
 
     private String getCustomKey(String key) {
-        return key + Condition.separator + SearchOperator.custom;
+        return key + CustomCondition.separator + SearchOperator.custom;
     }
 
     public Searchable setPage(final Pageable page) {
@@ -285,9 +285,9 @@ public final class SearchRequest extends Searchable {
                 contains = containsSearchKey(andCondition.getAndFilters(), key);
             }
 
-            if (searchFilter instanceof Condition) {
-                Condition condition = (Condition) searchFilter;
-                contains = condition.getKey().equals(key) || condition.getSearchProperty().equals(key);
+            if (searchFilter instanceof CustomCondition) {
+                CustomCondition customCondition = (CustomCondition) searchFilter;
+                contains = customCondition.getKey().equals(key) || customCondition.getSearchProperty().equals(key);
             }
 
             if (contains) {
@@ -307,9 +307,9 @@ public final class SearchRequest extends Searchable {
             return null;
         }
 
-        if (searchFilter instanceof Condition) {
-            Condition condition = (Condition) searchFilter;
-            return condition.getValue();
+        if (searchFilter instanceof CustomCondition) {
+            CustomCondition customCondition = (CustomCondition) searchFilter;
+            return customCondition.getValue();
         }
 
         return null;

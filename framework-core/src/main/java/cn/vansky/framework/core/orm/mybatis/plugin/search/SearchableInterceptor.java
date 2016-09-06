@@ -15,7 +15,7 @@ import org.apache.ibatis.session.RowBounds;
 /**
  * 查询插件 根据searchble接口的查询条件动态调整查询sql完成查询(包括了条件、排序和分页条件)
  * Author: hassop
- * Date: 2016/7/28
+ * Date: 2016/9/06
  */
 @Intercepts({@Signature(type = Executor.class, method = "query",
         args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})

@@ -6,25 +6,21 @@
 package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.utils;
 
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.SearchOperator;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.SearchRequest;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception.InvalidSearchPropertyException;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception.InvalidSearchValueException;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.exception.SearchException;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.AndCondition;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.Condition;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.CustomCondition;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.OrCondition;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.SearchFilter;
 import cn.vansky.framework.core.util.SpringUtils;
 import com.google.common.collect.Lists;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.InvalidPropertyException;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -93,7 +89,6 @@ public final class SearchableConvertUtils {
         if (search.isConverted()) {
             return;
         }
-
         Collection<SearchFilter> searchFilters = search.getSearchFilters();
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl(entityClass);
         beanWrapper.setAutoGrowNestedPaths(true);
@@ -102,14 +97,13 @@ public final class SearchableConvertUtils {
         for (SearchFilter searchFilter : searchFilters) {
             convertSearchValueToEntityValue(beanWrapper, searchFilter);
         }
-
     }
 
 
     private static void convertSearchValueToEntityValue(BeanWrapperImpl beanWrapper, SearchFilter searchFilter) {
-        if (searchFilter instanceof Condition) {
-            Condition condition = (Condition) searchFilter;
-            convert(beanWrapper, condition);
+        if (searchFilter instanceof CustomCondition) {
+            CustomCondition customCondition = (CustomCondition) searchFilter;
+            convert(beanWrapper, customCondition);
             return;
         }
 
@@ -126,28 +120,20 @@ public final class SearchableConvertUtils {
             }
             return;
         }
-
-
     }
 
-    private static void convert(BeanWrapperImpl beanWrapper, Condition condition) {
-        String searchProperty = condition.getSearchProperty();
-
+    private static void convert(BeanWrapperImpl beanWrapper, CustomCondition customCondition) {
+        String searchProperty = customCondition.getSearchProperty();
         //自定义的也不转换
-        if (condition.getOperator() == SearchOperator.custom) {
+        if (customCondition.getOperator() == SearchOperator.custom) {
             return;
         }
-
         //一元运算符不需要计算
-        if (condition.isUnaryFilter()) {
+        if (customCondition.isUnaryFilter()) {
             return;
         }
-
-
-        String entityProperty = condition.getEntityProperty();
-
-        Object value = condition.getValue();
-
+        String entityProperty = customCondition.getEntityProperty();
+        Object value = customCondition.getValue();
         Object newValue = null;
         boolean isCollection = value instanceof Collection;
         boolean isArray = value != null && value.getClass().isArray();
@@ -166,7 +152,7 @@ public final class SearchableConvertUtils {
         } else {
             newValue = getConvertedValue(beanWrapper, searchProperty, entityProperty, value);
         }
-        condition.setValue(newValue);
+        customCondition.setValue(newValue);
     }
 
     private static Object getConvertedValue(
@@ -177,7 +163,6 @@ public final class SearchableConvertUtils {
 
         Object newValue;
         try {
-
             beanWrapper.setPropertyValue(entityProperty, value);
             newValue = beanWrapper.getPropertyValue(entityProperty);
         } catch (InvalidPropertyException e) {
@@ -185,10 +170,6 @@ public final class SearchableConvertUtils {
         } catch (Exception e) {
             throw new InvalidSearchValueException(searchProperty, entityProperty, value, e);
         }
-
         return newValue;
     }
-
-
-
 }

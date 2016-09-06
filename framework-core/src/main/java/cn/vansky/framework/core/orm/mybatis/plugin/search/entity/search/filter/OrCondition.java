@@ -5,13 +5,8 @@
  */
 package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter;
 
-import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback.adaptor.AbstractConditionAdaptor;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback.adaptor.AndConditionAdaptor;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback.adaptor.ConditionAdaptor;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback.adaptor.OrConditionAdaptor;
 import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
