@@ -297,7 +297,7 @@ public class JsonResp {
     }
 
     /**
-     * 树形结构响应
+     * kong结构响应
      */
     public static class JEmpty extends BaseResp {
 

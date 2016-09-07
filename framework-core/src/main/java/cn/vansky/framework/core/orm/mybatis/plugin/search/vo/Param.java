@@ -1,7 +1,7 @@
-package cn.vansky.framework.core.orm.mybatis.plugin.search.entity.callback.adaptor;
+package cn.vansky.framework.core.orm.mybatis.plugin.search.vo;
 
-import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.SearchOperator;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.filter.CustomCondition;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.enums.SearchOperator;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.filter.CustomCondition;
 
 /**
  * @author hassop

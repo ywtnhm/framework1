@@ -1,8 +1,7 @@
 package cn.vansky.framework.core.orm.mybatis.plugin.search;
 
-import cn.vansky.framework.core.orm.mybatis.plugin.search.entity.search.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.BaseInterceptor;
-import cn.vansky.framework.core.orm.mybatis.plugin.page.SQLHelp;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -42,13 +41,13 @@ public class SearchableInterceptor extends BaseInterceptor {
             BoundSql boundSql = mappedStatement.getBoundSql(parameter);
             String originalSql = boundSql.getSql().trim();
             //parameter is searhabel
-            String realSql = SQLHelp.generateRealSql(originalSql, (Searchable) parameter, dialect);
+            String realSql = SqlFacade.generateRealSql(originalSql, (Searchable) parameter, dialect);
 
             log.info("最终 的sql为:" + realSql);
 
             invocation.getArgs()[2] = new RowBounds(RowBounds.NO_ROW_OFFSET, RowBounds.NO_ROW_LIMIT);
 
-            BoundSql newBoundSql = SQLHelp.createNewBoundSql(mappedStatement, boundSql.getParameterObject(),
+            BoundSql newBoundSql = SqlFacade.createNewBoundSql(mappedStatement, boundSql.getParameterObject(),
                     boundSql, realSql);
 
             MappedStatement newMs = copyFromMappedStatement(mappedStatement, new BoundSqlSqlSource(newBoundSql));
