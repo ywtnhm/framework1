@@ -20,7 +20,7 @@ public class DelegeteSqlResolver extends AbstractSqlResolverOuter {
         }
     }
 
-    @Override
+
     public void compositeSql(StringBuilder query, Searchable search, Dialect dialect) {
         sqlResolver.prepareSQL(query, search);
         if(search.hashSort()){
