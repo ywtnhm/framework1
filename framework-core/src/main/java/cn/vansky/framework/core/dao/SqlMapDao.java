@@ -11,7 +11,6 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ import java.util.List;
  * Author: CK
  * Date: 2015/6/5.
  */
-public interface SqlMapDao<T , ID extends Serializable> {
+public interface SqlMapDao<T, ID extends Serializable> {
     /**
      * 通过主键查询
      * @param id 主键
@@ -97,11 +96,11 @@ public interface SqlMapDao<T , ID extends Serializable> {
 
     void deleteBantch(ID[] ids);
 
-    <T extends FieldAccessVo> Page<T> findBySearchable(Searchable searchable) throws InvocationTargetException, IllegalAccessException;
+    Page<T> findBySearchable(Searchable searchable);
 
-    <T extends FieldAccessVo> List<T> findBySearchableForTree(Searchable searchable) throws InvocationTargetException, IllegalAccessException;
+    List<T> findBySearchableForTree(Searchable searchable);
 
-    <T extends FieldAccessVo> List<T> findBySort(Sort sort);
+    List<T> findBySort(Sort sort);
 
     long countBySearchable(Searchable searchable);
 

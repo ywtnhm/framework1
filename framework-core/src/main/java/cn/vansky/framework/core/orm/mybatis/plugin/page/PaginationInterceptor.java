@@ -4,7 +4,8 @@
 
 package cn.vansky.framework.core.orm.mybatis.plugin.page;
 
-import cn.vansky.framework.core.orm.mybatis.SqlFacade;
+import cn.vansky.framework.core.orm.mybatis.plugin.BaseInterceptor;
+import cn.vansky.framework.core.orm.mybatis.plugin.SqlHelper;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -60,16 +61,16 @@ public class PaginationInterceptor extends BaseInterceptor {
                 if (totPage <= 0) {
                     Connection connection = mappedStatement.getConfiguration().getEnvironment().getDataSource()
                             .getConnection();
-                    totPage = SqlFacade.getCount(originalSql, connection, mappedStatement, parameterObject, boundSql);
+                    totPage = SqlHelper.getCount(originalSql, connection, mappedStatement, parameterObject, boundSql);
                 }
 
                 // 分页计算
                 page.init(totPage, page.getLimit(), page.getCurrentPage());
 
-                String pageSql = SqlFacade.generatePageSql(originalSql, page, dialect);
+                String pageSql = SqlHelper.generatePageSql(originalSql, page, dialect);
                 log.info("分页SQL:" + pageSql);
                 invocation.getArgs()[2] = new RowBounds(RowBounds.NO_ROW_OFFSET, RowBounds.NO_ROW_LIMIT);
-                BoundSql newBoundSql = SqlFacade.createNewBoundSql(mappedStatement, boundSql.getParameterObject(),
+                BoundSql newBoundSql = SqlHelper.createNewBoundSql(mappedStatement, boundSql.getParameterObject(),
                         boundSql, pageSql);
                 MappedStatement newMs = copyFromMappedStatement(mappedStatement, new BoundSqlSqlSource(newBoundSql));
 

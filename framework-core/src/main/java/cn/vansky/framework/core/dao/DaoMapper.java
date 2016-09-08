@@ -8,7 +8,6 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -91,11 +90,11 @@ public interface DaoMapper<T, ID extends Serializable> {
 
     void deleteBantch(ID[] ids);
 
-    <T > List<T> findBySearchable(Searchable searchable) throws InvocationTargetException, IllegalAccessException ;
+    List<T> findBySearchable(Searchable searchable);
 
-    <T > List<T> findBySearchableForTree(Searchable searchable) throws InvocationTargetException, IllegalAccessException;
+    List<T> findBySearchableForTree(Searchable searchable);
 
-    <T > List<T> findBySort(Sort sort);
+    List<T> findBySort(Sort sort);
 
     long countBySearchable(Searchable searchable);
 }
