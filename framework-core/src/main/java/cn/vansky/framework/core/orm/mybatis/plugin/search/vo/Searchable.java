@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * <p>查询条件接口</p>
+ * <p>查询条件接口（有点儿乱）</p>
  * <p>User: hyssop
  * <p>Date: 16-1-16 上午8:47
  * <p>Version: 1.0
