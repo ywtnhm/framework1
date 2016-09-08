@@ -6,9 +6,9 @@ package cn.vansky.framework.core.service;
 
 import cn.vansky.framework.core.dao.SqlMapDao;
 import cn.vansky.framework.core.dao.FieldAccessVo;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Page;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 import org.springframework.util.Assert;
 
 import java.io.Serializable;

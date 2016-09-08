@@ -4,7 +4,7 @@
 
 package cn.vansky.framework.core.orm.mybatis.plugin.page;
 
-import cn.vansky.framework.core.orm.mybatis.plugin.search.SqlFacade;
+import cn.vansky.framework.core.orm.mybatis.SqlFacade;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;

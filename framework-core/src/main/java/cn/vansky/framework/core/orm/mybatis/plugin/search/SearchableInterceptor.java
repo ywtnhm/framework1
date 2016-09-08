@@ -1,5 +1,6 @@
 package cn.vansky.framework.core.orm.mybatis.plugin.search;
 
+import cn.vansky.framework.core.orm.mybatis.SqlFacade;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.BaseInterceptor;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import org.apache.ibatis.executor.Executor;

@@ -17,6 +17,7 @@
         <module>framework-exception</module>
         <module>framework-cache</module>
         <module>framework-ip</module>
+        <module>framework-tree</module>
     </modules>
 
     <properties>
@@ -73,7 +74,6 @@
         <httpcore.version>4.3</httpcore.version>
         <compress.version>1.11</compress.version>
         <log4j.version>1.2.17</log4j.version>
-        <spring.data.jpa.version>1.4.1.RELEASE</spring.data.jpa.version>
     </properties>
 
     <build>
@@ -151,17 +151,6 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aspects</artifactId>
                 <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-jpa</artifactId>
-                <version>${spring.data.jpa.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>jcl-over-slf4j</artifactId>
-                        <groupId>org.slf4j</groupId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>

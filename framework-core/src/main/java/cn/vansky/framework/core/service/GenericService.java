@@ -4,9 +4,10 @@
 
 package cn.vansky.framework.core.service;
 
+import cn.vansky.framework.core.dao.FieldAccessVo;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Page;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +18,7 @@ import java.util.List;
  * Author: CK
  * Date: 2015/6/5.
  */
-public interface GenericService<T , ID extends Serializable> {
+public interface GenericService<T extends FieldAccessVo, ID extends Serializable> {
     /**
      * 删除对象
      *

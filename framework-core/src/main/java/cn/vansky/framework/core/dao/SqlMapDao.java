@@ -6,9 +6,9 @@ package cn.vansky.framework.core.dao;
 
 
 import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Page;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -98,6 +98,8 @@ public interface SqlMapDao<T , ID extends Serializable> {
     void deleteBantch(ID[] ids);
 
     <T extends FieldAccessVo> Page<T> findBySearchable(Searchable searchable) throws InvocationTargetException, IllegalAccessException;
+
+    <T extends FieldAccessVo> List<T> findBySearchableForTree(Searchable searchable) throws InvocationTargetException, IllegalAccessException;
 
     <T extends FieldAccessVo> List<T> findBySort(Sort sort);
 
