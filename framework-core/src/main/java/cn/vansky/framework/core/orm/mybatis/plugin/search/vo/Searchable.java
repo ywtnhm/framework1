@@ -13,8 +13,6 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.exception.InvalidSearc
 import cn.vansky.framework.core.orm.mybatis.plugin.search.exception.InvalidSearchValueException;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.exception.SearchException;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.filter.SearchFilter;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.util.Collection;
 import java.util.Map;

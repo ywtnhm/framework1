@@ -3,8 +3,8 @@ package cn.vansky.framework.core.orm.mybatis.plugin.search.resolver;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.Dialect;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Param;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 import org.apache.commons.lang.ObjectUtils;
-import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 
 /**

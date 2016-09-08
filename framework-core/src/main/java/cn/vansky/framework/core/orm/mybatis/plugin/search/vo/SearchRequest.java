@@ -15,9 +15,6 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.utils.SearchableConver
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;

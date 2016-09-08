@@ -5,7 +5,7 @@
 package cn.vansky.framework.core.dao;
 
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
-import org.springframework.data.domain.Sort;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -91,9 +91,11 @@ public interface DaoMapper<T, ID extends Serializable> {
 
     void deleteBantch(ID[] ids);
 
-    <T extends FieldAccessVo> List<T> findBySearchable(Searchable searchable) throws InvocationTargetException, IllegalAccessException ;
+    <T > List<T> findBySearchable(Searchable searchable) throws InvocationTargetException, IllegalAccessException ;
 
-    <T extends FieldAccessVo> List<T> findBySort(Sort sort);
+    <T > List<T> findBySearchableForTree(Searchable searchable) throws InvocationTargetException, IllegalAccessException;
+
+    <T > List<T> findBySort(Sort sort);
 
     long countBySearchable(Searchable searchable);
 }

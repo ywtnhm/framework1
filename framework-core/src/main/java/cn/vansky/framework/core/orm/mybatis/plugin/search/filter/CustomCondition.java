@@ -83,9 +83,13 @@ public final class CustomCondition implements SearchFilter {
         String searchProperty = searchs[0];
 
         SearchOperator operator = null;
+
         if (searchs.length == 1) {
             operator = SearchOperator.custom;
-        } else {
+        } else if(searchs.length==3){
+            searchProperty = searchs[0] + separator + searchs[1];
+            operator = SearchOperator.valueOf(searchs[2]);
+        }else {
             try {
                 operator = SearchOperator.valueOf(searchs[1]);
             } catch (IllegalArgumentException e) {

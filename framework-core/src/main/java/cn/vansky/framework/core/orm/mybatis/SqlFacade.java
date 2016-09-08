@@ -2,7 +2,7 @@
  * Copyright (C) 2015 CK, Inc. All Rights Reserved.
  */
 
-package cn.vansky.framework.core.orm.mybatis.plugin.search;
+package cn.vansky.framework.core.orm.mybatis;
 
 import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.Dialect;

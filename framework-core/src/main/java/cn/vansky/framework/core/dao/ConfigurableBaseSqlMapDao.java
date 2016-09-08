@@ -6,10 +6,11 @@ package cn.vansky.framework.core.dao;
 
 import cn.vansky.framework.core.orm.mybatis.SqlMapDaoSupport;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Page;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.PageImpl;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Sort;
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
+
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -109,6 +110,10 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
         );
     }
 
+    public <T extends FieldAccessVo> List<T> findBySearchableForTree(Searchable searchable) throws InvocationTargetException, IllegalAccessException {
+        List<T> content=   getDaoMapper().findBySearchable(searchable);
+        return content;
+    }
     public <T extends FieldAccessVo> List<T> findBySort(Sort sort){
         return getDaoMapper().findBySort(sort);
 

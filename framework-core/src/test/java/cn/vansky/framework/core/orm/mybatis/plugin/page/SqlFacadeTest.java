@@ -2,7 +2,7 @@ package cn.vansky.framework.core.orm.mybatis.plugin.page;
 
 import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.Dialect;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.MySQLDialect;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.SqlFacade;
+import cn.vansky.framework.core.orm.mybatis.SqlFacade;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import org.testng.annotations.Test;
 
