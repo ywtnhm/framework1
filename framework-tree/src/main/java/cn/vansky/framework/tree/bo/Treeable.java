@@ -89,7 +89,6 @@ public abstract class Treeable<ID extends Serializable> extends FieldAccessVo {
      */
     public abstract boolean isLeaf();
 
-
     /**
      * 根节点默认图标 如果没有默认 空即可  大小为16×16
      */
@@ -104,7 +103,6 @@ public abstract class Treeable<ID extends Serializable> extends FieldAccessVo {
      * 树叶节点默认图标 如果没有默认 空即可  大小为16×16
      */
     public abstract String getLeafDefaultIcon();
-
 
     public abstract Object getId();
 }
