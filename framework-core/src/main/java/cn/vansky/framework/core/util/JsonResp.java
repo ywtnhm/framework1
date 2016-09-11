@@ -6,7 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import java.util.*;
 
 /**
- * Created by IntelliJ IDEA.
+ * 前后端统一接口
  * Author: CK
  * Date: 2016/1/27
  */
@@ -297,7 +297,7 @@ public class JsonResp {
     }
 
     /**
-     * kong结构响应
+     * 空结构响应
      */
     public static class JEmpty extends BaseResp {
 
