@@ -25,8 +25,4 @@ public class ForwardException extends RuntimeException {
     public ForwardException(Throwable cause) {
         super(cause);
     }
-
-    public ForwardException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }
