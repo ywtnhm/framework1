@@ -91,6 +91,7 @@ public interface DaoMapper<T, ID extends Serializable> {
 
     void deleteBantch(ID[] ids);
 
+
     <T > List<T> findBySearchable(Searchable searchable) throws InvocationTargetException, IllegalAccessException ;
 
     <T > List<T> findBySearchableForTree(Searchable searchable) throws InvocationTargetException, IllegalAccessException;
