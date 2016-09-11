@@ -8,6 +8,7 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -19,8 +20,7 @@ public interface DaoMapper<T, ID extends Serializable> {
     /**
      * delete action by primary key
      *
-     * @param id
-     *            primary key
+     * @param id primary key
      * @return delete result. 1 means success
      */
     int deleteByPrimaryKey(ID id);
@@ -28,8 +28,7 @@ public interface DaoMapper<T, ID extends Serializable> {
     /**
      * do insert entity
      *
-     * @param record
-     *            entity bean to insert
+     * @param record entity bean to insert
      * @return insert result 1 means success
      */
     int insert(T record);
@@ -37,8 +36,7 @@ public interface DaoMapper<T, ID extends Serializable> {
     /**
      * do insert entity ignore null property
      *
-     * @param record
-     *            entity bean to insert
+     * @param record entity bean to insert
      * @return insert result 1 means success
      */
     int insertSelective(T record);
@@ -46,8 +44,7 @@ public interface DaoMapper<T, ID extends Serializable> {
     /**
      * find entity by primary key
      *
-     * @param id
-     *            primary key
+     * @param id primary key
      * @return entity bean
      */
     T selectByPrimaryKey(ID id);
@@ -55,8 +52,7 @@ public interface DaoMapper<T, ID extends Serializable> {
     /**
      * update entity by primary key ignore null property
      *
-     * @param record
-     *            entity bean
+     * @param record entity bean
      * @return effective count
      */
     int updateByPrimaryKeySelective(T record);
@@ -64,8 +60,7 @@ public interface DaoMapper<T, ID extends Serializable> {
     /**
      * update entity by primary key
      *
-     * @param record
-     *            entity bean
+     * @param record entity bean
      * @return effective count
      */
     int updateByPrimaryKey(T record);
@@ -83,6 +78,7 @@ public interface DaoMapper<T, ID extends Serializable> {
      * @return all records
      */
     List<T> selectAll();
+
     /**
      * save batch
      */
