@@ -39,7 +39,6 @@ public class ZtreeConvertTool<T extends SimpleZtree, S extends Treeable,ID > imp
         Map<ID, T> p = new HashMap<ID, T>(list.size() + 1);
         // 最外层,默认为0
         T root = (T)new SimpleZtree();
-        //todo 和ID类型兼容性
         root.setId((ID)list.get(0).getParentId());
         p.put((ID)list.get(0).getParentId() , (T)root);
         findModel(list, p, mc);

@@ -35,7 +35,6 @@ public class EasyUiTreeConvertTool<T extends SimpleEasyUiTree, S extends Treeabl
         Map<ID, T> p = new HashMap<ID, T>(list.size() + 1);
         // 最外层,默认为0
         T root = (T)new SimpleEasyUiTree();
-        //todo 和ID类型兼容性
         root.setId((ID)list.get(0).getParentId());
         root.setId(0);
         p.put((ID)root.getId() , (T)root);
