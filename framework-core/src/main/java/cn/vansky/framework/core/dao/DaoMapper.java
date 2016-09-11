@@ -86,11 +86,11 @@ public interface DaoMapper<T, ID extends Serializable> {
 
     void deleteBantch(ID[] ids);
 
-    <T> List<T> findBySearchable(Searchable searchable);
+    List<T> findBySearchable(Searchable searchable);
 
-    <T> List<T> findBySearchableForTree(Searchable searchable);
+    List<T> findBySearchableForTree(Searchable searchable);
 
-    <T> List<T> findBySort(Sort sort);
+    List<T> findBySort(Sort sort);
 
     long countBySearchable(Searchable searchable);
 }
