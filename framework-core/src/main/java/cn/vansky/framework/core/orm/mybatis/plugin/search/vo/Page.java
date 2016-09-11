@@ -10,7 +10,7 @@ import java.util.List;
  * Auth: hyssop
  * Date: 12:21
  */
-public interface Page<T extends FieldAccessVo> extends Iterable<T> {
+public interface Page<T> extends Iterable<T> {
 
     /**
      * Returns the number of the current page. Is always non-negative and less that {@code Page#getTotalPages()}.

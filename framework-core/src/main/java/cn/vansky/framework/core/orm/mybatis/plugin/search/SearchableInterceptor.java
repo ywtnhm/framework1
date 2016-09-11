@@ -1,7 +1,7 @@
 package cn.vansky.framework.core.orm.mybatis.plugin.search;
 
-import cn.vansky.framework.core.orm.mybatis.SqlFacade;
-import cn.vansky.framework.core.orm.mybatis.plugin.page.BaseInterceptor;
+import cn.vansky.framework.core.orm.mybatis.plugin.SqlHelper;
+import cn.vansky.framework.core.orm.mybatis.plugin.BaseInterceptor;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -48,7 +48,7 @@ public class SearchableInterceptor extends BaseInterceptor {
 
             invocation.getArgs()[2] = new RowBounds(RowBounds.NO_ROW_OFFSET, RowBounds.NO_ROW_LIMIT);
 
-            BoundSql newBoundSql = SqlFacade.createNewBoundSql(mappedStatement, boundSql.getParameterObject(),
+            BoundSql newBoundSql = SqlHelper.createNewBoundSql(mappedStatement, boundSql.getParameterObject(),
                     boundSql, realSql);
 
             MappedStatement newMs = copyFromMappedStatement(mappedStatement, new BoundSqlSqlSource(newBoundSql));

@@ -12,7 +12,6 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 import org.springframework.util.Assert;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -79,23 +78,24 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
         Assert.notNull(entitys, "saveBatch entitys failed due to entitys is null");
         getDao().saveBatch(entitys);
     }
+
     /**
      * 条件查询 searchable
+     *
      * @param searchable
      * @return
      */
-
-    public Page<T> findBySearchable(Searchable searchable) throws InvocationTargetException, IllegalAccessException {
-
-      return   getDao().findBySearchable(searchable);
+    public Page<T> findBySearchable(Searchable searchable) {
+        return getDao().findBySearchable(searchable);
     }
 
     /**
      * 条件查询 sort
+     *
      * @param sort
      * @return
      */
-    public List<T> findBySort(Sort sort){
+    public List<T> findBySort(Sort sort) {
         return getDao().findBySort(sort);
     }
 
@@ -105,7 +105,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
      * @param searchable
      * @return
      */
-    public long countBySearchable(Searchable searchable){
-        return  getDao().countBySearchable(searchable);
+    public long countBySearchable(Searchable searchable) {
+        return getDao().countBySearchable(searchable);
     }
 }
