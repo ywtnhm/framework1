@@ -14,7 +14,7 @@ import java.util.List;
  * Auth: hyssop
  * Date: 2016-09-09
  */
-public abstract class Ztree<T extends Ztree,ID> extends BaseTree {
+public abstract class Ztree<T extends Ztree, ID> extends BaseTree {
     /**
      * 字段唯一标示
      */
@@ -38,7 +38,7 @@ public abstract class Ztree<T extends Ztree,ID> extends BaseTree {
 
     public abstract List<T> getChildren();
 
-    public abstract void setChildren(List<T> children) ;
+    public abstract void setChildren(List<T> children);
 
     public ID getId() {
         return id;
@@ -59,7 +59,8 @@ public abstract class Ztree<T extends Ztree,ID> extends BaseTree {
     public Boolean isRoot() {
         return root;
     }
-    public Boolean getRoot(){
+
+    public Boolean getRoot() {
         return root;
     }
 

@@ -14,7 +14,7 @@ import java.util.List;
  * Auth: hyssop
  * Date: 2016-09-09
  */
-public class SimpleZtree<T extends Ztree,ID> extends Ztree {
+public class SimpleZtree<T extends Ztree, ID> extends Ztree {
     private List<T> children;
 
     public List getChildren() {

@@ -13,7 +13,7 @@ import java.util.List;
  * Auth: hyssop
  * Date: 2016-09-09
  */
-public abstract class EasyUiTree<T extends EasyUiTree,ID> extends BaseTree{
+public abstract class EasyUiTree<T extends EasyUiTree, ID> extends BaseTree {
 
     // 树节点的标识，必需
     private ID id;
@@ -25,7 +25,8 @@ public abstract class EasyUiTree<T extends EasyUiTree,ID> extends BaseTree{
     private String classes;
 
     public abstract List<T> getChildren();
-    public abstract void setChildren(List<T> children) ;
+
+    public abstract void setChildren(List<T> children);
 
     public ID getId() {
         return id;

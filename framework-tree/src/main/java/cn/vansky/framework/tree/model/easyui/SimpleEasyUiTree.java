@@ -12,7 +12,7 @@ import java.util.List;
  * Auth: hyssop
  * Date: 2016-09-09
  */
-public class SimpleEasyUiTree<T extends EasyUiTree,ID> extends EasyUiTree {
+public class SimpleEasyUiTree<T extends EasyUiTree, ID> extends EasyUiTree {
     private List<T> children;
 
     public List getChildren() {
@@ -29,5 +29,4 @@ public class SimpleEasyUiTree<T extends EasyUiTree,ID> extends EasyUiTree {
         }
         children.add(model);
     }
-
 }

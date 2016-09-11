@@ -34,9 +34,6 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
 
     public abstract SqlMapDao<T, ID> getDao();
 
-    protected BaseTreeableServiceImpl() {
-    }
-
     public T save(T m) {
         if (m.getWeight() == null) {
             m.setWeight(nextWeight(m.getParentId()));
@@ -47,10 +44,10 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
 
     @Transactional
     public void deleteSelfAndChild(T m) {
-        List<T> ms =getDao().findAll();
+        List<T> ms = getDao().findAll();
         List<T> results = new ArrayList<T>();
-        for(T t:ms){
-            if(t.getParentId().equals(m.getId())){
+        for (T t : ms) {
+            if (t.getParentId().equals(m.getId())) {
                 getDao().delete((ID) t.getId());
             }
         }
@@ -66,14 +63,13 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
     public void appendChild(T parent, T child) {
         child.setParentId((ID) parent.getId());
         child.setParentIds(parent.makeSelfAsNewParentIds());
-        child.setWeight(nextWeight((ID)parent.getId()));
+        child.setWeight(nextWeight((ID) parent.getId()));
         save(child);
     }
 
     public int nextWeight(ID id) {
         return getDao().findById(id).getWeight();
     }
-
 
     /**
      * 移动节点
@@ -92,7 +88,6 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
         boolean isSibling = source.getParentId().equals(target.getParentId());
         boolean isNextOrPrevMoveType = "next".equals(moveType) || "prev".equals(moveType);
         if (isSibling && isNextOrPrevMoveType && Math.abs(source.getWeight() - target.getWeight()) == 1) {
-
             //无需移动
             if ("next".equals(moveType) && source.getWeight() > target.getWeight()) {
                 return;
@@ -100,8 +95,6 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
             if ("prev".equals(moveType) && source.getWeight() < target.getWeight()) {
                 return;
             }
-
-
             int sourceWeight = source.getWeight();
             source.setWeight(target.getWeight());
             target.setWeight(sourceWeight);
@@ -151,10 +144,9 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
             return;
         }
         //否则作为最后孩子节点
-        int nextWeight = nextWeight((ID)target.getId());
-        updateSelftAndChild(source, (ID)target.getId(), target.makeSelfAsNewParentIds(), nextWeight);
+        int nextWeight = nextWeight((ID) target.getId());
+        updateSelftAndChild(source, (ID) target.getId(), target.makeSelfAsNewParentIds(), nextWeight);
     }
-
 
     /**
      * 把源节点全部变更为目标节点
@@ -169,8 +161,6 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
         source.setWeight(newWeight);
         getDao().saveOrUpdate(source);
         String newSourceChildrenParentIds = source.makeSelfAsNewParentIds();
-
-
     }
 
     /**
@@ -183,14 +173,13 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
     public List<T> findSelfAndNextSiblings(String parentIds, int currentWeight) {
         List<T> result = new ArrayList<T>();
         List<T> all = getDao().findAll();
-        for(T part:all){
-            if(part.getParentIds().equalsIgnoreCase(parentIds)&& part.getWeight()==currentWeight){
+        for (T part : all) {
+            if (part.getParentIds().equalsIgnoreCase(parentIds) && part.getWeight() == currentWeight) {
                 result.add(part);
             }
         }
         return result;
     }
-
 
     /**
      * 查看与name模糊匹配的名称
@@ -214,36 +203,39 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
                         }
                 )
         );
-
     }
-
 
     /**
      * 查询子子孙孙
      *
      * @return
      */
-    public List<T> findChildren(List<T> parents, Searchable searchable) throws InvocationTargetException, IllegalAccessException {
-
+    public List<T> findChildren(List<T> parents, Searchable searchable)
+            throws InvocationTargetException, IllegalAccessException {
         if (parents.isEmpty()) {
             return Collections.EMPTY_LIST;
         }
 
-        SearchFilter first = CustomConditionFactory.newCustomCondition("parent_ids", SearchOperator.prefixLike, parents.get(0).makeSelfAsNewParentIds());
+        SearchFilter first = CustomConditionFactory.newCustomCondition("parent_ids",
+                SearchOperator.prefixLike,
+                parents.get(0).makeSelfAsNewParentIds());
         SearchFilter[] others = new SearchFilter[parents.size() - 1];
         for (int i = 1; i < parents.size(); i++) {
-            others[i - 1] = CustomConditionFactory.newCustomCondition("parent_ids", SearchOperator.prefixLike, parents.get(i).makeSelfAsNewParentIds());
+            others[i - 1] = CustomConditionFactory.newCustomCondition("parent_ids",
+                    SearchOperator.prefixLike,
+                    parents.get(i).makeSelfAsNewParentIds());
         }
         searchable.or(first, others);
 
-        List children =  getDao().findBySearchable(searchable).getContent();
+        List children = getDao().findBySearchable(searchable).getContent();
         return children;
     }
 
-    public List<T> findAllByName(Searchable searchable, T excludeM) throws InvocationTargetException, IllegalAccessException {
+    public List<T> findAllByName(Searchable searchable, T excludeM)
+            throws InvocationTargetException, IllegalAccessException {
         addExcludeSearchFilter(searchable, excludeM);
-        List list =getDao().findBySearchable(searchable).getContent();
-        return list ;
+        List list = getDao().findBySearchable(searchable).getContent();
+        return list;
     }
 
     /**
@@ -255,7 +247,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
     public List<T> findRootAndChild(Searchable searchable) throws InvocationTargetException, IllegalAccessException {
         searchable.addSearchParam("parent_id_eq", 0);
         List<T> models = getDao().findBySearchableForTree(searchable);
-        if (models.size() == 0){
+        if (models.size() == 0) {
             return models;
         }
         List<String> ids = Lists.newArrayList();
@@ -265,7 +257,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
         searchable.removeSearchFilter("parent_id_eq");
         String[] array = ids.toArray(new String[ids.size()]);
         searchable.addSearchParam("parent_id_in", array);
-        models.addAll(getDao().<T>findBySearchableForTree(searchable));
+        models.addAll(getDao().findBySearchableForTree(searchable));
         return models;
     }
 
@@ -306,7 +298,6 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
 
         return results;
     }
-
 
     public void addExcludeSearchFilter(Searchable searchable, T excludeM) {
         if (excludeM == null) {
