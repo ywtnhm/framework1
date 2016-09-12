@@ -4,7 +4,10 @@
 
 package cn.vansky.framework.core.orm.mybatis.plugin.page;
 
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,7 +72,9 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
     /**
      * 获取该页的数据列表
      */
-    protected List<T> rows;
+    protected List<T> rows = new ArrayList<T>();
+
+
 
     public BasePagination() {
         this(0);
@@ -86,7 +91,15 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
     public BasePagination(int total, int limit, int currentPage) {
         this(total, limit, currentPage, DEFAULT_MAX_PAGE_INDEX_NUMBER);
     }
+    public BasePagination(List<T> content, int total) {
 
+        if (null == content) {
+            throw new IllegalArgumentException("Content must not be null!");
+        }
+
+        this.rows.addAll(content);
+        this.total = total;
+    }
     public BasePagination(int total, int limit, int currentPage, int maxPageIndexNumber) {
         this.maxPageIndexNumber = maxPageIndexNumber;
         init(total, limit, currentPage);
@@ -188,6 +201,14 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         this.currentPage = currentPage;
     }
 
+    public boolean hasNextPage()  {
+        return currentPage + 1 < totalPage;
+    }
+
+    public Sort getSort() {
+        return null;
+    }
+
     /**
      * 获取页码列表 <br/>
      *
@@ -222,5 +243,15 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
             }
         }
         return pageNumberList;
+    }
+    public String toString() {
+
+        String contentType = "UNKNOWN";
+
+        if (rows.size() > 0) {
+            contentType = rows.get(0).getClass().getName();
+        }
+
+        return String.format("Page %s of %d containing %s instances", getLimit(), getTotal(), contentType);
     }
 }

@@ -4,6 +4,8 @@
 
 package cn.vansky.framework.core.orm.mybatis.plugin.page;
 
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -143,4 +145,16 @@ public interface Pagination<T> extends Serializable {
      * @param currentPage 当前页
      */
     public void setCurrentPage(int currentPage);
+
+
+
+    /**
+     * 是否有下一页
+     * @return
+     */
+    public boolean hasNextPage();
+
+
+
+
 }

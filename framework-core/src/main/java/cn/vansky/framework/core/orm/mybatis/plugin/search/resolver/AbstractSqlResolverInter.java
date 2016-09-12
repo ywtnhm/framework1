@@ -43,8 +43,8 @@ public abstract class AbstractSqlResolverInter implements SqlResolver {
     }
     public void setPageable(StringBuilder sql, Searchable searchable , Dialect dialect){
         if (dialect.supportsLimit()&&searchable.getPage()!=null&& !ObjectUtils.equals(searchable.getPage(), ObjectUtils.NULL)) {
-            int pageSize = searchable.getPage().getPageSize();
-            int index = (searchable.getPage().getPageNumber() - 1) * pageSize;
+            int pageSize = searchable.getPage().getLimit();
+            int index = (searchable.getPage().getCurrentPage() - 1) * pageSize;
             int start = index < 0 ? 0 : index;
             dialect.getLimitString(sql, start, pageSize);
         }

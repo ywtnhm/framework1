@@ -1,4 +1,6 @@
-package cn.vansky.framework.core.orm.mybatis.plugin.search.vo;
+package cn.vansky.framework.core.orm.mybatis.plugin.page;
+
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 
 import java.io.Serializable;
 
@@ -7,7 +9,7 @@ import java.io.Serializable;
  * Auth: hyssop
  * Date: 12:29
  */
-public class PageRequest implements Pageable, Serializable {
+public class PageRequest extends BasePagination implements BasePageRequest, Serializable {
 
     private static final long serialVersionUID = 8280485938848398236L;
 
@@ -62,7 +64,7 @@ public class PageRequest implements Pageable, Serializable {
 
     /*
      * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#getPageSize()
+     * @see org.springframework.data.domain.Pagination#getPageSize()
      */
     public int getPageSize() {
 
@@ -71,7 +73,7 @@ public class PageRequest implements Pageable, Serializable {
 
     /*
      * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#getPageNumber()
+     * @see org.springframework.data.domain.Pagination#getPageNumber()
      */
     public int getPageNumber() {
         return page;
@@ -79,7 +81,7 @@ public class PageRequest implements Pageable, Serializable {
 
     /*
      * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#getOffset()
+     * @see org.springframework.data.domain.Pagination#getOffset()
      */
     public int getOffset() {
         return page * size;
@@ -87,15 +89,16 @@ public class PageRequest implements Pageable, Serializable {
 
     /*
      * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#getSort()
+     * @see org.springframework.data.domain.Pagination#getSort()
      */
     public Sort getSort() {
         return sort;
     }
 
+
     /*
      * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#hasPrevious()
+     * @see org.springframework.data.domain.Pagination#hasPrevious()
      */
     public boolean hasPrevious() {
         return page > 0;
@@ -103,25 +106,25 @@ public class PageRequest implements Pageable, Serializable {
 
     /*
      * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#next()
+     * @see org.springframework.data.domain.Pagination#next()
      */
-    public Pageable next() {
+    public Pagination next() {
         return new PageRequest(page + 1, size, sort);
     }
 
     /*
      * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#previousOrFirst()
+     * @see org.springframework.data.domain.Pagination#previousOrFirst()
      */
-    public Pageable previousOrFirst() {
+    public Pagination previousOrFirst() {
         return hasPrevious() ? new PageRequest(page - 1, size, sort) : this;
     }
 
     /*
      * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#first()
+     * @see org.springframework.data.domain.Pagination#first()
      */
-    public Pageable first() {
+    public Pagination first() {
         return new PageRequest(0, size, sort);
     }
 
@@ -175,4 +178,6 @@ public class PageRequest implements Pageable, Serializable {
         return String.format("Page request [number: %d, size %d, sort: %s]", page, size,
                 sort == null ? null : sort.toString());
     }
+
+   
 }

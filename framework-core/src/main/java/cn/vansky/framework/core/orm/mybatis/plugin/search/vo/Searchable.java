@@ -7,6 +7,9 @@ package cn.vansky.framework.core.orm.mybatis.plugin.search.vo;
 
 
 
+import cn.vansky.framework.core.orm.mybatis.plugin.page.BasePageRequest;
+import cn.vansky.framework.core.orm.mybatis.plugin.page.BasePagination;
+import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.enums.SearchOperator;
 
 import cn.vansky.framework.core.orm.mybatis.plugin.search.exception.InvalidSearchPropertyException;
@@ -23,7 +26,7 @@ import java.util.Map;
  * <p>Date: 16-1-16 上午8:47
  * <p>Version: 1.0
  */
-public abstract class Searchable {
+public abstract class Searchable extends BasePagination implements Pagination {
 
 
     /**
@@ -49,7 +52,7 @@ public abstract class Searchable {
      *
      * @return
      */
-    public static Searchable newSearchable(final Map<String, Object> searchParams, final Pageable page)
+    public static Searchable newSearchable(final Map<String, Object> searchParams, final BasePageRequest page)
             throws SearchException {
         return new SearchRequest(searchParams, page);
     }
@@ -69,10 +72,10 @@ public abstract class Searchable {
      *
      * @return
      */
-    public static Searchable newSearchable(final Map<String, Object> searchParams, final Pageable page, final Sort sort) {
+    public static Searchable newSearchable(final Map<String, Object> searchParams, final BasePageRequest page, final Sort sort) {
         return new SearchRequest(searchParams, page, sort);
     }
-
+    public abstract void removePageable();
 
     /**
      * 添加过滤条件 如key="parent.id_eq" value = 1
@@ -159,7 +162,7 @@ public abstract class Searchable {
      */
     public abstract Searchable markConverted();
 
-    public abstract Searchable setPage(final Pageable page);
+    public abstract Searchable setPage(final Pagination page);
 
     /**
      * @param pageNumber 分页页码 索引从 0 开始
@@ -210,16 +213,16 @@ public abstract class Searchable {
      *
      * @return
      */
-    public abstract boolean hasPageable();
+    public abstract boolean hasPagination();
 
-    public abstract void removePageable();
+    public abstract void removePagination();
 
     /**
      * 获取分页和排序信息
      *
      * @return
      */
-    public abstract Pageable getPage();
+    public abstract Pagination getPage();
 
     /**
      * 获取排序信息
@@ -246,10 +249,12 @@ public abstract class Searchable {
      * @return
      */
     public abstract <T> T getValue(final String key);
-
-    /*
-    *
-    * */
+    /**
+     * 是否有分页
+     *
+     * @return
+     */
+    public abstract boolean hasPageable();
 
 
 }

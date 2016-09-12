@@ -195,7 +195,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
 
         return Sets.newHashSet(
                 Lists.transform(
-                        findBySearchable(searchable).getContent(),
+                        findBySearchable(searchable).getRows(),
                         new Function<T, String>() {
                             public String apply(T input) {
                                 return input.getName();
@@ -227,14 +227,14 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
         }
         searchable.or(first, others);
 
-        List children = getDao().findBySearchable(searchable).getContent();
+        List children = getDao().findBySearchable(searchable).getRows();
         return children;
     }
 
     public List<T> findAllByName(Searchable searchable, T excludeM)
             throws InvocationTargetException, IllegalAccessException {
         addExcludeSearchFilter(searchable, excludeM);
-        List list = getDao().findBySearchable(searchable).getContent();
+        List list = getDao().findBySearchable(searchable).getRows();
         return list;
     }
 
@@ -246,7 +246,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
      */
     public List<T> findRootAndChild(Searchable searchable) throws InvocationTargetException, IllegalAccessException {
         searchable.addSearchParam("parent_id_eq", 0);
-        List<T> models = getDao().findBySearchableForTree(searchable);
+        List<T> models = getDao().findBySearchable(searchable).getRows();
         if (models.size() == 0) {
             return models;
         }
@@ -257,7 +257,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
         searchable.removeSearchFilter("parent_id_eq");
         String[] array = ids.toArray(new String[ids.size()]);
         searchable.addSearchParam("parent_id_in", array);
-        models.addAll(getDao().findBySearchableForTree(searchable));
+        models.addAll(getDao().findBySearchable(searchable).getRows());
         return models;
     }
 

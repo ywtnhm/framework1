@@ -5,6 +5,9 @@
  */
 package cn.vansky.framework.core.orm.mybatis.plugin.search.vo;
 
+import cn.vansky.framework.core.orm.mybatis.plugin.page.BasePageRequest;
+import cn.vansky.framework.core.orm.mybatis.plugin.page.PageRequest;
+import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.enums.SearchOperator;
 
 import cn.vansky.framework.core.orm.mybatis.plugin.search.exception.SearchException;
@@ -38,7 +41,7 @@ public final class SearchRequest extends Searchable {
      */
     private final List<SearchFilter> searchFilters = Lists.newArrayList();
 
-    private Pageable page;
+    private BasePageRequest page;
 
     private Sort sort;
 
@@ -60,7 +63,7 @@ public final class SearchRequest extends Searchable {
      * @param searchParams
      * @see SearchRequest#SearchRequest(Map<String,Object>)
      */
-    public SearchRequest(final Map<String, Object> searchParams, final Pageable page) {
+    public SearchRequest(final Map<String, Object> searchParams, final BasePageRequest page) {
         this(searchParams, page, null);
     }
     /**
@@ -82,7 +85,7 @@ public final class SearchRequest extends Searchable {
      * @param page         分页
      * @param sort         排序
      */
-    public SearchRequest(final Map<String, Object> searchParams, final Pageable page, final Sort sort)
+    public SearchRequest(final Map<String, Object> searchParams, final BasePageRequest page, final Sort sort)
             throws SearchException {
 
         toSearchFilters(searchParams);
@@ -103,6 +106,10 @@ public final class SearchRequest extends Searchable {
         }
     }
 
+
+    public void removePageable() {
+        this.page = null;
+    }
 
     public Searchable addSearchParam(final String key, final Object value) throws SearchException {
         addSearchFilter(CustomConditionFactory.newCustomCondition(key, value));
@@ -188,7 +195,7 @@ public final class SearchRequest extends Searchable {
         return key + CustomCondition.separator + SearchOperator.custom;
     }
 
-    public Searchable setPage(final Pageable page) {
+    public Searchable setPage(final BasePageRequest page) {
         merge(sort, page);
         return this;
     }
@@ -221,6 +228,10 @@ public final class SearchRequest extends Searchable {
         return this;
     }
 
+    public Searchable setPage(Pagination page) {
+        return null;
+    }
+
 
     public Collection<SearchFilter> getSearchFilters() {
         return Collections.unmodifiableCollection(searchFilters);
@@ -238,22 +249,25 @@ public final class SearchRequest extends Searchable {
         return this.sort != null && this.sort.iterator().hasNext();
     }
 
-    public boolean hasPageable() {
-        return this.page != null && this.page.getPageSize() > 0;
-    }
+
 
     public void removeSort() {
         this.sort = null;
         if (this.page != null) {
-            this.page = new PageRequest(page.getPageNumber(), page.getPageSize(), null);
+            this.page = new PageRequest(page.getCurrentPage(), page.getLimit(), null);
         }
     }
 
-    public void removePageable() {
+    @Override
+    public boolean hasPagination() {
+        return false;
+    }
+
+    public void removePagination() {
         this.page = null;
     }
 
-    public Pageable getPage() {
+    public Pagination getPage() {
         return page;
     }
 
@@ -272,6 +286,11 @@ public final class SearchRequest extends Searchable {
 
         //否则检查其中的or 和 and
         return containsSearchKey(searchFilters, key);
+    }
+
+    @Override
+    public boolean hasPageable() {
+        return this.page != null && this.page.getLimit()> 0;
     }
 
     private boolean containsSearchKey(List<SearchFilter> searchFilters, String key) {
@@ -324,7 +343,7 @@ public final class SearchRequest extends Searchable {
         return null;
     }
 
-    private void merge(Sort sort, Pageable page) {
+    private void merge(Sort sort, BasePageRequest page) {
         if (sort == null) {
             sort = this.sort;
         }
@@ -339,7 +358,7 @@ public final class SearchRequest extends Searchable {
         }
         //把排序合并到page中
         if (page != null) {
-            this.page = new PageRequest(page.getPageNumber(), page.getPageSize(), this.sort);
+            this.page = new PageRequest(page.getCurrentPage(), page.getLimit(), this.sort);
         } else {
             this.page = null;
         }
