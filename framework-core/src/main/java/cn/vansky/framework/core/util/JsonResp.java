@@ -219,11 +219,10 @@ public class JsonResp {
         /**
          * 增加数据集合到数据列表中.
          *
-         * @param <T> 对象类型变量
          * @param collection 数据集合
          * @return 该响应对象.
          */
-        public <T> JList addAll(Collection<T> collection) {
+        public JList addAll(Collection collection) {
             resp.dataList.addAll(collection);
             return this;
         }

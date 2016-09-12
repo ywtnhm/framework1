@@ -98,8 +98,6 @@ public interface SqlMapDao<T, ID extends Serializable> {
 
     Page<T> findBySearchable(Searchable searchable);
 
-    List<T> findBySearchableForTree(Searchable searchable);
-
     List<T> findBySort(Sort sort);
 
     long countBySearchable(Searchable searchable);
