@@ -8,6 +8,7 @@ import org.aopalliance.aop.Advice;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
+import org.springframework.aop.framework.AdvisorChainFactory;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.interceptor.AsyncExecutionInterceptor;
 import org.springframework.aop.support.AopUtils;
@@ -80,6 +81,33 @@ public class SpringProxyUtils {
         }
         return obj;
     }
+    /**
+     * 通过代理对象获取被代理对象
+     * @param proxy 代理对象
+     * @param <T>   强转
+     * @return 被代理对象
+     */
+    public static <T> T getRealTarget2(Object proxy) {
+        ConfigurablePropertyAccessor accessor;
+        while (AopUtils.isAopProxy(proxy)) {
+            ProxyFactory proxyFactory = null;
+            if (AopUtils.isJdkDynamicProxy(proxy)) {
+                proxyFactory = findJdkDynamicProxyFactory(proxy);
+            }
+            if (AopUtils.isCglibProxy(proxy)) {
+                proxyFactory = findCglibProxyFactory(proxy);
+            }
+            accessor = PropertyAccessorFactory.forDirectFieldAccess(proxyFactory);
+            accessor.getPropertyValue("targetSource");
+            TargetSource targetSource = (TargetSource)accessor.getPropertyValue("targetSource");
+            try {
+                proxy = targetSource.getTarget();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return (T)proxy;
+    }
 
     /**
      * 判断被代理的对象是否被双重代理
@@ -87,6 +115,7 @@ public class SpringProxyUtils {
      */
     @SuppressWarnings("all")
     public static boolean isMultipleProxy(Object proxy) {
+        ConfigurablePropertyAccessor accessor;
         try {
             ProxyFactory proxyFactory = null;
             if (AopUtils.isJdkDynamicProxy(proxy)) {
@@ -95,7 +124,8 @@ public class SpringProxyUtils {
             if (AopUtils.isCglibProxy(proxy)) {
                 proxyFactory = findCglibProxyFactory(proxy);
             }
-            TargetSource targetSource = (TargetSource) ReflectionUtils.getField(ProxyFactory_targetSource_FIELD, proxyFactory);
+            accessor = PropertyAccessorFactory.forDirectFieldAccess(proxyFactory);
+            TargetSource targetSource = (TargetSource) accessor.getPropertyValue("targetSource");
             return AopUtils.isAopProxy(targetSource.getTarget());
         } catch (Exception e) {
             throw new IllegalArgumentException("proxy args maybe not proxy with cglib or jdk dynamic proxy. this method not support", e);
@@ -108,7 +138,9 @@ public class SpringProxyUtils {
      */
     public static ProxyFactory findJdkDynamicProxyFactory(final Object proxy) {
         InvocationHandler h = Proxy.getInvocationHandler(proxy);
-        return (ProxyFactory) ReflectionUtils.getField(JdkDynamicAopProxy_advised_FIELD, h);
+        ConfigurablePropertyAccessor accessor;
+        accessor = PropertyAccessorFactory.forDirectFieldAccess(h);
+        return  (ProxyFactory) accessor.getPropertyValue("advised");
     }
 
     /**
@@ -117,11 +149,11 @@ public class SpringProxyUtils {
      * @return
      */
     public static ProxyFactory findCglibProxyFactory(final Object proxy) {
-        Field field = ReflectionUtils.findField(proxy.getClass(), "CGLIB$CALLBACK_0");
-        ReflectionUtils.makeAccessible(field);
-        Object CGLIB$CALLBACK_0 = ReflectionUtils.getField(field, proxy);
-        return (ProxyFactory) ReflectionUtils.getField(CglibAopProxy$DynamicAdvisedInterceptor_advised_FIELD, CGLIB$CALLBACK_0);
-
+        ConfigurablePropertyAccessor accessor;
+        accessor = PropertyAccessorFactory.forDirectFieldAccess(proxy);
+        Object cglib$CALLBACK_0  =  accessor.getPropertyValue("CGLIB$CALLBACK_0");
+        accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
+        return  (ProxyFactory) accessor.getPropertyValue("advised");
     }
 
     /**
@@ -214,47 +246,4 @@ public class SpringProxyUtils {
         return false;
     }
 
-    ///////////////////////////////////内部使用的反射 静态字段///////////////////////////////////
-    //JDK动态代理 字段相关
-    private static Field JdkDynamicProxy_h_FIELD;
-    private static Class JdkDynamicAopProxy_CLASS;
-    private static Field JdkDynamicAopProxy_advised_FIELD;
-
-    //CGLIB代理 相关字段
-    private static Class CglibAopProxy_CLASS;
-    private static Class CglibAopProxy$DynamicAdvisedInterceptor_CLASS;
-    private static Field CglibAopProxy$DynamicAdvisedInterceptor_advised_FIELD;
-
-    //ProxyFactory 相关字段
-    private static Class ProxyFactory_CLASS;
-    private static Field ProxyFactory_targetSource_FIELD;
-
-    static {
-        JdkDynamicProxy_h_FIELD = ReflectionUtils.findField(Proxy.class, "h");
-        ReflectionUtils.makeAccessible(JdkDynamicProxy_h_FIELD);
-
-        try {
-            JdkDynamicAopProxy_CLASS = Class.forName("org.springframework.aop.framework.JdkDynamicAopProxy");
-            JdkDynamicAopProxy_advised_FIELD = ReflectionUtils.findField(JdkDynamicAopProxy_CLASS, "advised");
-            ReflectionUtils.makeAccessible(JdkDynamicAopProxy_advised_FIELD);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            /*ignore*/
-        }
-
-        try {
-            CglibAopProxy_CLASS = Class.forName("org.springframework.aop.framework.CglibAopProxy");
-            CglibAopProxy$DynamicAdvisedInterceptor_CLASS = Class.forName("org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor");
-            CglibAopProxy$DynamicAdvisedInterceptor_advised_FIELD = ReflectionUtils.findField(CglibAopProxy$DynamicAdvisedInterceptor_CLASS, "advised");
-            ReflectionUtils.makeAccessible(CglibAopProxy$DynamicAdvisedInterceptor_advised_FIELD);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            /*ignore*/
-        }
-
-        ProxyFactory_CLASS = ProxyFactory.class;
-        ProxyFactory_targetSource_FIELD = ReflectionUtils.findField(ProxyFactory_CLASS, "targetSource");
-        ReflectionUtils.makeAccessible(ProxyFactory_targetSource_FIELD);
-
-    }
 }
