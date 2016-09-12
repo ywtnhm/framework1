@@ -185,6 +185,7 @@ public abstract class JndiSupportFilter implements Filter {
          *                           we can't accept default values
          * @throws ServletException if any required properties are missing
          */
+        @SuppressWarnings("unchecked")
         public JndiSupportFilterConfigPropertyValues(FilterConfig config, Set requiredProperties)
                 throws ServletException {
 

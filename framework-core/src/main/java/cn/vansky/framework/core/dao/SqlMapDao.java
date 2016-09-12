@@ -94,7 +94,7 @@ public interface SqlMapDao<T, ID extends Serializable> {
      */
     Pagination page(Pagination pagination, SqlCallback selectCount, SqlCallback select);
 
-    void deleteBantch(ID[] ids);
+    void deleteBatch(ID[] ids);
 
     Page<T> findBySearchable(Searchable searchable);
 

@@ -45,6 +45,7 @@ public class FieldAccessVo implements Cloneable, Serializable {
      *            primary key class type
      * @return primary value
      */
+    @SuppressWarnings("unchecked")
     public <T> T getPrimaryKey() {
         final List<Field> FIELDS = new ArrayList<Field>(1);
         ReflectionUtils.doWithFields(getClass(), new ReflectionUtils.FieldCallback() {
@@ -52,7 +53,6 @@ public class FieldAccessVo implements Cloneable, Serializable {
                 if (field.getAnnotation(Id.class) != null) {
                     field.setAccessible(true);
                     FIELDS.add(field);
-                    return;
                 }
             }
         });

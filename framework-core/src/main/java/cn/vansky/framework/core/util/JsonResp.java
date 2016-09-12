@@ -267,6 +267,7 @@ public class JsonResp {
          * @param data map内容
          * @return 返回该响应对象.
          */
+        @SuppressWarnings("unchecked")
         public JData addAll(Map<String, Object> data) {
             ((Map) resp.data).putAll(data);
             return this;
@@ -279,6 +280,7 @@ public class JsonResp {
          * @param value value
          * @return 返回该响应对象.
          */
+        @SuppressWarnings("unchecked")
         public JData add(String key, Object value) {
             ((Map) resp.data).put(key, value);
             return this;

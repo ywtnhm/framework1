@@ -26,6 +26,7 @@ public class SpringProxyUtils {
      * @param <T> 强转
      * @return 被代理对象
      */
+    @SuppressWarnings("unchecked")
     public static <T> T getProxy(Object proxy) {
         ConfigurablePropertyAccessor accessor;
         if (AopUtils.isJdkDynamicProxy(proxy)) {

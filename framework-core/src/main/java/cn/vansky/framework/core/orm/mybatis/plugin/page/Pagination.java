@@ -12,7 +12,7 @@ import java.util.List;
  * Author: CK
  * Date: 2015/6/14
  */
-public interface Pagination<T extends Serializable> extends Serializable {
+public interface Pagination<T> extends Serializable {
 
     /**
      * 当pagination做为参数放入map传到mybatis时，该值为取pagination的key

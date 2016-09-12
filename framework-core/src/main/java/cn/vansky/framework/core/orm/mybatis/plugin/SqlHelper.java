@@ -56,6 +56,7 @@ public class SqlHelper {
      * @throws java.sql.SQLException
      *             数据库异常
      */
+    @SuppressWarnings("unchecked")
     public static void setParameters(PreparedStatement ps, MappedStatement mappedStatement,
                                      BoundSql boundSql, Object parameterObject) throws SQLException {
         ErrorContext.instance().activity("setting parameters").object(mappedStatement.getParameterMap().getId());
@@ -147,9 +148,6 @@ public class SqlHelper {
                     connection.close();
                 }
             } catch (SQLException e) {
-                rs = null;
-                countStmt = null;
-                connection = null;
                 e.printStackTrace();
                 log.error("", e);
             }

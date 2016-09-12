@@ -4,9 +4,6 @@
 
 package cn.vansky.framework.core.dao;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by IntelliJ IDEA.
  * Author: CK

@@ -8,7 +8,6 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -84,11 +83,9 @@ public interface DaoMapper<T, ID extends Serializable> {
      */
     void insertBatch(List<T> list);
 
-    void deleteBantch(ID[] ids);
+    void deleteBatch(ID[] ids);
 
     List<T> findBySearchable(Searchable searchable);
-
-    List<T> findBySearchableForTree(Searchable searchable);
 
     List<T> findBySort(Sort sort);
 

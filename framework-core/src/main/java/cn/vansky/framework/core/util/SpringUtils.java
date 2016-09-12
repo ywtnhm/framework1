@@ -30,8 +30,8 @@ public class SpringUtils implements ApplicationContextAware {
      *
      * @param name 名称
      * @return Object
-     *
      */
+    @SuppressWarnings("unchecked")
     public static <T> T getBean(String name) {
         return (T) getApplicationContext().getBean(name);
     }

@@ -41,10 +41,7 @@ public class SessionHelper {
     public static boolean hasOpAuth(String path) {
         // 从缓存中获取当前用户所能操作的所有的url
         SortedSet<String> urls = SessionHelper.getAuthWrap().getAuthUrlSet();
-        if (CollectionUtils.isNotEmpty(urls)) {
-            return StringUtils.isNotBlank(UrlUtils.urlMatch(urls, path));
-        }
-        return false;
+        return CollectionUtils.isNotEmpty(urls) && StringUtils.isNotBlank(UrlUtils.urlMatch(urls, path));
     }
 
     public static void logout(HttpServletRequest request) {

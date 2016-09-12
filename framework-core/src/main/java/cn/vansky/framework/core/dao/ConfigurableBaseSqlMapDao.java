@@ -58,7 +58,7 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
     }
 
     public void saveOrUpdate(T entity) {
-        ID id = (ID) entity.getPrimaryKey();
+        ID id = entity.getPrimaryKey();
         if (id == null) {
             save(entity);
         } else {
@@ -71,7 +71,7 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
     }
 
     public void saveOrUpdateSelective(T entity) {
-        ID id = (ID) entity.getPrimaryKey();
+        ID id = entity.getPrimaryKey();
         if (id == null) {
             saveSelective(entity);
         } else {
@@ -87,8 +87,9 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
         getDaoMapper().insertBatch(entitys);
     }
 
+    @SuppressWarnings("unchecked")
     public Pagination page(Pagination pagination, SqlMapDao.SqlCallback selectCount, SqlMapDao.SqlCallback select) {
-        int totalCount = (Integer) getSqlSession().selectOne(selectCount.getSqlId(), selectCount.getParameters());
+        int totalCount = getSqlSession().selectOne(selectCount.getSqlId(), selectCount.getParameters());
 
         List dataList = getSqlSession().selectList(select.getSqlId(), select.getParameters());
         pagination.init(totalCount, pagination.getLimit(), pagination.getCurrentPage());
@@ -96,24 +97,19 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
         return pagination;
     }
 
-    public void deleteBantch(ID[] ids) {
-        getDaoMapper().deleteBantch(ids);
+    public void deleteBatch(ID[] ids) {
+        getDaoMapper().deleteBatch(ids);
     }
 
+    @SuppressWarnings("unchecked")
     public Page<T> findBySearchable(Searchable searchable) {
         List<T> content = getDaoMapper().findBySearchable(searchable);
         long total = searchable.hasPageable() ? countBySearchable(searchable) : content.size();
         return new PageImpl<T>(content, searchable.getPage(), total);
     }
 
-    public List<T> findBySearchableForTree(Searchable searchable) {
-        List<T> content = getDaoMapper().findBySearchable(searchable);
-        return content;
-    }
-
     public List<T> findBySort(Sort sort) {
         return getDaoMapper().findBySort(sort);
-
     }
 
     public long countBySearchable(Searchable searchable) {

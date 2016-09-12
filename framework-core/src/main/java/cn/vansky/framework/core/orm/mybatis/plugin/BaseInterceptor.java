@@ -59,8 +59,6 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
         if (properties.keySet().isEmpty()) {
             return;
         }
-        /*   this.sqlPattern = properties.getProperty("sqlPattern");*/
-
         BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(this);
         MutablePropertyValues mutablePropertyValues = new MutablePropertyValues();
         for (Object o : properties.keySet()) {

@@ -48,8 +48,8 @@ public class MapDistance {
      * 最大经度 maxLng
      * 最大纬度 minLat
      */
-    public static Map getAround(double lng, double lat, double raidusMile) {
-        Map map = new HashMap();
+    public static Map<String, String> getAround(double lng, double lat, double raidusMile) {
+        Map<String, String> map = new HashMap<String, String>();
 
         Double degree = (24901 * 1609) / 360.0; // 获取每度
 

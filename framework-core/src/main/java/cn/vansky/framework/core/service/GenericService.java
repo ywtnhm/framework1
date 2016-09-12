@@ -27,7 +27,7 @@ public interface GenericService<T, ID extends Serializable> {
     /**
      * 批量删除对象
      */
-    void deleteBantch(ID[] ids);
+    void deleteBatch(ID[] ids);
 
     /**
      * 查询所有对象

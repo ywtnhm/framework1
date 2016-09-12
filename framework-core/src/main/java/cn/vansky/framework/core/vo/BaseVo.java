@@ -5,6 +5,7 @@
 package cn.vansky.framework.core.vo;
 
 import java.beans.PropertyDescriptor;
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import org.springframework.beans.FatalBeanException;
  * Author: CK
  * Date: 2016/1/20
  */
-public class BaseVo<T> extends BasePagination {
+public class BaseVo<T extends Serializable> extends BasePagination<T> {
     /**
      * 获取对象属性对应的map
      * 
@@ -38,6 +39,7 @@ public class BaseVo<T> extends BasePagination {
                 ? Arrays.asList(ignoreProperties) : new ArrayList<String>();
         ignoreList.add("pageNumberList");
         Map<String, Object> m = new HashMap<String, Object>();
+        boolean page = false;
         for (PropertyDescriptor t : ts) {
             Method r = t.getReadMethod();
             if (r != null && (ignoreProperties == null || (!ignoreList.contains(t.getName())))) {
@@ -48,6 +50,7 @@ public class BaseVo<T> extends BasePagination {
                     // 属性中包括分页类
                     if (r.invoke(this) instanceof Pagination) {
                         m.put(Pagination.MAP_PAGE_FIELD, r.invoke(this));
+                        page = true;
                     } else {
                         m.put(t.getName(), r.invoke(this));
                     }
@@ -57,8 +60,7 @@ public class BaseVo<T> extends BasePagination {
                 }
             }
         }
-        // 本身就是分页类
-        if (this instanceof Pagination) {
+        if (!page) {
             m.put(Pagination.MAP_PAGE_FIELD, this);
         }
         return m;

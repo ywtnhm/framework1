@@ -16,7 +16,7 @@ public class UrlUtils {
      *
      * @param urls URL列表
      * @param path 路径
-     * @return
+     * @return String
      */
     public static String urlMatch(SortedSet<String> urls, String path) {
         if(urls == null || urls.size() == 0) {
@@ -46,9 +46,9 @@ public class UrlUtils {
     /**
      * 匹配路径是否在控制域的范围内
      *
-     * @param path
-     * @param domain
-     * @return
+     * @param path 匹配路径
+     * @param domain 实际路径
+     * @return boolean
      */
     private static boolean pathMatch(String path, String domain) {
         if (PathPatternMatcher.isPattern(domain)) {

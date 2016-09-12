@@ -27,6 +27,7 @@ public class CommonProxy<T> implements InvocationHandler {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     public T bind(T target, ProxyInterface proxyInterface) {
         this.proxyInterface = proxyInterface;
         this.target = target;

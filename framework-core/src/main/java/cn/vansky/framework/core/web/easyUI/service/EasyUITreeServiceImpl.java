@@ -1,7 +1,6 @@
 package cn.vansky.framework.core.web.easyUI.service;
 
 import cn.vansky.framework.common.util.JsonUtil;
-import cn.vansky.framework.core.service.GenericService;
 import cn.vansky.framework.core.web.easyUI.model.EasyUITreeModel;
 
 import java.util.*;

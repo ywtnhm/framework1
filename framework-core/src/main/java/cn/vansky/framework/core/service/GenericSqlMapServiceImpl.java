@@ -24,6 +24,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
 
     public abstract SqlMapDao<T, ID> getDao();
 
+    @SuppressWarnings("unchecked")
     public void delete(T entity) {
         Assert.notNull(entity, "delete failed due to entity is null");
         getDao().delete((ID) entity.getPrimaryKey());
@@ -37,19 +38,21 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
         return getDao().findById(id);
     }
 
+    @SuppressWarnings("unchecked")
     public ID saveEntity(T entity) {
         Assert.notNull(entity, "save entity failed due to entity is null");
         getDao().save(entity);
         return (ID) entity.getPrimaryKey();
     }
 
+    @SuppressWarnings("unchecked")
     public ID saveEntitySelective(T entity) {
         Assert.notNull(entity, "save entity failed due to entity is null");
         getDao().saveSelective(entity);
         return (ID) entity.getPrimaryKey();
     }
-    public void deleteBantch(ID[] ids){
-        getDao().deleteBantch(ids);
+    public void deleteBatch(ID[] ids){
+        getDao().deleteBatch(ids);
     }
 
     public void updateEntity(T entity) {
