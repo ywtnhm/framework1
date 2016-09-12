@@ -31,6 +31,7 @@ public class SpringProxyUtils {
 
     /**
      * 通过代理对象获取被代理对象
+     *
      * @param proxy 代理对象
      * @param <T>   强转
      * @return 被代理对象
@@ -46,19 +47,19 @@ public class SpringProxyUtils {
                 proxyFactory = findCglibProxyFactory(proxy);
             }
             accessor = PropertyAccessorFactory.forDirectFieldAccess(proxyFactory);
-            accessor.getPropertyValue("targetSource");
-            TargetSource targetSource = (TargetSource)accessor.getPropertyValue("targetSource");
+            TargetSource targetSource = (TargetSource) accessor.getPropertyValue("targetSource");
             try {
                 proxy = targetSource.getTarget();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return (T)proxy;
+        return (T) proxy;
     }
 
     /**
      * 判断被代理的对象是否被双重代理
+     *
      * @param proxy 被代理的对象
      */
     @SuppressWarnings("all")
@@ -82,26 +83,27 @@ public class SpringProxyUtils {
 
     /**
      * 获取被代理对象的工厂类
+     *
      * @param proxy jdk类型的代理类
      */
     public static ProxyFactory findJdkDynamicProxyFactory(final Object proxy) {
         InvocationHandler h = Proxy.getInvocationHandler(proxy);
         ConfigurablePropertyAccessor accessor;
         accessor = PropertyAccessorFactory.forDirectFieldAccess(h);
-        return  (ProxyFactory) accessor.getPropertyValue("advised");
+        return (ProxyFactory) accessor.getPropertyValue("advised");
     }
 
     /**
      * 获取代理对象对应的工厂实例
+     *
      * @param proxy cglib类型的代理类
-     * @return
      */
     public static ProxyFactory findCglibProxyFactory(final Object proxy) {
         ConfigurablePropertyAccessor accessor;
         accessor = PropertyAccessorFactory.forDirectFieldAccess(proxy);
-        Object cglib$CALLBACK_0  =  accessor.getPropertyValue("CGLIB$CALLBACK_0");
+        Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
         accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
-        return  (ProxyFactory) accessor.getPropertyValue("advised");
+        return (ProxyFactory) accessor.getPropertyValue("advised");
     }
 
     /**
@@ -150,7 +152,6 @@ public class SpringProxyUtils {
         }
 
         Advisor[] advisors = proxyFactory.getAdvisors();
-
         if (advisors == null || advisors.length == 0) {
             return;
         }
@@ -164,8 +165,7 @@ public class SpringProxyUtils {
     }
 
     /**
-     *
-     * @param proxy 被代理类
+     * @param proxy       被代理类
      * @param adviceClass 判断代理类是否包含该类型的拦截器
      */
 
@@ -180,8 +180,8 @@ public class SpringProxyUtils {
         if (AopUtils.isCglibProxy(proxy)) {
             proxyFactory = findCglibProxyFactory(proxy);
         }
-        Advisor[] advisors = proxyFactory.getAdvisors();
 
+        Advisor[] advisors = proxyFactory.getAdvisors();
         if (advisors == null || advisors.length == 0) {
             return false;
         }
