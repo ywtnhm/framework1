@@ -30,26 +30,48 @@ public class SpringProxyUtils {
 
     /**
      * 通过代理对象获取被代理对象
-     *
      * @param proxy 代理对象
      * @param <T>   强转
      * @return 被代理对象
      */
-    @SuppressWarnings("unchecked")
-    public static <T> T getProxy(Object proxy) {
+    @SuppressWarnings("all")
+    public static <T> T getRealTarget(Object proxy) {
         ConfigurablePropertyAccessor accessor;
-        if (AopUtils.isJdkDynamicProxy(proxy)) {
-            // jdk proxy
-            InvocationHandler handler = Proxy.getInvocationHandler(proxy);
-            accessor = PropertyAccessorFactory.forDirectFieldAccess(handler);
+        TargetSource targetSource = null;
+        if (isMultipleProxy(proxy)) {
+            try {
+                InvocationHandler handler = Proxy.getInvocationHandler(proxy);
+                accessor = PropertyAccessorFactory.forDirectFieldAccess(handler);
+                AdvisedSupport advised = (AdvisedSupport) accessor.getPropertyValue("advised");
+                targetSource = advised.getTargetSource();
+
+                accessor = PropertyAccessorFactory.forDirectFieldAccess(targetSource.getTarget());
+                Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
+                accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
+
+                 advised = (AdvisedSupport) accessor.getPropertyValue("advised");
+                 targetSource = advised.getTargetSource();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         } else {
-            // cglib
-            accessor = PropertyAccessorFactory.forDirectFieldAccess(proxy);
-            Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
-            accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
+            if (AopUtils.isJdkDynamicProxy(proxy)) {
+                // jdk proxy
+                InvocationHandler handler = Proxy.getInvocationHandler(proxy);
+                accessor = PropertyAccessorFactory.forDirectFieldAccess(handler);
+            } else {
+                // cglib
+                accessor = PropertyAccessorFactory.forDirectFieldAccess(proxy);
+                Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
+                accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
+            }
+            AdvisedSupport advised = (AdvisedSupport) accessor.getPropertyValue("advised");
+             targetSource = advised.getTargetSource();
         }
-        AdvisedSupport advised = (AdvisedSupport) accessor.getPropertyValue("advised");
-        TargetSource targetSource = advised.getTargetSource();
+
+
         T obj = null;
         try {
             obj = (T) targetSource.getTarget();
@@ -59,35 +81,10 @@ public class SpringProxyUtils {
         return obj;
     }
 
-    @SuppressWarnings("all")
-    public static <T> T getRealTarget(Object proxy) {
-        ConfigurablePropertyAccessor accessor;
-        if (isMultipleProxy(proxy)) {
-            try {
-                InvocationHandler handler = Proxy.getInvocationHandler(proxy);
-                accessor = PropertyAccessorFactory.forDirectFieldAccess(handler);
-                AdvisedSupport advised = (AdvisedSupport) accessor.getPropertyValue("advised");
-                TargetSource targetSource = advised.getTargetSource();
-
-                accessor = PropertyAccessorFactory.forDirectFieldAccess(targetSource.getTarget());
-                Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
-                accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
-                advised = (AdvisedSupport) accessor.getPropertyValue("advised");
-                targetSource = advised.getTargetSource();
-
-                T obj = null;
-                obj = (T) targetSource.getTarget();
-                return obj;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            return getProxy(proxy);
-        }
-        return null;
-    }
-
+    /**
+     * 判断被代理的对象是否被双重代理
+     * @param proxy 被代理的对象
+     */
     @SuppressWarnings("all")
     public static boolean isMultipleProxy(Object proxy) {
         try {
@@ -105,11 +102,20 @@ public class SpringProxyUtils {
         }
     }
 
+    /**
+     * 获取被代理对象的工厂类
+     * @param proxy jdk类型的代理类
+     */
     public static ProxyFactory findJdkDynamicProxyFactory(final Object proxy) {
         InvocationHandler h = Proxy.getInvocationHandler(proxy);
         return (ProxyFactory) ReflectionUtils.getField(JdkDynamicAopProxy_advised_FIELD, h);
     }
 
+    /**
+     * 获取代理对象对应的工厂实例
+     * @param proxy cglib类型的代理类
+     * @return
+     */
     public static ProxyFactory findCglibProxyFactory(final Object proxy) {
         Field field = ReflectionUtils.findField(proxy.getClass(), "CGLIB$CALLBACK_0");
         ReflectionUtils.makeAccessible(field);
@@ -123,7 +129,6 @@ public class SpringProxyUtils {
      * see http://jinnianshilongnian.iteye.com/blog/1850432
      *
      * @param proxy
-     * @return
      */
     public static boolean isTransactional(Object proxy) {
         return hasAdvice(proxy, TransactionInterceptor.class);
@@ -131,8 +136,6 @@ public class SpringProxyUtils {
 
     /**
      * 移除代理对象的异步调用支持
-     *
-     * @return
      */
     public static void removeTransactional(Object proxy) {
         removeAdvisor(proxy, TransactionInterceptor.class);
@@ -142,7 +145,6 @@ public class SpringProxyUtils {
      * 是否是异步的代理
      *
      * @param proxy
-     * @return
      */
     public static boolean isAsync(Object proxy) {
         return hasAdvice(proxy, AsyncExecutionInterceptor.class);
@@ -150,8 +152,6 @@ public class SpringProxyUtils {
 
     /**
      * 移除代理对象的异步调用支持
-     *
-     * @return
      */
     public static void removeAsync(Object proxy) {
         removeAdvisor(proxy, AsyncExecutionInterceptor.class);
@@ -182,6 +182,12 @@ public class SpringProxyUtils {
             }
         }
     }
+
+    /**
+     *
+     * @param proxy 被代理类
+     * @param adviceClass 判断代理类是否包含该类型的拦截器
+     */
 
     private static boolean hasAdvice(Object proxy, Class<? extends Advice> adviceClass) {
         if (!AopUtils.isAopProxy(proxy)) {
