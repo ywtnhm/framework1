@@ -57,7 +57,7 @@ public class SpringProxyUtils {
         }
         return obj;
     }
-
+    @SuppressWarnings("all")
     public static <T> T getRealTarget(Object proxy) {
         ConfigurablePropertyAccessor accessor;
         if(isMultipleProxy(proxy)) {
@@ -86,6 +86,7 @@ public class SpringProxyUtils {
         return null;
     }
 
+    @SuppressWarnings("all")
     public static boolean isMultipleProxy(Object proxy) {
         try {
             ProxyFactory proxyFactory = null;
