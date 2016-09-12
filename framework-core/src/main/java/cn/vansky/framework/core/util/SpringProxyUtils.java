@@ -36,6 +36,8 @@ public class SpringProxyUtils {
         } else {
             // cglib
             accessor = PropertyAccessorFactory.forDirectFieldAccess(proxy);
+            Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
+            accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
         }
         AdvisedSupport advised = (AdvisedSupport) accessor.getPropertyValue("advised");
         TargetSource targetSource = advised.getTargetSource();
