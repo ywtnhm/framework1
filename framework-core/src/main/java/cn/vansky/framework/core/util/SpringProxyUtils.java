@@ -35,59 +35,7 @@ public class SpringProxyUtils {
      * @param <T>   强转
      * @return 被代理对象
      */
-    @SuppressWarnings("all")
     public static <T> T getRealTarget(Object proxy) {
-        ConfigurablePropertyAccessor accessor;
-        TargetSource targetSource = null;
-        if (isMultipleProxy(proxy)) {
-            try {
-                InvocationHandler handler = Proxy.getInvocationHandler(proxy);
-                accessor = PropertyAccessorFactory.forDirectFieldAccess(handler);
-                AdvisedSupport advised = (AdvisedSupport) accessor.getPropertyValue("advised");
-                targetSource = advised.getTargetSource();
-
-                accessor = PropertyAccessorFactory.forDirectFieldAccess(targetSource.getTarget());
-                Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
-                accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
-
-                 advised = (AdvisedSupport) accessor.getPropertyValue("advised");
-                 targetSource = advised.getTargetSource();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            if (AopUtils.isJdkDynamicProxy(proxy)) {
-                // jdk proxy
-                InvocationHandler handler = Proxy.getInvocationHandler(proxy);
-                accessor = PropertyAccessorFactory.forDirectFieldAccess(handler);
-            } else {
-                // cglib
-                accessor = PropertyAccessorFactory.forDirectFieldAccess(proxy);
-                Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
-                accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
-            }
-            AdvisedSupport advised = (AdvisedSupport) accessor.getPropertyValue("advised");
-             targetSource = advised.getTargetSource();
-        }
-
-
-        T obj = null;
-        try {
-            obj = (T) targetSource.getTarget();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return obj;
-    }
-    /**
-     * 通过代理对象获取被代理对象
-     * @param proxy 代理对象
-     * @param <T>   强转
-     * @return 被代理对象
-     */
-    public static <T> T getRealTarget2(Object proxy) {
         ConfigurablePropertyAccessor accessor;
         while (AopUtils.isAopProxy(proxy)) {
             ProxyFactory proxyFactory = null;
