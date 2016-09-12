@@ -48,7 +48,7 @@ public class SpringProxyUtilsTest {
         proxyFactory.addAdvisors(advisors);
 
         Car proxy = (Car) proxyFactory.getProxy();
-        Bmw obj = SpringProxyUtils.getProxy(proxy);
+        Bmw obj = SpringProxyUtils.getRealTarget(proxy);
         Assert.assertEquals(bmw, obj);
     }
 
@@ -64,7 +64,7 @@ public class SpringProxyUtilsTest {
         proxyFactory.addAdvisors(advisors);
 
         Audi proxy = (Audi) proxyFactory.getProxy();
-        Audi obj = SpringProxyUtils.getProxy(proxy);
+        Audi obj = SpringProxyUtils.getRealTarget(proxy);
         Assert.assertEquals(audi, obj);
     }
 }
