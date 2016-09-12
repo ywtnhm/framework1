@@ -9,6 +9,7 @@ import org.springframework.aop.Advisor;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.interceptor.AsyncExecutionInterceptor;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.ConfigurablePropertyAccessor;
@@ -57,10 +58,11 @@ public class SpringProxyUtils {
         }
         return obj;
     }
+
     @SuppressWarnings("all")
     public static <T> T getRealTarget(Object proxy) {
         ConfigurablePropertyAccessor accessor;
-        if(isMultipleProxy(proxy)) {
+        if (isMultipleProxy(proxy)) {
             try {
                 InvocationHandler handler = Proxy.getInvocationHandler(proxy);
                 accessor = PropertyAccessorFactory.forDirectFieldAccess(handler);
@@ -125,6 +127,60 @@ public class SpringProxyUtils {
      */
     public static boolean isTransactional(Object proxy) {
         return hasAdvice(proxy, TransactionInterceptor.class);
+    }
+
+    /**
+     * 移除代理对象的异步调用支持
+     *
+     * @return
+     */
+    public static void removeTransactional(Object proxy) {
+        removeAdvisor(proxy, TransactionInterceptor.class);
+    }
+
+    /**
+     * 是否是异步的代理
+     *
+     * @param proxy
+     * @return
+     */
+    public static boolean isAsync(Object proxy) {
+        return hasAdvice(proxy, AsyncExecutionInterceptor.class);
+    }
+
+    /**
+     * 移除代理对象的异步调用支持
+     *
+     * @return
+     */
+    public static void removeAsync(Object proxy) {
+        removeAdvisor(proxy, AsyncExecutionInterceptor.class);
+    }
+
+    private static void removeAdvisor(Object proxy, Class<? extends Advice> adviceClass) {
+        if (!AopUtils.isAopProxy(proxy)) {
+            return;
+        }
+        ProxyFactory proxyFactory = null;
+        if (AopUtils.isJdkDynamicProxy(proxy)) {
+            proxyFactory = findJdkDynamicProxyFactory(proxy);
+        }
+        if (AopUtils.isCglibProxy(proxy)) {
+            proxyFactory = findCglibProxyFactory(proxy);
+        }
+
+        Advisor[] advisors = proxyFactory.getAdvisors();
+
+        if (advisors == null || advisors.length == 0) {
+            return;
+        }
+
+        for (Advisor advisor : advisors) {
+            if (adviceClass.isAssignableFrom(advisor.getAdvice().getClass())) {
+                proxyFactory.removeAdvisor(advisor);
+                break;
+            }
+        }
     }
 
     private static boolean hasAdvice(Object proxy, Class<? extends Advice> adviceClass) {
