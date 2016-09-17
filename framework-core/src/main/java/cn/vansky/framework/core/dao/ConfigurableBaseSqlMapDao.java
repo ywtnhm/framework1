@@ -11,7 +11,6 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.PageImpl;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 
-
 import java.io.Serializable;
 import java.util.List;
 

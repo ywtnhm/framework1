@@ -2,7 +2,12 @@ package cn.vansky.framework.core.web.filter;
 
 import cn.vansky.framework.core.web.ThreadLocalInfo;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.io.IOException;
 
 /**
@@ -15,7 +20,8 @@ public class FrameWorkFilter implements Filter {
 
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
         ThreadLocalInfo.set(request, response);
         chain.doFilter(request, response);
     }

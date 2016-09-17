@@ -4,7 +4,6 @@
 
 package cn.vansky.framework.core.dao;
 
-
 import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Page;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;

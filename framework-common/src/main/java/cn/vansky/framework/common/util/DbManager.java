@@ -6,7 +6,13 @@ package cn.vansky.framework.common.util;
 
 import cn.vansky.framework.common.constant.Constant;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 
 /**
  * Created by IntelliJ IDEA.

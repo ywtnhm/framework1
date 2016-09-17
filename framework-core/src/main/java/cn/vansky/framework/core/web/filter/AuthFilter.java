@@ -10,7 +10,11 @@ import cn.vansky.framework.core.web.util.SessionHelper;
 import cn.vansky.framework.core.web.util.UrlUtils;
 import org.apache.commons.lang.StringUtils;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -97,24 +101,12 @@ public class AuthFilter extends JndiSupportFilter {
         writer.close();
     }
 
-    public String getIndex() {
-        return index;
-    }
-
     public void setIndex(String index) {
         this.index = index;
     }
 
-    public String getExcludePath() {
-        return excludePath;
-    }
-
     public void setExcludePath(String excludePath) {
         this.excludePath = excludePath;
-    }
-
-    public boolean isOpen() {
-        return open;
     }
 
     public void setOpen(boolean open) {

@@ -3,7 +3,12 @@ package cn.vansky.framework.core.web.easyUI.service;
 import cn.vansky.framework.common.util.JsonUtil;
 import cn.vansky.framework.core.web.easyUI.model.EasyUITreeModel;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by IntelliJ IDEA.
@@ -89,8 +94,8 @@ public class EasyUITreeServiceImpl<T> implements EasyUITreeService<T> {
 
     /**
      * 判断当前菜单是否需要设置选择
-     * @param set
-     * @param model
+     * @param set 子菜单勾选标识
+     * @param model model
      */
     private void setCheck(Set<Integer> set, EasyUITreeModel model) {
         if (set.contains(model.getId())) {
