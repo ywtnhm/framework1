@@ -86,7 +86,7 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
         getDaoMapper().insertBatch(entitys);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings("unchecked")
     public Pagination page(Pagination pagination, SqlMapDao.SqlCallback selectCount, SqlMapDao.SqlCallback select) {
         int totalCount = getSqlSession().selectOne(selectCount.getSqlId(), selectCount.getParameters());
 

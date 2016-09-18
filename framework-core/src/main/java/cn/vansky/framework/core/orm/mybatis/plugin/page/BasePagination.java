@@ -87,7 +87,7 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
     /**
      * 获取该页的数据列表
      */
-    protected List<T> rows ;
+    protected List<T> rows;
 
     public BasePagination() {
         this(0);
@@ -105,6 +105,7 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
     public BasePagination(int total, int limit, int currentPage) {
         this(total, limit, currentPage, DEFAULT_MAX_PAGE_INDEX_NUMBER);
     }
+
     public BasePagination(List<T> content, int total) {
         this(total);
         if (null == content) {
@@ -112,6 +113,7 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         }
         this.rows.addAll(content);
     }
+
     public BasePagination(int total, int limit, int currentPage, int maxPageIndexNumber) {
         this.maxPageIndexNumber = maxPageIndexNumber;
         init(total, limit, currentPage);
@@ -160,7 +162,7 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
     }
 
     public void setRows(List<T> rows) {
-        if(this.rows==null){
+        if (this.rows == null) {
             this.rows = new ArrayList<T>();
         }
         this.rows = rows;

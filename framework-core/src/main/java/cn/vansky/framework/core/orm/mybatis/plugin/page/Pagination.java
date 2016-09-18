@@ -146,13 +146,4 @@ public interface Pagination<T> extends Serializable {
      */
     public void setCurrentPage(int currentPage);
 
-    /**
-     * 是否有下一页
-     * @return
-     */
-    public boolean hasNextPage();
-
-
-
-
 }

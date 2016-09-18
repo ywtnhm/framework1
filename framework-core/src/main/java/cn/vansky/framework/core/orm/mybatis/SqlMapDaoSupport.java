@@ -17,7 +17,7 @@ public abstract class SqlMapDaoSupport extends DaoSupport {
 
     private BatchSqlSupportSession sqlSession;
 
-    protected final void setSqlSessionFactoryInternal(SqlSessionFactory sqlSessionFactory) {
+    protected void setSqlSessionFactoryInternal(SqlSessionFactory sqlSessionFactory) {
         this.sqlSession = new BatchSqlSessionTemplateWrapper(sqlSessionFactory);
     }
 
@@ -35,7 +35,7 @@ public abstract class SqlMapDaoSupport extends DaoSupport {
      *
      * @return Spring managed thread safe SqlSession
      */
-    public final BatchSqlSupportSession getSqlSession() {
+    public BatchSqlSupportSession getSqlSession() {
         return this.sqlSession;
     }
 }

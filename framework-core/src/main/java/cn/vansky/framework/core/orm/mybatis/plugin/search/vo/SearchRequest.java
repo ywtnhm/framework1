@@ -31,15 +31,15 @@ import java.util.Map;
  * <p>Version: 1.0
  */
 
-public final class SearchRequest extends Searchable {
+public class SearchRequest extends Searchable {
 
-    private final Map<String, SearchFilter> searchFilterMap = Maps.newHashMap();
+    private Map<String, SearchFilter> searchFilterMap = Maps.newHashMap();
     /**
      * 使用这个的目的是保证拼sql的顺序是按照添加时的顺序
      */
-    private final List<SearchFilter> searchFilters = Lists.newArrayList();
+    private List<SearchFilter> searchFilters = Lists.newArrayList();
 
-    public SearchRequest(final Map<String, Object> searchParams) {
+    public SearchRequest(Map<String, Object> searchParams) {
         this(searchParams, null, null);
     }
 
@@ -47,11 +47,11 @@ public final class SearchRequest extends Searchable {
         this(null, null, null);
     }
 
-    public SearchRequest(final Map<String, Object> searchParams, final PageRequest page) {
+    public SearchRequest(Map<String, Object> searchParams, PageRequest page) {
         this(searchParams, page, null);
     }
 
-    public SearchRequest(final Map<String, Object> searchParams, final Sort sort) throws SearchException {
+    public SearchRequest(Map<String, Object> searchParams, Sort sort) throws SearchException {
         this(searchParams, null, sort);
     }
 
@@ -67,13 +67,13 @@ public final class SearchRequest extends Searchable {
      * @param page         分页
      * @param sort         排序
      */
-    public SearchRequest(final Map<String, Object> searchParams, final PageRequest page, final Sort sort)
+    public SearchRequest(Map<String, Object> searchParams, PageRequest page,  Sort sort)
             throws SearchException {
         toSearchFilters(searchParams);
         merge(sort, page);
     }
 
-    private void toSearchFilters(final Map<String, Object> searchParams) throws SearchException {
+    private void toSearchFilters(Map<String, Object> searchParams) throws SearchException {
         if (searchParams == null || searchParams.size() == 0) {
             return;
         }
@@ -89,7 +89,7 @@ public final class SearchRequest extends Searchable {
         page = null;
     }
 
-    public Searchable addSearchParam(final String key, final Object value) throws SearchException {
+    public Searchable addSearchParam(String key, Object value) throws SearchException {
         addSearchFilter(CustomConditionFactory.newCustomCondition(key, value));
         return this;
     }
@@ -99,7 +99,7 @@ public final class SearchRequest extends Searchable {
         return this;
     }
 
-    public Searchable addSearchFilter(final String searchProperty, final SearchOperator operator, final Object value) {
+    public Searchable addSearchFilter(String searchProperty, SearchOperator operator,  Object value) {
         SearchFilter searchFilter = CustomConditionFactory.newCustomCondition(searchProperty, operator, value);
         return addSearchFilter(searchFilter);
     }
@@ -133,22 +133,22 @@ public final class SearchRequest extends Searchable {
         return this;
     }
 
-    public Searchable or(final SearchFilter first, final SearchFilter... others) {
+    public Searchable or(SearchFilter first, SearchFilter... others) {
         addSearchFilter(CustomConditionFactory.or(first, others));
         return this;
     }
 
-    public Searchable and(final SearchFilter first, final SearchFilter... others) {
+    public Searchable and(SearchFilter first, SearchFilter... others) {
         addSearchFilter(CustomConditionFactory.and(first, others));
         return this;
     }
 
-    public Searchable removeSearchFilter(final String searchProperty, final SearchOperator operator) {
+    public Searchable removeSearchFilter(String searchProperty, SearchOperator operator) {
         this.removeSearchFilter(searchProperty + CustomCondition.separator + operator);
         return this;
     }
 
-    public Searchable removeSearchFilter(final String key) {
+    public Searchable removeSearchFilter(String key) {
         if (key == null) {
             return this;
         }
@@ -172,7 +172,7 @@ public final class SearchRequest extends Searchable {
         return key + CustomCondition.separator + SearchOperator.custom;
     }
 
-    public Searchable setPage(final PageRequest page) {
+    public Searchable setPage( PageRequest page) {
         merge(sort, page);
         return this;
     }
@@ -182,18 +182,18 @@ public final class SearchRequest extends Searchable {
         return this;
     }
 
-    public Searchable addSort(final Sort sort) {
+    public Searchable addSort( Sort sort) {
         merge(sort, page);
         return this;
     }
 
-    public Searchable addSort(final Sort.Direction direction, final String property) {
+    public Searchable addSort( Sort.Direction direction,  String property) {
         merge(new Sort(direction, property), page);
         return this;
     }
 
 
-    public <T> Searchable convert(final Class<T> entityClass) {
+    public <T> Searchable convert( Class<T> entityClass) {
         SearchableConvertUtils.convertSearchValueToEntityValue(this, entityClass);
         markConverted();
         return this;

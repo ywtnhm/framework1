@@ -31,8 +31,9 @@ public class SpringProxyUtils {
 
     /**
      * 通过代理对象获取被代理对象
+     *
      * @param proxy 代理对象
-     * @param <T> 强转
+     * @param <T>   强转
      * @return 被代理对象
      */
     public static <T> T getRealTarget(Object proxy) {
@@ -61,7 +62,7 @@ public class SpringProxyUtils {
      *
      * @param proxy 被代理的对象
      */
-    @SuppressWarnings("all")
+    @SuppressWarnings("checked")
     public static boolean isMultipleProxy(Object proxy) {
         ConfigurablePropertyAccessor accessor;
         try {
@@ -85,7 +86,7 @@ public class SpringProxyUtils {
      *
      * @param proxy jdk类型的代理类
      */
-    public static ProxyFactory findJdkDynamicProxyFactory(final Object proxy) {
+    public static ProxyFactory findJdkDynamicProxyFactory(Object proxy) {
         InvocationHandler h = Proxy.getInvocationHandler(proxy);
         ConfigurablePropertyAccessor accessor;
         accessor = PropertyAccessorFactory.forDirectFieldAccess(h);
@@ -97,7 +98,7 @@ public class SpringProxyUtils {
      *
      * @param proxy cglib类型的代理类
      */
-    public static ProxyFactory findCglibProxyFactory(final Object proxy) {
+    public static ProxyFactory findCglibProxyFactory(Object proxy) {
         ConfigurablePropertyAccessor accessor;
         accessor = PropertyAccessorFactory.forDirectFieldAccess(proxy);
         Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
@@ -192,5 +193,4 @@ public class SpringProxyUtils {
         }
         return false;
     }
-
 }

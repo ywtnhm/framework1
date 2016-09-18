@@ -59,7 +59,7 @@ public enum SearchOperator {
      * @param operator
      * @return
      */
-    public static boolean isAllowBlankValue(final SearchOperator operator) {
+    public static boolean isAllowBlankValue(SearchOperator operator) {
         return operator == SearchOperator.isNotNull || operator == SearchOperator.isNull;
     }
     public static SearchOperator valueBySymbol(String symbol) throws SearchException {
