@@ -9,130 +9,52 @@ import java.io.Serializable;
  * Auth: hyssop
  * Date: 12:29
  */
-public class PageRequest extends BasePagination implements BasePageRequest, Serializable {
+public class PageRequest extends BasePagination implements Pagination, Serializable {
 
     private static final long serialVersionUID = 8280485938848398236L;
 
-    private final int page;
-    private final int size;
-    private final Sort sort;
-
     /**
-     * Creates a new {@link PageRequest}. Pages are zero indexed, thus providing 0 for {@code page} will return the first
-     * page.
-     *
-     * @param size
+     * 分页从1开始，limit为每页的数量
      * @param page
+     * @param limit
      */
-    public PageRequest(int page, int size) {
-        this(page, size, null);
+    public PageRequest(int page, int limit) {
+       this.setCurrentPage(page);
+       this.setLimit(limit);
     }
 
-    /**
-     * Creates a new {@link PageRequest} with sort parameters applied.
-     *
-     * @param page
-     * @param size
-     * @param direction
-     * @param properties
-     */
-    public PageRequest(int page, int size, Sort.Direction direction, String... properties) {
-        this(page, size, new Sort(direction, properties));
-    }
 
-    /**
-     * Creates a new {@link PageRequest} with sort parameters applied.
-     *
-     * @param page
-     * @param size
-     * @param sort can be {@literal null}.
-     */
-    public PageRequest(int page, int size, Sort sort) {
 
-        if (page < 0) {
-            throw new IllegalArgumentException("Page index must not be less than zero!");
-        }
-
-        if (size < 0) {
-            throw new IllegalArgumentException("Page size must not be less than zero!");
-        }
-
-        this.page = page;
-        this.size = size;
-        this.sort = sort;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pagination#getPageSize()
-     */
     public int getPageSize() {
-
-        return size;
+        return totalPage ;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pagination#getPageNumber()
-     */
     public int getPageNumber() {
-        return page;
+        return currentPage;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pagination#getOffset()
-     */
     public int getOffset() {
-        return page * size;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pagination#getSort()
-     */
-    public Sort getSort() {
-        return sort;
+        return currentPage * limit;
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pagination#hasPrevious()
-     */
+
     public boolean hasPrevious() {
-        return page > 0;
+        return currentPage > 1;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pagination#next()
-     */
     public Pagination next() {
-        return new PageRequest(page + 1, size, sort);
+        return new PageRequest(currentPage + 1, limit);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pagination#previousOrFirst()
-     */
     public Pagination previousOrFirst() {
-        return hasPrevious() ? new PageRequest(page - 1, size, sort) : this;
+        return hasPrevious() ? new PageRequest(currentPage - 1, limit) : this;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pagination#first()
-     */
     public Pagination first() {
-        return new PageRequest(0, size, sort);
+        return new PageRequest(0, limit);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
     public boolean equals(final Object obj) {
 
         if (this == obj) {
@@ -145,39 +67,23 @@ public class PageRequest extends BasePagination implements BasePageRequest, Seri
 
         PageRequest that = (PageRequest) obj;
 
-        boolean pageEqual = this.page == that.page;
-        boolean sizeEqual = this.size == that.size;
+        boolean pageEqual = this.currentPage == that.currentPage;
+        boolean sizeEqual = this.limit == that.limit;
 
-        boolean sortEqual = this.sort == null ? that.sort == null : this.sort.equals(that.sort);
-
-        return pageEqual && sizeEqual && sortEqual;
+        return pageEqual && sizeEqual;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
     public int hashCode() {
 
         int result = 17;
-
-        result = 31 * result + page;
-        result = 31 * result + size;
-        result = 31 * result + (null == sort ? 0 : sort.hashCode());
+        result = 31 * result + currentPage;
+        result = 31 * result + limit;
+        result = 31 * result ;
 
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
     public String toString() {
-        return String.format("Page request [number: %d, size %d, sort: %s]", page, size,
-                sort == null ? null : sort.toString());
+        return String.format("Page request [number: %d, limit %d, sort: %s]", currentPage, limit);
     }
-
-   
 }

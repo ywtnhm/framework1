@@ -49,6 +49,7 @@ public class SpringProxyUtilsTest {
         proxyFactory.addAdvisors(advisors);
 
         Car proxy = (Car) proxyFactory.getProxy();
+        proxy.hashCode();
         Bmw obj = SpringProxyUtils.getRealTarget(proxy);
         Assert.assertEquals(bmw, obj);
     }

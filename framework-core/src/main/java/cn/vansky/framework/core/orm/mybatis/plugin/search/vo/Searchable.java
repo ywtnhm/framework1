@@ -5,10 +5,8 @@
  */
 package cn.vansky.framework.core.orm.mybatis.plugin.search.vo;
 
-
-
-import cn.vansky.framework.core.orm.mybatis.plugin.page.BasePageRequest;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.BasePagination;
+import cn.vansky.framework.core.orm.mybatis.plugin.page.PageRequest;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.enums.SearchOperator;
 
@@ -21,14 +19,18 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * <p>查询条件接口（有点儿乱）</p>
+ * <p>查询条件接口</p>
  * <p>User: hyssop
  * <p>Date: 16-1-16 上午8:47
  * <p>Version: 1.0
  */
-public abstract class Searchable extends BasePagination implements Pagination {
+public abstract class Searchable {
 
+    public PageRequest page;
 
+    public boolean converted;
+
+    public Sort sort;
     /**
      * 创建一个新的查询
      *
@@ -36,6 +38,13 @@ public abstract class Searchable extends BasePagination implements Pagination {
      */
     public static Searchable newSearchable() {
         return new SearchRequest();
+    }
+    public void setConverted(boolean converted) {
+        this.converted = converted;
+    }
+
+    public void setSort(Sort sort) {
+        this.sort = sort;
     }
 
     /**
@@ -52,15 +61,13 @@ public abstract class Searchable extends BasePagination implements Pagination {
      *
      * @return
      */
-    public static Searchable newSearchable(final Map<String, Object> searchParams, final BasePageRequest page)
+    public static Searchable newSearchable(final Map<String, Object> searchParams, final PageRequest page)
             throws SearchException {
         return new SearchRequest(searchParams, page);
     }
 
     /**
      * 创建一个新的查询
-     *
-     * @return
      */
     public static Searchable newSearchable(final Map<String, Object> searchParams, final Sort sort)
             throws SearchException {
@@ -69,10 +76,8 @@ public abstract class Searchable extends BasePagination implements Pagination {
 
     /**
      * 创建一个新的查询
-     *
-     * @return
      */
-    public static Searchable newSearchable(final Map<String, Object> searchParams, final BasePageRequest page, final Sort sort) {
+    public static Searchable newSearchable(final Map<String, Object> searchParams, final PageRequest page, final Sort sort) {
         return new SearchRequest(searchParams, page, sort);
     }
     public abstract void removePageable();
@@ -83,15 +88,12 @@ public abstract class Searchable extends BasePagination implements Pagination {
      *
      * @param key   如 name_like
      * @param value 如果是in查询 多个值之间","分隔
-     * @return
      */
     public abstract Searchable addSearchParam(final String key, final Object value) throws SearchException;
 
     /**
      * 添加一组查询参数
-     *
      * @param searchParams
-     * @return
      */
     public abstract Searchable addSearchParams(final Map<String, Object> searchParams) throws SearchException;
 
@@ -224,12 +226,7 @@ public abstract class Searchable extends BasePagination implements Pagination {
      */
     public abstract Pagination getPage();
 
-    /**
-     * 获取排序信息
-     *
-     * @return
-     */
-    public abstract Sort getSort();
+
 
 
     /**

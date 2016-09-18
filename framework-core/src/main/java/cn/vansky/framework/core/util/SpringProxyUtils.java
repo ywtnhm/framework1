@@ -31,9 +31,8 @@ public class SpringProxyUtils {
 
     /**
      * 通过代理对象获取被代理对象
-     *
      * @param proxy 代理对象
-     * @param <T>   强转
+     * @param <T> 强转
      * @return 被代理对象
      */
     public static <T> T getRealTarget(Object proxy) {

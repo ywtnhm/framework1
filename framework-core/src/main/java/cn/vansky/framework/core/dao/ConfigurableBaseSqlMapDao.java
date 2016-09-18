@@ -103,8 +103,8 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
     @SuppressWarnings("unchecked")
     public Pagination<T> findBySearchable(Searchable searchable) {
         List<T> content = getDaoMapper().findBySearchable(searchable);
-        long total = searchable.hasPageable() ? countBySearchable(searchable) : content.size();
-        return new BasePagination<T>(content, Integer.parseInt(String.valueOf(total)));
+        long total = searchable.hasPageable() ? countBySearchable(searchable.setPage(null)) : content.size();
+        return new BasePagination<T>(content, Integer.parseInt(String.valueOf(total)),searchable.hasPageable()?searchable.getPage().getCurrentPage():1);
     }
 
     public List<T> findBySort(Sort sort) {

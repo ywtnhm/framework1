@@ -34,7 +34,7 @@ public abstract class AbstractSqlResolverInter implements SqlResolver {
     public void prepareOrder(StringBuilder ql, Searchable search){
         if (search.hashSort()) {
             ql.append(" order by ");
-            for (Sort.Order order : search.getSort()) {
+            for (Sort.Order order : search.sort) {
                 ql.append(String.format("%s%s %s, ", getAliasWithDot(), order.getProperty(), order.getDirection().name().toLowerCase()));
             }
 

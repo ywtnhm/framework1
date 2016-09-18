@@ -25,6 +25,8 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
      * 默认页码（第一页）
      */
     public static final int DEFAULT_PAGE_NUM = 1;
+
+    public int firstPage = DEFAULT_PAGE_NUM;
     /**
      * 默认显示页码标签的个数 如： {首页 1 2 3 4 5 ... 16 17 18 末页}
      */
@@ -74,8 +76,6 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
      */
     protected List<T> rows = new ArrayList<T>();
 
-
-
     public BasePagination() {
         this(0);
     }
@@ -92,16 +92,20 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         this(total, limit, currentPage, DEFAULT_MAX_PAGE_INDEX_NUMBER);
     }
     public BasePagination(List<T> content, int total) {
-
+        this(total);
         if (null == content) {
             throw new IllegalArgumentException("Content must not be null!");
         }
-
         this.rows.addAll(content);
-        this.total = total;
     }
     public BasePagination(int total, int limit, int currentPage, int maxPageIndexNumber) {
         this.maxPageIndexNumber = maxPageIndexNumber;
+        init(total, limit, currentPage);
+    }
+
+    public BasePagination(List<T> content, int total, int currentPage) {
+        this(total);
+        this.rows.addAll(content);
         init(total, limit, currentPage);
     }
 
@@ -205,8 +209,13 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         return currentPage + 1 < totalPage;
     }
 
-    public Sort getSort() {
-        return null;
+
+    public int getFirstPage() {
+        return firstPage;
+    }
+
+    public void setFirstPage(int firstPage) {
+        this.firstPage = firstPage;
     }
 
     /**
@@ -245,13 +254,11 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         return pageNumberList;
     }
     public String toString() {
-
         String contentType = "UNKNOWN";
 
         if (rows.size() > 0) {
             contentType = rows.get(0).getClass().getName();
         }
-
         return String.format("Page %s of %d containing %s instances", getLimit(), getTotal(), contentType);
     }
 }
