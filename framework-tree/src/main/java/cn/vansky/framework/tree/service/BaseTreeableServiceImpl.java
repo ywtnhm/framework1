@@ -14,6 +14,8 @@ import cn.vansky.framework.tree.bo.Treeable;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.apache.commons.collections.ListUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -247,9 +249,8 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
     public List<T> findRootAndChild(Searchable searchable) throws InvocationTargetException, IllegalAccessException {
         searchable.addSearchParam("parent_id_eq", 0);
         List<T> models = getDao().findBySearchable(searchable).getRows();
-        if (models.size() == 0) {
+        if (ListUtils.isEqualList(models, null))
             return models;
-        }
         List<String> ids = Lists.newArrayList();
         for (int i = 0; i < models.size(); i++) {
             ids.add(String.valueOf(models.get(i).getId()));
@@ -272,7 +273,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
     public Set<ID> findAncestorIds(ID currentId) {
         Set ids = Sets.newHashSet();
         T m = getDao().findById(currentId);
-        if (m == null) {
+        if (StringUtils.isEmpty(m)) {
             return ids;
         }
         for (String idStr : StringUtils.tokenizeToStringArray(m.getParentIds(), "/")) {
