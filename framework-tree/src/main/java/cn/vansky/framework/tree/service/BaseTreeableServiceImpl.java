@@ -14,6 +14,8 @@ import cn.vansky.framework.tree.bo.Treeable;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.apache.commons.collections.ListUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -195,7 +197,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
 
         return Sets.newHashSet(
                 Lists.transform(
-                        findBySearchable(searchable).getContent(),
+                        findBySearchable(searchable).getRows(),
                         new Function<T, String>() {
                             public String apply(T input) {
                                 return input.getName();
@@ -227,14 +229,14 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
         }
         searchable.or(first, others);
 
-        List children = getDao().findBySearchable(searchable).getContent();
+        List children = getDao().findBySearchable(searchable).getRows();
         return children;
     }
 
     public List<T> findAllByName(Searchable searchable, T excludeM)
             throws InvocationTargetException, IllegalAccessException {
         addExcludeSearchFilter(searchable, excludeM);
-        List list = getDao().findBySearchable(searchable).getContent();
+        List list = getDao().findBySearchable(searchable).getRows();
         return list;
     }
 
@@ -246,10 +248,9 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
      */
     public List<T> findRootAndChild(Searchable searchable) throws InvocationTargetException, IllegalAccessException {
         searchable.addSearchParam("parent_id_eq", 0);
-        List<T> models = getDao().findBySearchableForTree(searchable);
-        if (models.size() == 0) {
+        List<T> models = getDao().findBySearchable(searchable).getRows();
+        if (ListUtils.isEqualList(models, null))
             return models;
-        }
         List<String> ids = Lists.newArrayList();
         for (int i = 0; i < models.size(); i++) {
             ids.add(String.valueOf(models.get(i).getId()));
@@ -257,7 +258,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
         searchable.removeSearchFilter("parent_id_eq");
         String[] array = ids.toArray(new String[ids.size()]);
         searchable.addSearchParam("parent_id_in", array);
-        models.addAll(getDao().findBySearchableForTree(searchable));
+        models.addAll(getDao().findBySearchable(searchable).getRows());
         return models;
     }
 
@@ -272,7 +273,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
     public Set<ID> findAncestorIds(ID currentId) {
         Set ids = Sets.newHashSet();
         T m = getDao().findById(currentId);
-        if (m == null) {
+        if (StringUtils.isEmpty(m)) {
             return ids;
         }
         for (String idStr : StringUtils.tokenizeToStringArray(m.getParentIds(), "/")) {

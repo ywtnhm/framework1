@@ -4,7 +4,10 @@
 
 package cn.vansky.framework.core.orm.mybatis.plugin.page;
 
+import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,54 +21,69 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
      * 默认的每页数据量（pageSize）
      */
     public static final int DEFAULT_PAGE_SIZE = 10;
+
     /**
      * 默认页码（第一页）
      */
     public static final int DEFAULT_PAGE_NUM = 1;
+
+    public int firstPage = DEFAULT_PAGE_NUM;
+
     /**
      * 默认显示页码标签的个数 如： {首页 1 2 3 4 5 ... 16 17 18 末页}
      */
     public static final int DEFAULT_MAX_PAGE_INDEX_NUMBER = 9;
+
     /**
      * 显示页码标签的个数
      */
     private transient int maxPageIndexNumber = DEFAULT_MAX_PAGE_INDEX_NUMBER;
+
     /**
      * 页码编号数组
      */
     protected transient int[] pageNumberList = new int[0];
+
     /**
      * 总数据量
      */
     protected int total;
+
     /**
      * 每页数据量
      */
     protected int limit = DEFAULT_PAGE_SIZE;
+
     /**
      * 总页数
      */
     protected transient int totalPage;
+
     /**
      * 当前页码
      */
     protected transient int currentPage;
+
     /**
      * 下一页页码
      */
     protected transient int nextPage;
+
     /**
      * 上一页页码
      */
     protected transient int previousPage;
+
     /**
      * 是否有下一页
      */
     protected transient boolean hasNext = false;
+
     /**
      * 是否有前一页
      */
     protected transient boolean hasPrevious = false;
+
     /**
      * 获取该页的数据列表
      */
@@ -73,6 +91,8 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
 
     public BasePagination() {
         this(0);
+
+
     }
 
     public BasePagination(int total) {
@@ -90,6 +110,22 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
     public BasePagination(int total, int limit, int currentPage, int maxPageIndexNumber) {
         this.maxPageIndexNumber = maxPageIndexNumber;
         init(total, limit, currentPage);
+    }
+
+    public BasePagination(List<T> content, int total) {
+        this(content, total, DEFAULT_PAGE_NUM);
+    }
+
+    public BasePagination(List<T> content, int total, int currentPage) {
+        this(total, DEFAULT_PAGE_SIZE, currentPage);
+        setRows(content);
+    }
+
+    public void init(int total, int limit, int currentPage) {
+        this.total = total;
+        this.limit = limit;
+        this.currentPage = currentPage;
+        calculatePage();
     }
 
     /**
@@ -115,13 +151,6 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         if (hasNext) {
             nextPage = currentPage + 1;
         }
-    }
-
-    public void init(int total, int limit, int currentPage) {
-        this.total = total;
-        this.limit = limit;
-        this.currentPage = currentPage;
-        calculatePage();
     }
 
     public List<T> getRows() {
@@ -188,6 +217,14 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         this.currentPage = currentPage;
     }
 
+    public int getFirstPage() {
+        return firstPage;
+    }
+
+    public void setFirstPage(int firstPage) {
+        this.firstPage = firstPage;
+    }
+
     /**
      * 获取页码列表 <br/>
      *
@@ -222,5 +259,14 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
             }
         }
         return pageNumberList;
+    }
+
+    public String toString() {
+        String contentType = "UNKNOWN";
+
+        if (rows.size() > 0) {
+            contentType = rows.get(0).getClass().getName();
+        }
+        return String.format("Page %s of %d containing %s instances", getLimit(), getTotal(), contentType);
     }
 }

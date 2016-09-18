@@ -4,7 +4,7 @@
 
 package cn.vansky.framework.core.service;
 
-import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Page;
+import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 
@@ -100,7 +100,7 @@ public interface GenericService<T, ID extends Serializable> {
      * @return
      */
 
-    public Page<T> findBySearchable(Searchable searchable);
+    public Pagination<T> findBySearchable(Searchable searchable);
 
     /**
      * 条件查询 sort

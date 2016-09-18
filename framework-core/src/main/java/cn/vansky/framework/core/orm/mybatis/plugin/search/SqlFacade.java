@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 CK, Inc. All Rights Reserved.
+ * Copyright (C) 2015 CK,Inc. All Rights Reserved.
  */
 
 package cn.vansky.framework.core.orm.mybatis.plugin.search;
@@ -25,7 +25,7 @@ public class SqlFacade {
 
     public static AbstractSqlResolverOuter delegeteSqlResolver = DEFAULTDELEGETE;
 
-    public void setDelegeteSqlResolver(AbstractSqlResolverOuter sqlResolver){
+    public void setDelegeteSqlResolver(AbstractSqlResolverOuter sqlResolver) {
         this.delegeteSqlResolver = sqlResolver;
     }
 
@@ -33,20 +33,16 @@ public class SqlFacade {
         StringBuilder sb = new StringBuilder(originalSql);
         //条件拼接
         delegeteSqlResolver.compositeSql(sb, parameter, dialect);
-         return sb.toString();
+        return sb.toString();
     }
 
     /**
      * 分页字符串拼接
-     * @param sql
-     * @param searchable
-     * @param dialect
-     * @return
      */
     public static String generateRealPageSql(String sql, Searchable searchable, Dialect dialect) {
-        if (dialect.supportsLimit()&&searchable.getPage()!=null&& !ObjectUtils.equals(searchable.getPage(),ObjectUtils.NULL)) {
-            int pageSize = searchable.getPage().getPageSize();
-            int index = (searchable.getPage().getPageNumber() - 1) * pageSize;
+        if (dialect.supportsLimit() && null != searchable.getPage()) {
+            int pageSize = searchable.getPage().getLimit();
+            int index = (searchable.getPage().getCurrentPage() - 1) * pageSize;
             int start = index < 0 ? 0 : index;
             return dialect.getLimitString(sql, start, pageSize);
         } else {

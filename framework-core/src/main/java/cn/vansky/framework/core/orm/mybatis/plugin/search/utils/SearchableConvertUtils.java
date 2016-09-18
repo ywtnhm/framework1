@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2005-2012 https://github.com/yuqiangcui
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 package cn.vansky.framework.core.orm.mybatis.plugin.search.utils;
@@ -25,12 +25,11 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * <p>User: hyssop
+ * <p>Author: hyssop
  * <p>Date: 16-1-15 上午11:46
  * <p>Version: 1.0
  */
 public final class SearchableConvertUtils {
-
 
     /**
      * 设置用于类型转换的conversionService
@@ -98,17 +97,16 @@ public final class SearchableConvertUtils {
         }
     }
 
-
     private static void convertSearchValueToEntityValue(BeanWrapperImpl beanWrapper, SearchFilter searchFilter) {
         if (searchFilter instanceof CustomCondition) {
             CustomCondition customCondition = (CustomCondition) searchFilter;
             convert(beanWrapper, customCondition);
-            if(((CustomCondition) searchFilter).hasOrFilters()){
+            if (((CustomCondition) searchFilter).hasOrFilters()) {
                 for (SearchFilter orFilter : ((CustomCondition) searchFilter).getOrFilters()) {
                     convertSearchValueToEntityValue(beanWrapper, orFilter);
                 }
             }
-            if(((CustomCondition) searchFilter).hasAndFilters()){
+            if (((CustomCondition) searchFilter).hasAndFilters()) {
                 for (SearchFilter andFilter : ((CustomCondition) searchFilter).getAndFilters()) {
                     convertSearchValueToEntityValue(beanWrapper, andFilter);
                 }

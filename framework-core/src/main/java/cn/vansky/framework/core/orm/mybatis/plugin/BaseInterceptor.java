@@ -32,7 +32,7 @@ public abstract class BaseInterceptor implements Interceptor, Serializable {
 
     protected final Log log = LogFactory.getLog(this.getClass());
 
-    protected  Dialect dialect = DialectType.getDialect("mysql");
+    protected Dialect dialect = DialectType.getDialect("mysql");
 
     protected String dialectClass;
 

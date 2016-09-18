@@ -34,7 +34,7 @@ public abstract class AbstractSqlResolverInter implements SqlResolver {
     public void prepareOrder(StringBuilder ql, Searchable search){
         if (search.hashSort()) {
             ql.append(" order by ");
-            for (Sort.Order order : search.getSort()) {
+            for (Sort.Order order : search.sort) {
                 ql.append(String.format("%s%s %s, ", getAliasWithDot(), order.getProperty(), order.getDirection().name().toLowerCase()));
             }
 
@@ -43,8 +43,8 @@ public abstract class AbstractSqlResolverInter implements SqlResolver {
     }
     public void setPageable(StringBuilder sql, Searchable searchable , Dialect dialect){
         if (dialect.supportsLimit()&&searchable.getPage()!=null&& !ObjectUtils.equals(searchable.getPage(), ObjectUtils.NULL)) {
-            int pageSize = searchable.getPage().getPageSize();
-            int index = (searchable.getPage().getPageNumber() - 1) * pageSize;
+            int pageSize = searchable.getPage().getLimit();
+            int index = (searchable.getPage().getCurrentPage() - 1) * pageSize;
             int start = index < 0 ? 0 : index;
             dialect.getLimitString(sql, start, pageSize);
         }

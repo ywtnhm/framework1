@@ -52,10 +52,7 @@ public abstract class BaseTree<ID extends Serializable> implements Tree {
      * 节点是否被隐藏，true:隐藏、false:显示
      */
     private Boolean isHidden;
-    /**
-     * 是否父节点，true:父节点、false:不是父节点
-     */
-    private Boolean isParent;
+
     /**
      * 节点是否隐藏，true:节点不显示 、false:点具有正常的勾选功能
      */
@@ -145,14 +142,6 @@ public abstract class BaseTree<ID extends Serializable> implements Tree {
 
     public void setIsHidden(Boolean isHidden) {
         this.isHidden = isHidden;
-    }
-
-    public Boolean getIsParent() {
-        return isParent;
-    }
-
-    public void setIsParent(Boolean isParent) {
-        this.isParent = isParent;
     }
 
     public Boolean getNocheck() {

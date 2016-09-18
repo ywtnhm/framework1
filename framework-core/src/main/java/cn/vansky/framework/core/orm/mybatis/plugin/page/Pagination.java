@@ -143,4 +143,5 @@ public interface Pagination<T> extends Serializable {
      * @param currentPage 当前页
      */
     public void setCurrentPage(int currentPage);
+
 }

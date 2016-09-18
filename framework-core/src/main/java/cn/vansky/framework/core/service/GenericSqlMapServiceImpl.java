@@ -6,7 +6,7 @@ package cn.vansky.framework.core.service;
 
 import cn.vansky.framework.core.dao.SqlMapDao;
 import cn.vansky.framework.core.dao.FieldAccessVo;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Page;
+import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 import org.springframework.util.Assert;
@@ -88,7 +88,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
      * @param searchable
      * @return
      */
-    public Page<T> findBySearchable(Searchable searchable) {
+    public Pagination<T> findBySearchable(Searchable searchable) {
         return getDao().findBySearchable(searchable);
     }
 

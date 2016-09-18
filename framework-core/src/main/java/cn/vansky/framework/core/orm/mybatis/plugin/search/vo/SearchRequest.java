@@ -1,10 +1,12 @@
 /**
  * Copyright (c) 2005-2012 https://github.com/yuqiangcui
  * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License,Version 2.0 (the "License");
  */
 package cn.vansky.framework.core.orm.mybatis.plugin.search.vo;
 
+import cn.vansky.framework.core.orm.mybatis.plugin.page.PageRequest;
+import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.enums.SearchOperator;
 
 import cn.vansky.framework.core.orm.mybatis.plugin.search.exception.SearchException;
@@ -29,47 +31,29 @@ import java.util.Map;
  * <p>Version: 1.0
  */
 
-public final class SearchRequest extends Searchable {
+public class SearchRequest extends Searchable {
 
-    private final Map<String, SearchFilter> searchFilterMap = Maps.newHashMap();
+    private Map<String,SearchFilter> searchFilterMap = Maps.newHashMap();
     /**
      * 使用这个的目的是保证拼sql的顺序是按照添加时的顺序
-
      */
-    private final List<SearchFilter> searchFilters = Lists.newArrayList();
+    private List<SearchFilter> searchFilters = Lists.newArrayList();
 
-    private Pageable page;
-
-    private Sort sort;
-
-    private boolean converted;
-
-    /**
-     * @param searchParams
-     * @see SearchRequest#SearchRequest(Map<String,Object>)
-     */
-    public SearchRequest(final Map<String, Object> searchParams) {
-        this(searchParams, null, null);
+    public SearchRequest(Map<String,Object> searchParams) {
+        this(searchParams,null,null);
     }
 
     public SearchRequest() {
-        this(null, null, null);
     }
 
-    /**
-     * @param searchParams
-     * @see SearchRequest#SearchRequest(Map<String,Object>)
-     */
-    public SearchRequest(final Map<String, Object> searchParams, final Pageable page) {
-        this(searchParams, page, null);
+    public SearchRequest(Map<String,Object> searchParams,PageRequest page) {
+        this(searchParams,page,null);
     }
-    /**
-     * @param searchParams
-     * @see SearchRequest#SearchRequest(Map<String,Object>)
-     */
-    public SearchRequest(final Map<String, Object> searchParams, final Sort sort) throws SearchException {
-        this(searchParams, null, sort);
+
+    public SearchRequest(Map<String,Object> searchParams,Sort sort) throws SearchException {
+        this(searchParams,null,sort);
     }
+
     /**
      * <p>根据查询参数拼Search<br/>
      * 查询参数格式：property_op=value 或 customerProperty=value<br/>
@@ -82,41 +66,43 @@ public final class SearchRequest extends Searchable {
      * @param page         分页
      * @param sort         排序
      */
-    public SearchRequest(final Map<String, Object> searchParams, final Pageable page, final Sort sort)
+    public SearchRequest(Map<String,Object> searchParams,PageRequest page, Sort sort)
             throws SearchException {
-
         toSearchFilters(searchParams);
-
-        merge(sort, page);
+        merge(sort,page);
     }
 
-
-    private void toSearchFilters(final Map<String, Object> searchParams) throws SearchException {
+    private void toSearchFilters(Map<String,Object> searchParams) throws SearchException {
         if (searchParams == null || searchParams.size() == 0) {
             return;
         }
-        for (Map.Entry<String, Object> entry : searchParams.entrySet()) {
+        for (Map.Entry<String,Object> entry : searchParams.entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
 
-            addSearchFilter(CustomConditionFactory.newCustomCondition(key, value));
+            addSearchFilter(CustomConditionFactory.newCustomCondition(key,value));
         }
     }
 
+    public void removePageable() {
+        page = null;
+    }
 
-    public Searchable addSearchParam(final String key, final Object value) throws SearchException {
-        addSearchFilter(CustomConditionFactory.newCustomCondition(key, value));
+    public Searchable addSearchParam(String key,Object value) throws SearchException {
+        addSearchFilter(CustomConditionFactory.newCustomCondition(key,value));
         return this;
     }
 
-    public Searchable addSearchParams(Map<String, Object> searchParams) throws SearchException {
+    public Searchable addSearchParams(Map<String,Object> searchParams) throws SearchException {
         toSearchFilters(searchParams);
         return this;
     }
-    public Searchable addSearchFilter(final String searchProperty, final SearchOperator operator, final Object value) {
-        SearchFilter searchFilter = CustomConditionFactory.newCustomCondition(searchProperty, operator, value);
+
+    public Searchable addSearchFilter(String searchProperty,SearchOperator operator, Object value) {
+        SearchFilter searchFilter = CustomConditionFactory.newCustomCondition(searchProperty,operator,value);
         return addSearchFilter(searchFilter);
     }
+
     public Searchable addSearchFilter(SearchFilter searchFilter) {
         if (searchFilter == null) {
             return this;
@@ -124,17 +110,18 @@ public final class SearchRequest extends Searchable {
         if (searchFilter instanceof CustomCondition) {
             CustomCondition customCondition = (CustomCondition) searchFilter;
             String key = customCondition.getKey();
-            searchFilterMap.put(key, customCondition);
+            searchFilterMap.put(key,customCondition);
         }
         int index = searchFilters.indexOf(searchFilter);
         if (index != -1) {
-            searchFilters.set(index, searchFilter);
+            searchFilters.set(index,searchFilter);
         } else {
             searchFilters.add(searchFilter);
         }
         return this;
 
     }
+
     public Searchable addSearchFilters(Collection<? extends SearchFilter> searchFilters) {
         if (CollectionUtils.isEmpty(searchFilters)) {
             return this;
@@ -145,26 +132,22 @@ public final class SearchRequest extends Searchable {
         return this;
     }
 
-    public Searchable or(final SearchFilter first, final SearchFilter... others) {
-        addSearchFilter(CustomConditionFactory.or(first, others));
+    public Searchable or(SearchFilter first,SearchFilter... others) {
+        addSearchFilter(CustomConditionFactory.or(first,others));
         return this;
     }
 
-    public Searchable and(final SearchFilter first, final SearchFilter... others) {
-        addSearchFilter(CustomConditionFactory.and(first, others));
+    public Searchable and(SearchFilter first,SearchFilter... others) {
+        addSearchFilter(CustomConditionFactory.and(first,others));
         return this;
     }
 
-    public Searchable removeSearchFilter(final String searchProperty, final SearchOperator operator) {
+    public Searchable removeSearchFilter(String searchProperty,SearchOperator operator) {
         this.removeSearchFilter(searchProperty + CustomCondition.separator + operator);
         return this;
     }
 
-    /**
-     * @param key
-     * @return
-     */
-    public Searchable removeSearchFilter(final String key) {
+    public Searchable removeSearchFilter(String key) {
         if (key == null) {
             return this;
         }
@@ -188,29 +171,29 @@ public final class SearchRequest extends Searchable {
         return key + CustomCondition.separator + SearchOperator.custom;
     }
 
-    public Searchable setPage(final Pageable page) {
-        merge(sort, page);
+    public Searchable setPage( PageRequest page) {
+        merge(sort,page);
         return this;
     }
 
-    public Searchable setPage(int pageNumber, int pageSize) {
-        merge(sort, new PageRequest(pageNumber, pageSize));
+    public Searchable setPage(int pageNumber,int pageSize) {
+        merge(sort,new PageRequest(pageNumber,pageSize));
         return this;
     }
 
-    public Searchable addSort(final Sort sort) {
-        merge(sort, page);
+    public Searchable addSort( Sort sort) {
+        merge(sort,page);
         return this;
     }
 
-    public Searchable addSort(final Sort.Direction direction, final String property) {
-        merge(new Sort(direction, property), page);
+    public Searchable addSort( Sort.Direction direction, String property) {
+        merge(new Sort(direction,property),page);
         return this;
     }
 
 
-    public <T> Searchable convert(final Class<T> entityClass) {
-        SearchableConvertUtils.convertSearchValueToEntityValue(this, entityClass);
+    public <T> Searchable convert( Class<T> entityClass) {
+        SearchableConvertUtils.convertSearchValueToEntityValue(this,entityClass);
         markConverted();
         return this;
     }
@@ -221,6 +204,10 @@ public final class SearchRequest extends Searchable {
         return this;
     }
 
+    public Searchable setPage(Pagination page) {
+        this.page = (PageRequest) page;
+        return this;
+    }
 
     public Collection<SearchFilter> getSearchFilters() {
         return Collections.unmodifiableCollection(searchFilters);
@@ -238,28 +225,26 @@ public final class SearchRequest extends Searchable {
         return this.sort != null && this.sort.iterator().hasNext();
     }
 
-    public boolean hasPageable() {
-        return this.page != null && this.page.getPageSize() > 0;
-    }
-
     public void removeSort() {
         this.sort = null;
         if (this.page != null) {
-            this.page = new PageRequest(page.getPageNumber(), page.getPageSize(), null);
+            this.page = new PageRequest(page.getCurrentPage(),page.getLimit());
         }
     }
 
-    public void removePageable() {
+    public boolean hasPagination() {
+        return false;
+    }
+
+    public void removePagination() {
         this.page = null;
     }
 
-    public Pageable getPage() {
+    public Pagination getPage() {
         return page;
     }
 
-    public Sort getSort() {
-        return sort;
-    }
+
 
     public boolean containsSearchKey(String key) {
         boolean contains =
@@ -271,10 +256,14 @@ public final class SearchRequest extends Searchable {
         }
 
         //否则检查其中的or 和 and
-        return containsSearchKey(searchFilters, key);
+        return containsSearchKey(searchFilters,key);
     }
 
-    private boolean containsSearchKey(List<SearchFilter> searchFilters, String key) {
+    public boolean hasPageable() {
+        return this.page != null && this.page.getLimit() > 0;
+    }
+
+    private boolean containsSearchKey(List<SearchFilter> searchFilters,String key) throws ClassCastException{
         boolean contains = false;
         for (SearchFilter searchFilter : searchFilters) {
             if (searchFilter instanceof CustomCondition) {
@@ -282,31 +271,30 @@ public final class SearchRequest extends Searchable {
                 contains = customCondition.getKey().equals(key) || customCondition.getSearchProperty().equals(key);
             }
 
-            if (((CustomCondition)searchFilter).hasOrFilters()) {
-                List<CustomCondition> orConditions = ((CustomCondition) searchFilter).getOrFilters() ;
-                contains = containsCustomKey(orConditions, key);
+            if (((CustomCondition) searchFilter).hasOrFilters()) {
+                List<CustomCondition> orConditions = ((CustomCondition) searchFilter).getOrFilters();
+                contains = containsCustomKey(orConditions,key);
             }
 
-            if (((CustomCondition)searchFilter).hasAndFilters()) {
-               List<CustomCondition> andConditions = ((CustomCondition)searchFilter).getAndFilters();
-                contains = containsCustomKey(andConditions, key);
+            if (((CustomCondition) searchFilter).hasAndFilters()) {
+                List<CustomCondition> andConditions = ((CustomCondition) searchFilter).getAndFilters();
+                contains = containsCustomKey(andConditions,key);
             }
             if (contains) {
-                return true;
+                break;
             }
         }
 
         return contains;
     }
 
-    private boolean containsCustomKey(List<CustomCondition> conditions, String key) {
+    private boolean containsCustomKey(List<CustomCondition> conditions,String key) {
         for (CustomCondition customCondition : conditions) {
             if (customCondition.getKey().equals(key) || customCondition.getSearchProperty().equals(key)) {
                 return true;
             }
         }
-        return  false;
-
+        return false;
     }
 
     public Object getValue(String key) {
@@ -324,7 +312,7 @@ public final class SearchRequest extends Searchable {
         return null;
     }
 
-    private void merge(Sort sort, Pageable page) {
+    private void merge(Sort sort,PageRequest page) {
         if (sort == null) {
             sort = this.sort;
         }
@@ -333,23 +321,28 @@ public final class SearchRequest extends Searchable {
         }
         //合并排序
         if (sort == null) {
-            this.sort = page != null ? page.getSort() : null;
+            this.sort = page != null ? sort : null;
         } else {
-            this.sort = (page != null ? sort.and(page.getSort()) : sort);
+            this.sort = (page != null ? sort.and(this.sort) : sort);
         }
         //把排序合并到page中
         if (page != null) {
-            this.page = new PageRequest(page.getPageNumber(), page.getPageSize(), this.sort);
+            this.page = new PageRequest(page.getCurrentPage(),page.getLimit());
         } else {
             this.page = null;
         }
     }
 
+    public void setSort(Sort sort) {
+        this.sort = sort;
+    }
+
     public String toString() {
         return "SearchRequest{" +
                 "searchFilterMap=" + searchFilterMap +
-                ", page=" + page +
-                ", sort=" + sort +
+                ",page=" + page +
+                ",sort=" + sort +
                 '}';
     }
+
 }

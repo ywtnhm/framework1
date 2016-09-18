@@ -5,9 +5,8 @@
 package cn.vansky.framework.core.dao;
 
 import cn.vansky.framework.core.orm.mybatis.SqlMapDaoSupport;
+import cn.vansky.framework.core.orm.mybatis.plugin.page.BasePagination;
 import cn.vansky.framework.core.orm.mybatis.plugin.page.Pagination;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Page;
-import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.PageImpl;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Sort;
 
@@ -101,10 +100,13 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
     }
 
     @SuppressWarnings("unchecked")
-    public Page<T> findBySearchable(Searchable searchable) {
+    public Pagination<T> findBySearchable(Searchable searchable) {
         List<T> content = getDaoMapper().findBySearchable(searchable);
-        long total = searchable.hasPageable() ? countBySearchable(searchable) : content.size();
-        return new PageImpl<T>(content, searchable.getPage(), total);
+        int currentPage = searchable.hasPageable() ? searchable.getPage().getCurrentPage() : 1;
+        Pagination pagination = searchable.getPage();
+        long total = searchable.hasPageable() ? countBySearchable(searchable.setPage(null)) : content.size();
+        searchable.setPage(pagination);
+        return new BasePagination<T>(content, Integer.parseInt(String.valueOf(total)), currentPage);
     }
 
     public List<T> findBySort(Sort sort) {

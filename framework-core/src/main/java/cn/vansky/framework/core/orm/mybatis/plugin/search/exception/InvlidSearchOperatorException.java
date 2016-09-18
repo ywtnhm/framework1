@@ -9,7 +9,7 @@ package cn.vansky.framework.core.orm.mybatis.plugin.search.exception;
 import cn.vansky.framework.core.orm.mybatis.plugin.search.enums.SearchOperator;
 
 /**
- * <p>User: hyssop
+ * <p>author: hyssop
  * <p>Date: 16-1-17 上午11:59
  * <p>Version: 1.0
  */

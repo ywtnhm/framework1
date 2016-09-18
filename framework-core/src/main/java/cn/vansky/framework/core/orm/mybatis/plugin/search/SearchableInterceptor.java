@@ -29,7 +29,7 @@ public class SearchableInterceptor extends BaseInterceptor {
 
     public Object intercept(Invocation invocation) throws Throwable {
 
-         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
+        MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
 
         if (mappedStatement.getId().matches(sqlPattern)) {
 

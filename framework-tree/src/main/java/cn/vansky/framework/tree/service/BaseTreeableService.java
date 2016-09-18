@@ -38,6 +38,7 @@ public interface BaseTreeableService<M extends Treeable<ID>, ID extends Serializ
     /**
      * 移动节点
      * 根节点不能移动
+     *
      * @param source   源节点
      * @param target   目标节点
      * @param moveType 位置
