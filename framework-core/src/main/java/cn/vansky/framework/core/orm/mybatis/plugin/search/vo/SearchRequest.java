@@ -44,7 +44,6 @@ public class SearchRequest extends Searchable {
     }
 
     public SearchRequest() {
-        this(null,null,null);
     }
 
     public SearchRequest(Map<String,Object> searchParams,PageRequest page) {

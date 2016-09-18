@@ -24,7 +24,7 @@ import java.util.List;
 public class CustomCondition implements SearchFilter {
 
     //查询参数分隔符
-    public static String separator = "_";
+    public static final String separator = "_";
     private String key;
     private String searchProperty;
     private SearchOperator operator;
