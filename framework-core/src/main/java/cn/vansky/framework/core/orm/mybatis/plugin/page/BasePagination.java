@@ -21,63 +21,77 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
      * 默认的每页数据量（pageSize）
      */
     public static final int DEFAULT_PAGE_SIZE = 10;
+
     /**
      * 默认页码（第一页）
      */
     public static final int DEFAULT_PAGE_NUM = 1;
 
     public int firstPage = DEFAULT_PAGE_NUM;
+
     /**
      * 默认显示页码标签的个数 如： {首页 1 2 3 4 5 ... 16 17 18 末页}
      */
     public static final int DEFAULT_MAX_PAGE_INDEX_NUMBER = 9;
+
     /**
      * 显示页码标签的个数
      */
     private transient int maxPageIndexNumber = DEFAULT_MAX_PAGE_INDEX_NUMBER;
+
     /**
      * 页码编号数组
      */
     protected transient int[] pageNumberList = new int[0];
+
     /**
      * 总数据量
      */
     protected int total;
+
     /**
      * 每页数据量
      */
     protected int limit = DEFAULT_PAGE_SIZE;
+
     /**
      * 总页数
      */
     protected transient int totalPage;
+
     /**
      * 当前页码
      */
     protected transient int currentPage;
+
     /**
      * 下一页页码
      */
     protected transient int nextPage;
+
     /**
      * 上一页页码
      */
     protected transient int previousPage;
+
     /**
      * 是否有下一页
      */
     protected transient boolean hasNext = false;
+
     /**
      * 是否有前一页
      */
     protected transient boolean hasPrevious = false;
+
     /**
      * 获取该页的数据列表
      */
-    protected List<T> rows = new ArrayList<T>();
+    protected List<T> rows ;
 
     public BasePagination() {
         this(0);
+
     }
 
     public BasePagination(int total) {
@@ -146,6 +160,9 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
     }
 
     public void setRows(List<T> rows) {
+        if(this.rows==null){
+            this.rows = new ArrayList<T>();
+        }
         this.rows = rows;
     }
 
@@ -205,11 +222,6 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         this.currentPage = currentPage;
     }
 
-    public boolean hasNextPage()  {
-        return currentPage + 1 < totalPage;
-    }
-
-
     public int getFirstPage() {
         return firstPage;
     }
@@ -253,6 +265,7 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         }
         return pageNumberList;
     }
+
     public String toString() {
         String contentType = "UNKNOWN";
 
