@@ -38,10 +38,6 @@ public class SqlFacade {
 
     /**
      * 分页字符串拼接
-     * @param sql
-     * @param searchable
-     * @param dialect
-     * @return
      */
     public static String generateRealPageSql(String sql, Searchable searchable, Dialect dialect) {
         if (dialect.supportsLimit()&&searchable.getPage()!=null&& !ObjectUtils.equals(searchable.getPage(),ObjectUtils.NULL)) {

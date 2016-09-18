@@ -12,7 +12,7 @@ public class DelegeteSqlResolver extends AbstractSqlResolverOuter {
 
     public static SqlResolver DEFUALTCALL = new DefaultSqlResolver("");
 
-    public static SqlResolver sqlResolver = DEFUALTCALL;
+    public SqlResolver sqlResolver = DEFUALTCALL;
 
     public DelegeteSqlResolver( SqlResolver sqlResolver ){
         if(sqlResolver!=null){

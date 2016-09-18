@@ -5,9 +5,6 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.filter.CustomCondition
 
 /**
  * @author hassop
- * @Description
- * @date 2016/8/30 0030
- * To change this template use File | Settings | File Templates.
  */
 public class Param {
     public static final String paramPrefix = "param_";

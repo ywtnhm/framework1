@@ -29,7 +29,6 @@ public class DefaultSqlResolver extends AbstractSqlResolverInter {
         if (!search.hasSearchFilter()) {
             return;
         }
-        int paramIndex = 1;
         for (SearchFilter searchFilter : search.getSearchFilters()) {
 
             CustomCondition customCondition = (CustomCondition) searchFilter;

@@ -10,9 +10,9 @@ import cn.vansky.framework.core.orm.mybatis.plugin.search.vo.Searchable;
  */
 public interface SqlResolver {
 
-    public void prepareSQL(StringBuilder ql, Searchable search);
+    void prepareSQL(StringBuilder ql, Searchable search);
 
-    public void prepareOrder(StringBuilder ql, Searchable search);
+    void prepareOrder(StringBuilder ql, Searchable search);
 
     /**
      * 根据search给query赋值及设置分页信息
@@ -20,8 +20,8 @@ public interface SqlResolver {
      * @param query
      * @param search
      */
-    public void setValues(StringBuilder query, Searchable search);
+    void setValues(StringBuilder query, Searchable search);
 
-    public void setPageable(StringBuilder query, Searchable search , Dialect dialect);
+    void setPageable(StringBuilder query, Searchable search , Dialect dialect);
 
 }

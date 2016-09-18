@@ -39,11 +39,6 @@ public final class SearchRequest extends Searchable {
      */
     private final List<SearchFilter> searchFilters = Lists.newArrayList();
 
-
-
-    /**
-     * @param searchParams
-     */
     public SearchRequest(final Map<String, Object> searchParams) {
         this(searchParams, null, null);
     }
@@ -52,16 +47,10 @@ public final class SearchRequest extends Searchable {
         this(null, null, null);
     }
 
-    /**
-     * @param searchParams
-     */
     public SearchRequest(final Map<String, Object> searchParams, final PageRequest page) {
         this(searchParams, page, null);
     }
 
-    /**
-     * @param searchParams
-     */
     public SearchRequest(final Map<String, Object> searchParams, final Sort sort) throws SearchException {
         this(searchParams, null, sort);
     }
@@ -84,7 +73,6 @@ public final class SearchRequest extends Searchable {
         merge(sort, page);
     }
 
-
     private void toSearchFilters(final Map<String, Object> searchParams) throws SearchException {
         if (searchParams == null || searchParams.size() == 0) {
             return;
@@ -96,7 +84,6 @@ public final class SearchRequest extends Searchable {
             addSearchFilter(CustomConditionFactory.newCustomCondition(key, value));
         }
     }
-
 
     public void removePageable() {
         page = null;
@@ -240,11 +227,10 @@ public final class SearchRequest extends Searchable {
     }
 
     public void removeSort() {
-        this.page = null;
+        this.sort = null;
         if (this.page != null) {
             this.page = new PageRequest(page.getCurrentPage(), page.getLimit());
         }
-        sort = null;
     }
 
     public boolean hasPagination() {
@@ -278,7 +264,7 @@ public final class SearchRequest extends Searchable {
         return this.page != null && this.page.getLimit() > 0;
     }
 
-    private boolean containsSearchKey(List<SearchFilter> searchFilters, String key) {
+    private boolean containsSearchKey(List<SearchFilter> searchFilters, String key) throws ClassCastException{
         boolean contains = false;
         for (SearchFilter searchFilter : searchFilters) {
             if (searchFilter instanceof CustomCondition) {
@@ -296,7 +282,7 @@ public final class SearchRequest extends Searchable {
                 contains = containsCustomKey(andConditions, key);
             }
             if (contains) {
-                return true;
+                break;
             }
         }
 
