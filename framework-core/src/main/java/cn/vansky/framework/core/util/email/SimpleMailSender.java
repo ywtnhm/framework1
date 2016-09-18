@@ -36,7 +36,7 @@ public class SimpleMailSender {
      * @param username     发送邮件的用户名(地址)
      * @param password     发送邮件的密码
      */
-    public SimpleMailSender(final String smtpHostName, final String username, final String password) {
+    public SimpleMailSender(String smtpHostName, String username, String password) {
         init(username, password, smtpHostName);
     }
 
@@ -46,9 +46,9 @@ public class SimpleMailSender {
      * @param username 发送邮件的用户名(地址)，并以此解析SMTP服务器地址
      * @param password 发送邮件的密码
      */
-    public SimpleMailSender(final String username, final String password) {
+    public SimpleMailSender(String username, String password) {
         //通过邮箱地址解析出smtp服务器，对大多数邮箱都管用
-        final String smtpHostName = "smtp." + username.split("@")[1];
+        String smtpHostName = "smtp." + username.split("@")[1];
         init(username, password, smtpHostName);
     }
 

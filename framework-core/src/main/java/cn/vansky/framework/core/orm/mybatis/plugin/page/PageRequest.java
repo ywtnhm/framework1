@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public class PageRequest extends BasePagination implements Pagination, Serializable {
 
-    private static final long serialVersionUID = 8280485938848398236L;
+    private static long serialVersionUID = 8280485938848398236L;
 
     /**
      * 分页从1开始，limit为每页的数量
@@ -44,7 +44,7 @@ public class PageRequest extends BasePagination implements Pagination, Serializa
         return new PageRequest(0, limit);
     }
 
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
 
         if (this == obj) {
             return true;

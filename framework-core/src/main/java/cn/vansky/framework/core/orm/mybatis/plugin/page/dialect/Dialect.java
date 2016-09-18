@@ -21,8 +21,8 @@ public interface Dialect {
     /**
      * 将sql转换为分页SQL，分别调用分页sql
      *
-     * @param sql SQL语句
-     * @param offset 开始条数
+     * @param sql      SQL语句
+     * @param offset   开始条数
      * @param pageSize 每页显示多少纪录条数
      * @return 分页查询的sql
      */

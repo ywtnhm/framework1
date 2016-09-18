@@ -21,10 +21,10 @@ public class DelegeteSqlResolver extends AbstractSqlResolverOuter {
     }
 
 
-    public void compositeSql(StringBuilder query, Searchable search, Dialect dialect) {
-        sqlResolver.prepareSQL(query, search);
+    public void compositeSql(StringBuilder query,Searchable search,Dialect dialect) {
+        sqlResolver.prepareSQL(query,search);
         if(search.hashSort()){
-            sqlResolver.prepareOrder(query, search);
+            sqlResolver.prepareOrder(query,search);
         }
         if(search.hasPageable()){
             sqlResolver.setPageable(query,search,dialect);

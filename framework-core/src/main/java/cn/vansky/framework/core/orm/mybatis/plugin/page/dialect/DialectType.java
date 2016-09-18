@@ -14,8 +14,7 @@ import org.apache.commons.lang.StringUtils;
 public enum DialectType {
     MYSQL("mysql", "cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.MySQLDialect"),
     ORACLE("oracle", ""),
-    SQL_SERVER("microsoft sql server", ""),
-    ;
+    SQL_SERVER("microsoft sql server", ""),;
 
     private String name;
 

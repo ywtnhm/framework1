@@ -25,7 +25,7 @@ public class DefaultSqlResolver extends AbstractSqlResolverInter {
         super(alias);
     }
 
-    public void prepareSQL(StringBuilder ql, Searchable search) {
+    public void prepareSQL(StringBuilder ql,Searchable search) {
         if (!search.hasSearchFilter()) {
             return;
         }
@@ -41,12 +41,12 @@ public class DefaultSqlResolver extends AbstractSqlResolverInter {
             if (needAppendBracket) {
                 ql.append("(");
             }
-            resolveSelf.genCondition(ql, searchFilter);
+            resolveSelf.genCondition(ql,searchFilter);
             if (customCondition.hasAndFilters()) {
-                resolveWithAndFilters.genCondition(ql, searchFilter);
+                resolveWithAndFilters.genCondition(ql,searchFilter);
             }
             if (customCondition.hasOrFilters()) {
-                resolveWithOrFilters.genCondition(ql, searchFilter);
+                resolveWithOrFilters.genCondition(ql,searchFilter);
             }
             if (needAppendBracket) {
                 ql.append(")");
@@ -54,22 +54,22 @@ public class DefaultSqlResolver extends AbstractSqlResolverInter {
         }
     }
 
-    public void setValues(StringBuilder query, Searchable search) {
+    public void setValues(StringBuilder query,Searchable search) {
         int paramIndex = 1;
         for (SearchFilter searchFilter : search.getSearchFilters()) {
-            paramIndex = resolveSelf.setValues(query, searchFilter, paramIndex);
+            paramIndex = resolveSelf.setValues(query,searchFilter,paramIndex);
             if (((CustomCondition) searchFilter).hasAndFilters()) {
-                paramIndex = resolveWithAndFilters.setValues(query, searchFilter, paramIndex);
+                paramIndex = resolveWithAndFilters.setValues(query,searchFilter,paramIndex);
             }
             if (((CustomCondition) searchFilter).hasOrFilters()) {
-                paramIndex = resolveWithOrFilters.setValues(query, searchFilter, paramIndex);
+                paramIndex = resolveWithOrFilters.setValues(query,searchFilter,paramIndex);
             }
         }
     }
 
     public class ResolveSelf {
 
-        public int setValues(StringBuilder query, SearchFilter searchFilter, int paramIndex) {
+        public int setValues(StringBuilder query,SearchFilter searchFilter,int paramIndex) {
             CustomCondition customCondition = (CustomCondition) searchFilter;
             if (customCondition.getOperator() == SearchOperator.custom) {
                 return paramIndex;
@@ -77,11 +77,11 @@ public class DefaultSqlResolver extends AbstractSqlResolverInter {
             if (customCondition.isUnaryFilter()) {
                 return paramIndex;
             }
-            query.toString().replaceAll(param.paramPrefix + paramIndex++, param.formtValue(customCondition, customCondition.getValue()).toString());
+            query.toString().replaceAll(param.paramPrefix + paramIndex++,param.formtValue(customCondition,customCondition.getValue()).toString());
             return paramIndex;
         }
 
-        public void genCondition(StringBuilder ql, SearchFilter searchFilter) {
+        public void genCondition(StringBuilder ql,SearchFilter searchFilter) {
             CustomCondition customCondition = (CustomCondition) searchFilter;
             String entityProperty = customCondition.getEntityProperty(); //自定义条件
             String operatorStr = customCondition.getOperatorStr();
@@ -92,7 +92,7 @@ public class DefaultSqlResolver extends AbstractSqlResolverInter {
             if (!customCondition.isUnaryFilter()) {
                 ql.append(operatorStr);
                 if ("in".equalsIgnoreCase(operatorStr)) {
-                    String tep = StringUtils.arrayToDelimitedString((String[]) entityValue, ",");
+                    String tep = StringUtils.arrayToDelimitedString((String[]) entityValue,",");
                     ql.append("(");
                     ql.append(tep);
                     ql.append(")");
@@ -109,28 +109,28 @@ public class DefaultSqlResolver extends AbstractSqlResolverInter {
     public class ResolveWithAndFilters {
         ResolveSelf resolveSelf = new ResolveSelf();
 
-        public int setValues(StringBuilder query, List<SearchFilter> searchFilters, int paramIndex) {
+        public int setValues(StringBuilder query,List<SearchFilter> searchFilters,int paramIndex) {
             for (SearchFilter andSearchFilter : searchFilters) {
-                paramIndex = setValues(query, andSearchFilter, paramIndex);
+                paramIndex = setValues(query,andSearchFilter,paramIndex);
             }
             return paramIndex;
         }
 
-        public int setValues(StringBuilder query, SearchFilter searchFilter, int paramIndex) {
+        public int setValues(StringBuilder query,SearchFilter searchFilter,int paramIndex) {
             for (SearchFilter andSearchFilter : ((CustomCondition) searchFilter).getAndFilters()) {
-                paramIndex = resolveSelf.setValues(query, andSearchFilter, paramIndex);
+                paramIndex = resolveSelf.setValues(query,andSearchFilter,paramIndex);
             }
             return paramIndex;
         }
 
-        public void genCondition(StringBuilder ql, SearchFilter searchFilter) {
+        public void genCondition(StringBuilder ql,SearchFilter searchFilter) {
             boolean isFirst = true;
             for (SearchFilter andSearchFilter : ((CustomCondition) searchFilter).getAndFilters()) {
                 if (!isFirst) {
                     ql.append(" and ");
                 }
 
-                resolveSelf.genCondition(ql, andSearchFilter);
+                resolveSelf.genCondition(ql,andSearchFilter);
                 isFirst = false;
             }
         }
@@ -139,27 +139,27 @@ public class DefaultSqlResolver extends AbstractSqlResolverInter {
     public class ResolveWithOrFilters {
         ResolveSelf resolveSelf = new ResolveSelf();
 
-        public int setValues(StringBuilder query, List<SearchFilter> searchFilters, int paramIndex) {
+        public int setValues(StringBuilder query,List<SearchFilter> searchFilters,int paramIndex) {
             for (SearchFilter orSearchFilter : searchFilters) {
-                paramIndex = resolveSelf.setValues(query, orSearchFilter, paramIndex);
+                paramIndex = resolveSelf.setValues(query,orSearchFilter,paramIndex);
             }
             return paramIndex;
         }
 
-        public int setValues(StringBuilder query, SearchFilter searchFilter, int paramIndex) {
+        public int setValues(StringBuilder query,SearchFilter searchFilter,int paramIndex) {
             for (SearchFilter orSearchFilter : ((CustomCondition) searchFilter).getOrFilters()) {
-                paramIndex = setValues(query, orSearchFilter, paramIndex);
+                paramIndex = setValues(query,orSearchFilter,paramIndex);
             }
             return paramIndex;
         }
 
-        public void genCondition(StringBuilder ql, SearchFilter searchFilter) {
+        public void genCondition(StringBuilder ql,SearchFilter searchFilter) {
             boolean isFirst = true;
             for (SearchFilter orSearchFilter : ((CustomCondition) searchFilter).getOrFilters()) {
                 if (!isFirst) {
                     ql.append(" or ");
                 }
-                resolveSelf.genCondition(ql, orSearchFilter);
+                resolveSelf.genCondition(ql,orSearchFilter);
                 isFirst = false;
             }
         }

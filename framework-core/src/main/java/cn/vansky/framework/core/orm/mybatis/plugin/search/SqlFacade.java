@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 CK, Inc. All Rights Reserved.
+ * Copyright (C) 2015 CK,Inc. All Rights Reserved.
  */
 
 package cn.vansky.framework.core.orm.mybatis.plugin.search;
@@ -29,22 +29,22 @@ public class SqlFacade {
         this.delegeteSqlResolver = sqlResolver;
     }
 
-    public static String generateRealSql(String originalSql, Searchable parameter, Dialect dialect) {
+    public static String generateRealSql(String originalSql,Searchable parameter,Dialect dialect) {
         StringBuilder sb = new StringBuilder(originalSql);
         //条件拼接
-        delegeteSqlResolver.compositeSql(sb, parameter, dialect);
+        delegeteSqlResolver.compositeSql(sb,parameter,dialect);
          return sb.toString();
     }
 
     /**
      * 分页字符串拼接
      */
-    public static String generateRealPageSql(String sql, Searchable searchable, Dialect dialect) {
+    public static String generateRealPageSql(String sql,Searchable searchable,Dialect dialect) {
         if (dialect.supportsLimit()&&searchable.getPage()!=null&& !ObjectUtils.equals(searchable.getPage(),ObjectUtils.NULL)) {
             int pageSize = searchable.getPage().getLimit();
             int index = (searchable.getPage().getCurrentPage() - 1) * pageSize;
             int start = index < 0 ? 0 : index;
-            return dialect.getLimitString(sql, start, pageSize);
+            return dialect.getLimitString(sql,start,pageSize);
         } else {
             return sql;
         }

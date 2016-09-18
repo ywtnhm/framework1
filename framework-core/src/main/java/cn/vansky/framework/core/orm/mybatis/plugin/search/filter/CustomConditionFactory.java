@@ -18,18 +18,18 @@ import java.util.Arrays;
  * <p>Date: 16-5-24 下午4:10
  * <p>Version: 1.0
  */
-public final class CustomConditionFactory {
+public class CustomConditionFactory {
     /**
      * 根据查询key和值生成Condition
      * @param key   如 name_like
      */
-    public static SearchFilter newCustomCondition(final String key, final Object value) throws SearchException {
+    public static SearchFilter newCustomCondition(String key, Object value) throws SearchException {
         return CustomCondition.newCondition(key, value);
     }
     /**
      * 根据查询属性、操作符和值生成Condition
      */
-    public static SearchFilter newCustomCondition(final String searchProperty, final SearchOperator operator, final Object value) {
+    public static SearchFilter newCustomCondition(String searchProperty, SearchOperator operator, Object value) {
         return CustomCondition.newCondition(searchProperty, operator, value);
     }
 

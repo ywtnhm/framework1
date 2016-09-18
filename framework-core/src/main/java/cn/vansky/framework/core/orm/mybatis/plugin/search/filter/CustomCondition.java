@@ -21,10 +21,10 @@ import java.util.List;
  * <p>Date: 16-1-15 上午7:12
  * <p>Version: 1.0
  */
-public final class CustomCondition implements SearchFilter {
+public class CustomCondition implements SearchFilter {
 
     //查询参数分隔符
-    public static final String separator = "_";
+    public static String separator = "_";
     private String key;
     private String searchProperty;
     private SearchOperator operator;
@@ -65,7 +65,7 @@ public final class CustomCondition implements SearchFilter {
      * @param key   如 name_like
      * @param value 如 张
      */
-    static CustomCondition newCondition(final String key, final Object value) throws SearchException {
+    static CustomCondition newCondition(String key, Object value) throws SearchException {
         Assert.notNull(key, "CustomCondition key must not null");
         String[] searchs = StringUtils.split(key, separator);
         if (searchs.length == 0) {
@@ -107,7 +107,7 @@ public final class CustomCondition implements SearchFilter {
      * @param operator 查询的符号 = like
      * @param value  查询值，张三、张等
      */
-    static CustomCondition newCondition(final String searchProperty, final SearchOperator operator, final Object value) {
+    static CustomCondition newCondition(String searchProperty, SearchOperator operator, Object value) {
         return new CustomCondition(searchProperty, operator, value);
     }
 
@@ -116,7 +116,7 @@ public final class CustomCondition implements SearchFilter {
      * @param operator       操作
      * @param value          值
      */
-    private CustomCondition(final String searchProperty, final SearchOperator operator, final Object value) {
+    private CustomCondition(String searchProperty, SearchOperator operator, Object value) {
         this.searchProperty = searchProperty;
         this.operator = operator;
         this.value = value;
@@ -155,15 +155,15 @@ public final class CustomCondition implements SearchFilter {
         return value;
     }
 
-    public void setValue(final Object value) {
+    public void setValue(Object value) {
         this.value = value;
     }
 
-    public void setOperator(final SearchOperator operator) {
+    public void setOperator(SearchOperator operator) {
         this.operator = operator;
     }
 
-    public void setSearchProperty(final String searchProperty) {
+    public void setSearchProperty(String searchProperty) {
         this.searchProperty = searchProperty;
     }
 
