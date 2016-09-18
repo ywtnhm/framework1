@@ -40,7 +40,7 @@ public class SqlFacade {
      * 分页字符串拼接
      */
     public static String generateRealPageSql(String sql, Searchable searchable, Dialect dialect) {
-        if (dialect.supportsLimit() && searchable.getPage() != null && !ObjectUtils.equals(searchable.getPage(), ObjectUtils.NULL)) {
+        if (dialect.supportsLimit() && null != searchable.getPage()) {
             int pageSize = searchable.getPage().getLimit();
             int index = (searchable.getPage().getCurrentPage() - 1) * pageSize;
             int start = index < 0 ? 0 : index;
