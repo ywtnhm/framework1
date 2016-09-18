@@ -92,6 +92,7 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
     public BasePagination() {
         this(0);
 
+
     }
 
     public BasePagination(int total) {
@@ -151,6 +152,9 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
     }
 
     public void init(int total, int limit, int currentPage) {
+        if(null == rows){
+            rows = new ArrayList<T>();
+        }
         this.total = total;
         this.limit = limit;
         this.currentPage = currentPage;
@@ -162,9 +166,6 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
     }
 
     public void setRows(List<T> rows) {
-        if (this.rows == null) {
-            this.rows = new ArrayList<T>();
-        }
         this.rows = rows;
     }
 
