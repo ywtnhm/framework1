@@ -15,18 +15,17 @@ public class PageRequest extends BasePagination implements Pagination, Serializa
 
     /**
      * 分页从1开始，limit为每页的数量
+     *
      * @param page
      * @param limit
      */
     public PageRequest(int page, int limit) {
-       this.setCurrentPage(page);
-       this.setLimit(limit);
+        this.setCurrentPage(page);
+        this.setLimit(limit);
     }
 
-
-
     public int getPageSize() {
-        return totalPage ;
+        return totalPage;
     }
 
     public int getPageNumber() {
@@ -37,18 +36,8 @@ public class PageRequest extends BasePagination implements Pagination, Serializa
         return currentPage * limit;
     }
 
-
-
-    public boolean hasPrevious() {
-        return currentPage > 1;
-    }
-
-    public Pagination next() {
-        return new PageRequest(currentPage + 1, limit);
-    }
-
     public Pagination previousOrFirst() {
-        return hasPrevious() ? new PageRequest(currentPage - 1, limit) : this;
+        return hasPrevious ? new PageRequest(currentPage - 1, limit) : this;
     }
 
     public Pagination first() {
@@ -60,13 +49,10 @@ public class PageRequest extends BasePagination implements Pagination, Serializa
         if (this == obj) {
             return true;
         }
-
         if (!(obj instanceof PageRequest)) {
             return false;
         }
-
         PageRequest that = (PageRequest) obj;
-
         boolean pageEqual = this.currentPage == that.currentPage;
         boolean sizeEqual = this.limit == that.limit;
 
@@ -78,7 +64,7 @@ public class PageRequest extends BasePagination implements Pagination, Serializa
         int result = 17;
         result = 31 * result + currentPage;
         result = 31 * result + limit;
-        result = 31 * result ;
+        result = 31 * result;
 
         return result;
     }
