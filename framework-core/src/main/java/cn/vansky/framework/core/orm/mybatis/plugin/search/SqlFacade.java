@@ -25,26 +25,26 @@ public class SqlFacade {
 
     public static AbstractSqlResolverOuter delegeteSqlResolver = DEFAULTDELEGETE;
 
-    public void setDelegeteSqlResolver(AbstractSqlResolverOuter sqlResolver){
+    public void setDelegeteSqlResolver(AbstractSqlResolverOuter sqlResolver) {
         this.delegeteSqlResolver = sqlResolver;
     }
 
-    public static String generateRealSql(String originalSql,Searchable parameter,Dialect dialect) {
+    public static String generateRealSql(String originalSql, Searchable parameter, Dialect dialect) {
         StringBuilder sb = new StringBuilder(originalSql);
         //条件拼接
-        delegeteSqlResolver.compositeSql(sb,parameter,dialect);
-         return sb.toString();
+        delegeteSqlResolver.compositeSql(sb, parameter, dialect);
+        return sb.toString();
     }
 
     /**
      * 分页字符串拼接
      */
-    public static String generateRealPageSql(String sql,Searchable searchable,Dialect dialect) {
-        if (dialect.supportsLimit()&&searchable.getPage()!=null&& !ObjectUtils.equals(searchable.getPage(),ObjectUtils.NULL)) {
+    public static String generateRealPageSql(String sql, Searchable searchable, Dialect dialect) {
+        if (dialect.supportsLimit() && searchable.getPage() != null && !ObjectUtils.equals(searchable.getPage(), ObjectUtils.NULL)) {
             int pageSize = searchable.getPage().getLimit();
             int index = (searchable.getPage().getCurrentPage() - 1) * pageSize;
             int start = index < 0 ? 0 : index;
-            return dialect.getLimitString(sql,start,pageSize);
+            return dialect.getLimitString(sql, start, pageSize);
         } else {
             return sql;
         }

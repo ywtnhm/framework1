@@ -44,17 +44,11 @@ public class SqlHelper {
     /**
      * 对SQL参数(?)设值,
      * 参考org.apache.ibatis.executor.parameter.DefaultParameterHandler。
-     *
-     * @param ps
-     *            表示预编译的 SQL 语句的对象。
-     * @param mappedStatement
-     *            MappedStatement
-     * @param boundSql
-     *            SQL
-     * @param parameterObject
-     *            参数对象
-     * @throws java.sql.SQLException
-     *             数据库异常
+     * @param ps              表示预编译的 SQL 语句的对象。
+     * @param mappedStatement MappedStatement
+     * @param boundSql        SQL
+     * @param parameterObject 参数对象
+     * @throws java.sql.SQLException 数据库异常
      */
     @SuppressWarnings("unchecked")
     public static void setParameters(PreparedStatement ps, MappedStatement mappedStatement,
@@ -101,16 +95,11 @@ public class SqlHelper {
     /**
      * 查询总纪录数。
      *
-     * @param sql
-     *            SQL语句
-     * @param connection
-     *            数据库连接
-     * @param mappedStatement
-     *            mapped
-     * @param parameterObject
-     *            参数
-     * @param boundSql
-     *            boundSql
+     * @param sql             SQL语句
+     * @param connection      数据库连接
+     * @param mappedStatement mapped
+     * @param parameterObject 参数
+     * @param boundSql        boundSql
      * @return 总记录数
      */
     public static int getCount(String sql, Connection connection, MappedStatement mappedStatement,
@@ -159,8 +148,8 @@ public class SqlHelper {
      *
      * @param mappedStatement the mappedStatement
      * @param parameterObject 参数对象
-     * @param boundSql the boundSql
-     * @param newSql the newSql
+     * @param boundSql        the boundSql
+     * @param newSql          the newSql
      * @return boundSql
      */
     public static BoundSql createNewBoundSql(MappedStatement mappedStatement, Object parameterObject,
@@ -204,12 +193,9 @@ public class SqlHelper {
     /**
      * 根据数据库方言，生成特定的分页sql。
      *
-     * @param sql
-     *            Mapper中的Sql语句
-     * @param page
-     *            分页对象
-     * @param dialect
-     *            方言类型
+     * @param sql     Mapper中的Sql语句
+     * @param page    分页对象
+     * @param dialect 方言类型
      * @return 分页SQL
      */
     public static String generatePageSql(String sql, Pagination<Serializable> page, Dialect dialect) {
