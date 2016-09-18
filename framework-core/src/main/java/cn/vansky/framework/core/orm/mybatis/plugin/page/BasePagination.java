@@ -166,6 +166,9 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
     }
 
     public void setRows(List<T> rows) {
+        if(null == rows){
+            rows = new ArrayList<T>();
+        }
         this.rows = rows;
     }
 
