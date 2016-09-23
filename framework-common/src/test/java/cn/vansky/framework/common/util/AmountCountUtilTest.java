@@ -8,58 +8,55 @@ import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 
+import static org.testng.Assert.assertEquals;
+
 public class AmountCountUtilTest {
 
     @Test
     public void testAdd() throws Exception {
-        System.out.println(AmountCountUtil.add(123, 234));
+        assertEquals(357.0, AmountCountUtil.add(123, 234));
     }
 
     @Test
     public void testAdd1() throws Exception {
         BigDecimal v1 = new BigDecimal(123);
         BigDecimal v2 = new BigDecimal(234);
-        System.out.println(AmountCountUtil.add(v1, v2).toString());
+        assertEquals("357.00", AmountCountUtil.add(v1, v2).toString());
     }
 
     @Test
     public void testSub() throws Exception {
-        System.out.println(AmountCountUtil.sub(123, 234));
+        assertEquals(-111.0, AmountCountUtil.sub(123, 234));
     }
 
     @Test
     public void testSub1() throws Exception {
         BigDecimal v1 = new BigDecimal(123);
         BigDecimal v2 = new BigDecimal(234);
-        System.out.println(AmountCountUtil.sub(v1, v2).toString());
+        assertEquals("-111.00", AmountCountUtil.sub(v1, v2).toString());
     }
 
     @Test
     public void testMul() throws Exception {
-        System.out.println(AmountCountUtil.mul(10, 23));
+        assertEquals(230.0, AmountCountUtil.mul(10, 23));
     }
 
     @Test
     public void testMul1() throws Exception {
         BigDecimal v1 = new BigDecimal(10);
         BigDecimal v2 = new BigDecimal(23);
-        System.out.println(AmountCountUtil.mul(v1, v2).toString());
+        assertEquals("230.00", AmountCountUtil.mul(v1, v2).toString());
     }
 
     @Test
     public void testDiv() throws Exception {
-        System.out.println(AmountCountUtil.div(23, 10));
+        assertEquals(2.3, AmountCountUtil.div(23, 10));
     }
 
     @Test
     public void testDiv1() throws Exception {
         BigDecimal v1 = new BigDecimal(23);
         BigDecimal v2 = new BigDecimal(10);
-        System.out.println(AmountCountUtil.div(v1, v2).toString());
-    }
-
-    @Test
-    public void testFormatAmt() throws Exception {
-        System.out.println(AmountCountUtil.formatAmt(Double.valueOf(234)).toString());
+        assertEquals("2.30", AmountCountUtil.div(v1, v2).toString());
     }
 }

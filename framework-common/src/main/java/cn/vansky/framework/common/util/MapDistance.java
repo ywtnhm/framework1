@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA .
+ * 位置经纬度距离计算
  * Auth: CK
  * Date: 2016/6/15
  */
@@ -23,7 +23,7 @@ public class MapDistance {
      * @param lat1 用户纬度
      * @param lng2 商家经度
      * @param lat2 商家纬度
-     * @return
+     * @return double
      */
     public static double getDistance(double lng1, double lat1, double lng2, double lat2) {
         double radLat1 = rad(lng1);
@@ -47,6 +47,7 @@ public class MapDistance {
      * 最小纬度 maxLat
      * 最大经度 maxLng
      * 最大纬度 minLat
+     * @return Map
      */
     public static Map<String, String> getAround(double lng, double lat, double raidusMile) {
         Map<String, String> map = new HashMap<String, String>();

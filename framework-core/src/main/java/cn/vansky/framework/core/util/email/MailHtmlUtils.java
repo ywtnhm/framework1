@@ -29,7 +29,7 @@ public class MailHtmlUtils {
      */
     public static void sendHtmlMail(Object from, Object title, Object text, Object priority, Object... to) {
         // 获取发邮件的支持类
-        JavaMailSender mailSender = (JavaMailSender) ServiceLocator.getInstance().getBean("javaMailSender");
+        JavaMailSender mailSender = ServiceLocator.getInstance().getBean("javaMailSender");
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "GBK");

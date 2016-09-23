@@ -4,7 +4,6 @@
 
 package cn.vansky.framework.core.util;
 
-import cn.vansky.framework.core.dao.ConfigurableBaseSqlMapDao;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.ProxyFactory;
@@ -100,7 +99,7 @@ public class SpringProxyUtilsTest {
         Car proxy = (Car) proxyFactory.getProxy();
         //双向代理验证
         System.out.println(SpringProxyUtils.isMultipleProxy(proxy));
-        System.out.println(SpringProxyUtils.getRealTarget(proxy));
+        SpringProxyUtils.getRealTarget(proxy);
     }
 
     @Test

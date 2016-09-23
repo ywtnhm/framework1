@@ -12,7 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
+ * The query of the database use the {@link NamedParameterJdbcTemplate} of the spring,
+ * the {@link #dataSource} is setted through the XML injection of the spring.
+ * <pre>
+ * &lt;bean id="kvDao" class="cn.vansky.framework.core.kv.dao.impl.KvDaoImpl"&gt;
+ *     &lt;property name="dataSource" ref="dataSource"/&gt;
+ * &lt;/bean&gt;
+ * </pre>
  * Author: CK
  * Date: 2015/11/13
  */
@@ -23,10 +29,6 @@ public class KvDaoImpl implements KvDao {
     public List<Map<String, Object>> execute(String sql, Map<String, Object> namedParams) {
         NamedParameterJdbcTemplate tpl = new NamedParameterJdbcTemplate(dataSource);
         return tpl.queryForList(sql, namedParams);
-    }
-
-    public DataSource getDataSource() {
-        return dataSource;
     }
 
     public void setDataSource(DataSource dataSource) {

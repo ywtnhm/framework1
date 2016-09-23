@@ -8,88 +8,84 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
+ * Support for Handler.
  * Author: CK
  * Date: 2015/11/13
  */
 public class KvHandlerSupport {
-    /**
-     * 默认值
-     */
+    /** the default vale of the page */
     private Object defaultValue;
-    /**
-     * 处理Handler
-     */
+    /** the active deal Handler */
     private KvHandler kvHandler;
 
     /**
-     * handler是否存在
-     * @return true:存在,false:不存在
+     * Whether exist the Handler
+     * @return boolean
      */
     public boolean isExist() {
-        return kvHandler != null ? true : false;
+        return kvHandler != null;
     }
 
     /**
-     * 扩展执行
-     * @param params 参数
-     * @return list
+     * Perform the logic of user-defined.
+     * @param params the params of condition
+     * @return the new {@code List<Map>}
      */
     public List<Map<String, Object>> execute(Map<String, Object> params) {
         return kvHandler.extendExecute(params);
     }
 
     /**
-     * 是否使用dao执行
-     * @return
+     * Whether perform the logic of default(the execute database).
+     * @return boolean
      */
     public boolean isDaoExecute() {
         return kvHandler.isDaoExecute();
     }
 
     /**
-     * 创建SQL
-     * @return SQL
+     * Get the SQL of the database.
+     * @return the SQL of the database
      */
     public String getSql(Map<String, Object> params) {
         return kvHandler.createSql(params);
     }
 
     /**
-     * set kvHandler
-     * @param kvHandler kvHandler
+     * Set kvHandler.
+     * @param kvHandler the active deal Handler
      */
     public void setKvHandler(KvHandler kvHandler) {
         this.kvHandler = kvHandler;
     }
 
     /**
-     * get kvHandler
-     * @return kvHandler
+     * Get kvHandler.
+     * @return the active deal Handler
      */
     public KvHandler getKvHandler() {
         return kvHandler;
     }
 
     /**
-     * 获取默认值
-     * @return defaultValue
+     * Get {@link #defaultValue} that the default value of page.
+     * @return the default value
      */
     public Object getDefaultValue() {
         return defaultValue;
     }
 
     /**
-     * 获取默认值标志
-     * @return defaultValueFlag
+     * Get the default value flag of page.
+     * @return the defaultValueFlag
      */
     public int getDefaultValueFlag() {
         return kvHandler.getDefaultValueFlag();
     }
 
     /**
-     * 设置默认值
-     * @param defaultValue 默认值
+     * Set the default value of user-defined.
+     * @param defaultValue the default value
      */
     public void setDefaultValue(Object defaultValue) {
         this.defaultValue = defaultValue;

@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by IntelliJ IDEA.
+ * 验证工具类
  * Author: CK
  * Date: 2015/9/29
  */

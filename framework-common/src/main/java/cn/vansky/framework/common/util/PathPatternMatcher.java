@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 /**
- * Created by IntelliJ IDEA.
+ * 路径匹配类
  * Author: CK
  * Date: 2015/8/12
  */

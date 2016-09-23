@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * dao基础类,实现基础增删改查功能
  * Author: CK
  * Date: 2015/6/5.
  */
@@ -95,7 +95,7 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
         return pagination;
     }
 
-    public void deleteBatch(ID[] ids) {
+    public void deleteBatch(ID... ids) {
         getDaoMapper().deleteBatch(ids);
     }
 

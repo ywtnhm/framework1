@@ -7,18 +7,13 @@ package cn.vansky.framework.core.util;
 import org.aopalliance.aop.Advice;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.AdvisedSupport;
-import org.springframework.aop.framework.AdvisorChainFactory;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.interceptor.AsyncExecutionInterceptor;
 import org.springframework.aop.support.AopUtils;
-import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.ConfigurablePropertyAccessor;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
-import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
@@ -36,6 +31,7 @@ public class SpringProxyUtils {
      * @param <T>   强转
      * @return 被代理对象
      */
+    @SuppressWarnings("unchecked")
     public static <T> T getRealTarget(Object proxy) {
         ConfigurablePropertyAccessor accessor;
         while (AopUtils.isAopProxy(proxy)) {
@@ -99,8 +95,7 @@ public class SpringProxyUtils {
      * @param proxy cglib类型的代理类
      */
     public static ProxyFactory findCglibProxyFactory(Object proxy) {
-        ConfigurablePropertyAccessor accessor;
-        accessor = PropertyAccessorFactory.forDirectFieldAccess(proxy);
+        ConfigurablePropertyAccessor accessor = PropertyAccessorFactory.forDirectFieldAccess(proxy);
         Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
         accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
         return (ProxyFactory) accessor.getPropertyValue("advised");

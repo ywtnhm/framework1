@@ -15,7 +15,7 @@ import java.util.Random;
 import java.util.StringTokenizer;
 
 /**
- * Created by IntelliJ IDEA.
+ * code convert tools
  * Author: CK
  * Date: 2015/6/30.
  */

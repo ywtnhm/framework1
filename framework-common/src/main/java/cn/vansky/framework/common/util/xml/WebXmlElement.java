@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * 页面XML元素
  * Author: CK
  * Date: 2015/8/15
  */
@@ -75,10 +75,6 @@ public class WebXmlElement implements Element {
         return sb.toString();
     }
 
-    public List<Attribute> getAttributes() {
-        return attributes;
-    }
-
     public void addAttribute(Attribute attribute) {
         if (null != attribute) {
             attributes.add(attribute);
@@ -91,10 +87,6 @@ public class WebXmlElement implements Element {
         }
     }
 
-    public List<Element> getElements() {
-        return elements;
-    }
-
     public void addElement(Element element) {
         if (null != element) {
             elements.add(element);
@@ -105,13 +97,5 @@ public class WebXmlElement implements Element {
         if (null != element) {
             elements.addAll(element);
         }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

@@ -15,9 +15,14 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 /**
- * Created by IntelliJ IDEA.
+ * the database manager tools
  * Author: CK
  * Date: 2015/3/27.
+ * @see java.sql.Connection
+ * @see java.sql.PreparedStatement
+ * @see java.sql.ResultSet
+ * @see java.sql.ResultSetMetaData
+ * @see java.sql.DatabaseMetaData
  */
 public class DbManager {
 
@@ -40,24 +45,16 @@ public class DbManager {
         this.password = password;
     }
 
-    /**
-     * default the driveName of mysql
-     */
+    /** default the driveName of mysql */
     private String driveName = Constant.DEFAULT_DRIVE_NAME;
 
-    /**
-     * the database url
-     */
+    /** the database url */
     private String url;
 
-    /**
-     * the database user
-     */
+    /** the database user */
     private String user;
 
-    /**
-     * the database password
-     */
+    /** the database password */
     private String password;
 
     /**
@@ -70,9 +67,9 @@ public class DbManager {
             Class.forName(this.driveName);
             return DriverManager.getConnection(this.url, this.user, this.password);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("加载数据库驱动类异常:" + e.getMessage(), e);
+            throw new RuntimeException("load database class exception : " + e.getMessage(), e);
         } catch (SQLException e) {
-            throw new RuntimeException("获取数据库连接异常:" + e.getMessage(), e);
+            throw new RuntimeException("get database connection : " + e.getMessage(), e);
         }
     }
 
@@ -87,7 +84,7 @@ public class DbManager {
         try {
             return connection.prepareStatement(sql);
         } catch (SQLException e) {
-            throw new RuntimeException("获取PrepareStatement异常:" + e.getMessage(), e);
+            throw new RuntimeException("get PrepareStatement exception : " + e.getMessage(), e);
         }
     }
 
@@ -101,59 +98,57 @@ public class DbManager {
         try {
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException("获取ResultSet异常:" + e.getMessage(), e);
+            throw new RuntimeException("get ResultSet exception : " + e.getMessage(), e);
         }
     }
 
     /**
-     * 获取表信息
+     * Get tables message
      * @param connection the connection
-     * @param localCatalog 表类别
-     * @param localSchema 表模式
-     * @param localTableName 表名称
-     * @return 表信息
+     * @param localCatalog the catalog of table
+     * @param localSchema the schema of table
+     * @param localTableName the table name of table
+     * @return the tables message
      */
     public ResultSet getTables(Connection connection, String localCatalog, String localSchema, String localTableName) {
         try {
             return getDatabaseMetaData(connection).getTables(localCatalog, localSchema, localTableName, null);
         } catch (SQLException e) {
-            throw new RuntimeException("获取getTables异常:" + e.getMessage(), e);
+            throw new RuntimeException("get tables exception : " + e.getMessage(), e);
         }
     }
 
     /**
-     * 获取列信息
+     * Get columns of the specify table.
      * @param connection the connection
-     * @param localCatalog 表类别
-     * @param localSchema 表模式
-     * @param localTableName 表名称
-     * @return 列信息
-
+     * @param localCatalog the catalog of table
+     * @param localSchema the schema of table
+     * @param localTableName the table name of table
+     * @return the columns
      */
     public ResultSet getColumns(Connection connection, String localCatalog, String localSchema, String localTableName) {
         try {
             return getDatabaseMetaData(connection).getColumns(localCatalog, localSchema, localTableName, null);
         } catch (SQLException e) {
-            throw new RuntimeException("获取getColumns异常:" + e.getMessage(), e);
+            throw new RuntimeException("get columns exception : " + e.getMessage(), e);
         }
     }
 
     /**
-     * 获取主键信息
+     * Get primary key of table.
      * @param connection the connection
-     * @param localCatalog 表类别
-     * @param localSchema 表模式
-     * @param localTableName 表名称
-     * @return 主键信息
+     * @param localCatalog the catalog of table
+     * @param localSchema the schema of table
+     * @param localTableName the table name of table
+     * @return the primary key
      */
     public ResultSet getPrimaryKeys(Connection connection, String localCatalog, String localSchema, String localTableName) {
         try {
             return getDatabaseMetaData(connection).getPrimaryKeys(localCatalog, localSchema, localTableName);
         } catch (SQLException e) {
-            throw new RuntimeException("获取getPrimaryKeys异常:" + e.getMessage(), e);
+            throw new RuntimeException("get primary key exception : " + e.getMessage(), e);
         }
     }
-
 
     /**
      * Gets result set meta data.
@@ -165,7 +160,7 @@ public class DbManager {
         try {
             return resultSet.getMetaData();
         } catch (SQLException e) {
-            throw new RuntimeException("获取ResultSetMetaData异常:" + e.getMessage(), e);
+            throw new RuntimeException("get ResultSetMetaData exception : " + e.getMessage(), e);
         }
     }
 
@@ -179,7 +174,7 @@ public class DbManager {
         try {
             return connection.getMetaData();
         } catch (SQLException e) {
-            throw new RuntimeException("获取DatabaseMetaData异常:" + e.getMessage(), e);
+            throw new RuntimeException("get DatabaseMetaData exception : " + e.getMessage(), e);
         }
     }
 

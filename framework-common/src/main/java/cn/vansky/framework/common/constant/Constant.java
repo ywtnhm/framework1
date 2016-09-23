@@ -5,7 +5,7 @@
 package cn.vansky.framework.common.constant;
 
 /**
- * Created by IntelliJ IDEA.
+ * A Constant of the framework-common module that record with manage ALL Constant message
  * Author: CK
  * Date: 2015/6/30.
  */
@@ -33,7 +33,7 @@ public class Constant {
 
     public static final String DB_DEFAULT_DATE = "1970-01-01 00:00:00";
 
-    public static final String DEFAULT_EMAIL_PATTTERN = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
+    public static final String DEFAULT_EMAIL_PATTTERN = "\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*";
 
-    public static final String DEFAULT_MOBILE_PATTERN = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    public static final String DEFAULT_MOBILE_PATTERN = "((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}";
 }

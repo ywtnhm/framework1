@@ -83,7 +83,11 @@ public interface DaoMapper<T, ID extends Serializable> {
      */
     void insertBatch(List<T> list);
 
-    void deleteBatch(ID[] ids);
+    /**
+     * delete batch
+     * @param ids ids
+     */
+    void deleteBatch(ID... ids);
 
     List<T> findBySearchable(Searchable searchable);
 

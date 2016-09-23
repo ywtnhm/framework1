@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
+ * 封装Map操作工具类
  * Author: CK
  * Date: 2015/11/13
  */

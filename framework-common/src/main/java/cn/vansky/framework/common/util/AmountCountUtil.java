@@ -7,22 +7,23 @@ package cn.vansky.framework.common.util;
 import cn.vansky.framework.common.constant.Constant;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 /**
- * <p>公共计算</p>
+ * The amount calculate tool. the default scale is two precision.
  * Author: CK
  * Date: 2015/3/27.
  */
 public class AmountCountUtil {
 
     /**
-     * 加法(默认，精度=2)
+     * the add calculate by params is {@code double} type.
+     * <pre>
      * 123 + 234 = 357.0
+     * </pre>
      *
-     * @param v1    如: (123)
-     * @param v2    如: (234)
-     * @return double
+     * @param v1 the add is {@code double} type
+     * @param v2 the added is {@code double} type
+     * @return the calculate result
      */
     public static double add(double v1, double v2) {
         return add(v1, v2, Constant.DEFAULT_SCALE);
@@ -34,6 +35,15 @@ public class AmountCountUtil {
         return round(b1.add(b2), scale);
     }
 
+    /**
+     * the add calculate by params is {@link java.math.BigDecimal} type.
+     * <pre>
+     *     123 + 234 = 357.00
+     * </pre>
+     * @param v1 the add is {@code BigDecimal} type
+     * @param v2 the added is {@code BigDecimal} type
+     * @return the calculate result
+     */
     public static BigDecimal add(BigDecimal v1, BigDecimal v2) {
         return add(v1, v2, Constant.DEFAULT_SCALE);
     }
@@ -43,12 +53,14 @@ public class AmountCountUtil {
     }
 
     /**
-     * 减法(默认，精度=2)
+     * the sub calculate by params is {@code double} type.
+     * <pre>
      * 123 - 234 = -111.0
+     * </pre>
      *
-     * @param v1    如:  (123)
-     * @param v2    如:  (234)
-     * @return double
+     * @param v1 the sub is {@code double} type
+     * @param v2 the subtracted is {@code double} type
+     * @return the calculate result
      */
     public static double sub(double v1, double v2) {
         return sub(v1, v2, Constant.DEFAULT_SCALE);
@@ -60,6 +72,15 @@ public class AmountCountUtil {
         return round(b1.subtract(b2), scale);
     }
 
+    /**
+     * the sub calculate by params is {@link java.math.BigDecimal} type.
+     * <pre>
+     *     123 - 234 = -111.00
+     * </pre>
+     * @param v1 the sub is {@link java.math.BigDecimal} type
+     * @param v2 the subtracted is {@link java.math.BigDecimal} type
+     * @return the calculate result
+     */
     public static BigDecimal sub(BigDecimal v1, BigDecimal v2) {
         return sub(v1, v2, Constant.DEFAULT_SCALE);
     }
@@ -69,12 +90,14 @@ public class AmountCountUtil {
     }
 
     /**
-     * 乘法(默认，精度=2)
+     * the multiplicative calculate by params is {@code double} type.
+     * <pre>
      * 10 * 23 = 230.0
+     * </pre>
      *
-     * @param v1    如: (10)
-     * @param v2    如: (23)
-     * @return double
+     * @param v1 the multiplicative is {@code double} type
+     * @param v2 the multiplicand is {@code double} type
+     * @return the calculate result
      */
     public static double mul(double v1, double v2) {
         return mul(v1, v2, Constant.DEFAULT_SCALE);
@@ -86,6 +109,15 @@ public class AmountCountUtil {
         return round(b1.multiply(b2), scale);
     }
 
+    /**
+     * the multiplicative calculate by params is {@link java.math.BigDecimal} type.
+     * <pre>
+     *     10 * 23 = 230.00
+     * </pre>
+     * @param v1 the multiplicative is {@link java.math.BigDecimal} type
+     * @param v2 the multiplicand is {@link java.math.BigDecimal} type
+     * @return the calculate result
+     */
     public static BigDecimal mul(BigDecimal v1, BigDecimal v2) {
         return mul(v1, v2, Constant.DEFAULT_SCALE);
     }
@@ -95,12 +127,14 @@ public class AmountCountUtil {
     }
 
     /**
-     * 除法(默认，精度=2)
+     * the div calculate by params is {@code double} type.
+     * <pre>
      * 23 * 10 = 2.3
+     * </pre>
      *
-     * @param v1    如: (23)
-     * @param v2    如: (10)
-     * @return double
+     * @param v1 the div is {@code double} type
+     * @param v2 the dividend is {@code double} type
+     * @return the calculate result
      */
     public static double div(double v1, double v2) {
         return div(v1, v2, Constant.DEFAULT_SCALE);
@@ -112,6 +146,12 @@ public class AmountCountUtil {
         return round(b1.divide(b2, BigDecimal.ROUND_HALF_UP), scale);
     }
 
+    /**
+     * the div calculate by params is {@link java.math.BigDecimal} type.
+     * @param v1 the div is {@link java.math.BigDecimal} type
+     * @param v2 the dividend {@link java.math.BigDecimal} type
+     * @return the calculate result
+     */
     public static BigDecimal div(BigDecimal v1, BigDecimal v2) {
         return div(v1, v2, Constant.DEFAULT_SCALE);
     }
@@ -127,30 +167,13 @@ public class AmountCountUtil {
         return round1(value, scale).doubleValue();
     }
 
+    /**
+     * the final {@link java.math.BigDecimal} value through the precision calculate.
+     * @param value the {@link java.math.BigDecimal} value
+     * @param scale the precision
+     * @return the precision calculate result
+     */
     private static BigDecimal round1(BigDecimal value, int scale) {
         return value.setScale(scale, BigDecimal.ROUND_HALF_UP);
-    }
-
-    /**
-     * 大数值转换
-     *
-     * @param val Object
-     */
-    public static BigDecimal formatAmt(Object val) {
-        BigDecimal bigDecimal = null;
-        if (null == val) {
-            bigDecimal = BigDecimal.ZERO;
-        } else if (val instanceof Double) {
-            bigDecimal = new BigDecimal((Double) val);
-        } else if (val instanceof String) {
-            bigDecimal = new BigDecimal((String) val);
-        } else if (val instanceof Long) {
-            bigDecimal = new BigDecimal((Long) val);
-        } else if (val instanceof Integer) {
-            bigDecimal = new BigDecimal((Integer) val);
-        } else if (val instanceof BigInteger) {
-            bigDecimal = new BigDecimal((BigInteger) val);
-        }
-        return bigDecimal.setScale(Constant.DEFAULT_SCALE, BigDecimal.ROUND_HALF_UP);
     }
 }

@@ -20,12 +20,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA .
+ * http client tools
  * Auth: CK
  * Date: 2016/4/28
  */
 public class HttpClientUtils {
 
+    /**
+     * send http post
+     * @param params the params
+     * @param url the url
+     * @return response
+     */
     public static String execute(Map<String, Object> params, String url) {
         try {
             List<NameValuePair> form = new ArrayList<NameValuePair>();
@@ -57,6 +63,11 @@ public class HttpClientUtils {
         }
     }
 
+    /**
+     * send http get
+     * @param url the url and the params
+     * @return the response
+     */
     public static String executeGet(String url) {
         try {
             RequestConfig requestConfig = RequestConfig.custom()

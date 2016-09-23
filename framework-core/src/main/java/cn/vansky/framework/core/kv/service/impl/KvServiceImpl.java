@@ -20,7 +20,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
+ * <pre>
+ * &lt;bean id="kvService" class="cn.vansky.framework.core.kv.service.impl.KvServiceImpl"&gt;
+ *     &lt;property name="dao" ref="kvDao"/&gt;
+ * &lt;/bean&gt;
+ * </pre>
  * Author: CK
  * Date: 2015/11/13
  */

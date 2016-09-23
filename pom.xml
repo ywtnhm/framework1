@@ -23,6 +23,7 @@
     <properties>
         <project-version>1.0-SNAPSHOT</project-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--<maven.test.skip>true</maven.test.skip>-->
         <source.version>2.2.1</source.version>
         <profiles.dir>src/main/profiles</profiles.dir>
         <testng.version>6.8.8</testng.version>
@@ -91,6 +92,19 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <argLine>-Xms512m -Xmx1024m</argLine>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>cn/vansky/framework/common/util/ToolsTest.java</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

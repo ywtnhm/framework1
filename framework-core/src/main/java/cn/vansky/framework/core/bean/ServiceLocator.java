@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
+ * 包装spring上下文信息ApplicationContext
  * Author: CK
  * Date: 2015/6/24
  */
@@ -44,8 +44,9 @@ public class ServiceLocator {
         return locator;
     }
 
-    public Object getBean(String beanName) {
-        return getFactory().getBean(beanName);
+    @SuppressWarnings("unchecked")
+    public <T> T getBean(String beanName) {
+        return (T) getFactory().getBean(beanName);
     }
 
     public <T> Map<String, T> getBeansOfType(Class<T> type) {

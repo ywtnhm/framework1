@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
- * Created by IntelliJ IDEA.
+ * 反射工具类
  * Author: CK
  * Date: 2015/8/8
  */

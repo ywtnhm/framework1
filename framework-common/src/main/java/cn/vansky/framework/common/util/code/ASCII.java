@@ -5,7 +5,7 @@
 package cn.vansky.framework.common.util.code;
 
 /**
- * Created by IntelliJ IDEA.
+ * ASCII码
  * Author: CK
  * Date: 2016/2/14
  */

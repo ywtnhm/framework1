@@ -1,7 +1,7 @@
 package cn.vansky.framework.common.util.xml;
 
 /**
- * Created by IntelliJ IDEA.
+ * 元素接口,定义获取元素最终字符串
  * Author: CK
  * Date: 2015/8/15
  */

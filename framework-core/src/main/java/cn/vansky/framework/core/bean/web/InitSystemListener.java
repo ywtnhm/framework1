@@ -12,7 +12,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * Created by IntelliJ IDEA.
+ * 初始化系统监听器
  * Author: CK
  * Date: 2015/6/24
  */

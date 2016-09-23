@@ -7,14 +7,14 @@ import java.text.DateFormat;
 import java.util.Date;
 
 /**
- * Created by IntelliJ IDEA.
+ * A json tools for the gson deal of the google.
  * Author: CK
  * Date: 2015/8/7
  */
 public class JsonUtil {
     /**
-     * 字符串转换类信息
-     * @param json json字符串
+     * the {@code String} convert the {@code T} class message.
+     * @param json the json {@code String}
      * @param clazz Class
      * @param <T> Class
      * @return Class
@@ -41,6 +41,9 @@ public class JsonUtil {
         return builder.create();
     }
 
+    /**
+     * the time stamp convert the {@link java.util.Date} of java
+     */
     public static class DateDeserializer implements JsonDeserializer<Date> {
         public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
                 throws JsonParseException {
@@ -48,6 +51,9 @@ public class JsonUtil {
         }
     }
 
+    /**
+     * the {@link java.util.Date} of java convert the time stamp
+     */
     public static class DateSerializer implements JsonSerializer<Date> {
         public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
             return new JsonPrimitive(src.getTime());

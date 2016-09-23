@@ -3,7 +3,7 @@ package cn.vansky.framework.common.util;
 import java.io.File;
 
 /**
- * Created by IntelliJ IDEA.
+ * 路径工具类
  * Author: CK
  * Date: 2016/1/17
  */

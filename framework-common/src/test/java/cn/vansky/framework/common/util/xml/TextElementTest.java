@@ -2,6 +2,8 @@ package cn.vansky.framework.common.util.xml;
 
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
+
 public class TextElementTest {
 
     @Test
@@ -14,6 +16,6 @@ public class TextElementTest {
         Element element = new TextElement("分配权限");
         webXmlElement.addElement(element);
         String str = webXmlElement.getFormattedContent(0);
-        System.out.println(str);
+        assertEquals("<a href=\"javascript:void(0)\" id=\"auth\">分配权限</a>", str);
     }
 }

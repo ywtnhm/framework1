@@ -12,7 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by IntelliJ IDEA.
+ * 字段描述
  * Author: CK
  * Date: 2015/6/5.
  */

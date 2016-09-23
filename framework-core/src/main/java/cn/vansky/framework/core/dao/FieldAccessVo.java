@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * 字段操作类
  * Author: CK
  * Date: 2015/6/5.
  */
@@ -33,10 +33,7 @@ public class FieldAccessVo implements Cloneable, Serializable {
             return null;
         }
         ColumnDescription cd = field.getAnnotation(ColumnDescription.class);
-        if (cd == null) {
-            return null;
-        }
-        return cd.desc();
+        return cd == null ? null : cd.desc();
     }
 
     /**

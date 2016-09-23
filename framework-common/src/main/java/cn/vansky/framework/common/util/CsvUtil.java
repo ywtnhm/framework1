@@ -18,18 +18,18 @@ import java.net.URLEncoder;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * the CSV tools that the response write the csv file of the page and write the csv file of the user-defined
  * Author: CK
  * Date: 2015/9/22
  */
 public class CsvUtil {
     /**
-     * RESPONSE以流的方式向浏览器输出CSV文件。
-     * @param response 响应
-     * @param request 请求
-     * @param filename 文件名
-     * @param title 标题
-     * @param bodyList 内容
+     * The csv file is output through the response of the page
+     * @param response the response of the page
+     * @param request the request of the page
+     * @param filename the file name of user-defined
+     * @param title the title content of the csv file
+     * @param bodyList the body content of the csv file
      */
     public static void writeCsvFile(HttpServletResponse response, HttpServletRequest request,
                                     String filename, String[] title, List<String[]> bodyList) {
@@ -68,10 +68,10 @@ public class CsvUtil {
     }
 
     /**
-     * 以文件方式输出
-     * @param filename 文件名
-     * @param title 标题
-     * @param bodyList 内容
+     * The csv file wrote through user-defined
+     * @param filename the file name
+     * @param title the title content of the csv file
+     * @param bodyList this body content of the csv file
      */
     public static void writeCsvFile(String filename, String[] title, List<String[]> bodyList) {
         CSVWriter writer = null;
@@ -102,15 +102,15 @@ public class CsvUtil {
     }
 
     /**
-     * 生成CSV文件
-     * @param outputList 输出的LIST
-     * @return CSV文件
+     * create csv String
+     * @param outputList the output content list
+     * @return the new {@code String}
      */
     public static String createCsvFile(List<List<Object>> outputList) {
         StringBuilder os = new StringBuilder();
-        // 回车符
+        // enter symbol
         char returnChar = 13;
-        // 换行符
+        // newline symbol
         char lineChar = 10;
         for (List<Object> unitList : outputList) {
             if (unitList != null && !unitList.isEmpty()) {

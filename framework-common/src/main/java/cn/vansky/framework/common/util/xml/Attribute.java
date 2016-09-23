@@ -1,7 +1,10 @@
 package cn.vansky.framework.common.util.xml;
 
 /**
- * Created by IntelliJ IDEA.
+ * 属性字符拼接
+ * <pre>
+ * <code>name="value"</code>
+ * </pre>
  * Author: CK
  * Date: 2015/8/15
  */
@@ -22,12 +25,7 @@ public class Attribute implements Element {
     }
 
     public String getFormattedContent(int indentLevel) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name);
-        sb.append("=\"");
-        sb.append(value);
-        sb.append('\"');
-        return sb.toString();
+        return name + "=\"" + value + '\"';
     }
 
     public String getName() {

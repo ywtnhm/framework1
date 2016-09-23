@@ -12,7 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
+ * service层动态SQL, 处理前缀, 后缀, 全模糊查询
+ * <pre>
+ * &lt;bean id="kvService" class="cn.vansky.framework.core.kv.service.impl.KvServiceImpl"&gt;
+ *     &lt;property name="dao" ref="kvDao"/&gt;
+ * &lt;/bean&gt;
+ * </pre>
  * Author: CK
  * Date: 2015/11/13
  */

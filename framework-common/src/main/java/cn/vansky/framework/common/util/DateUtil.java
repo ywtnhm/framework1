@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * 日期工具类
+ * The date tools
  * <code>DatUtil</code>
  *
  * @author CK
@@ -43,42 +43,47 @@ public class DateUtil {
     public static final SimpleDateFormat timeFormat3 = new SimpleDateFormat(HH_mm);
 
     /**
-     * 秒
+     * second
      */
     public static final long SECOND_TIME = 1000;
+
     /**
-     * 分钟
+     * minute
      */
     public static final long MINUTE_TIME = SECOND_TIME * 60;
+
     /**
-     * 小时
+     * hour
      */
     public static final long HOUR_TIME = MINUTE_TIME * 60;
+
     /**
-     * 天数
+     * day
      */
     public static final long DAY_TIME = HOUR_TIME * 24;
 
     /**
-     * 格式化日期
-     * @param format 格式
-     * @param date 日期字符串
-     * @return 日期字符串
+     * The format {@link java.util.Date} to {@code String}.
+     *
+     * @param format the specify format
+     * @param date   the date {@link java.util.Date}
+     * @return the new {@code String}
      */
     public static String format(String format, Date date) {
         return DateEnum.getFormatByString(format).format(date);
     }
 
     /**
-     * 格式化日期
-     * @param formatStr 格式
-     * @param date 日期字符串
-     * @return 日期字符串
+     * The parse {@code String} to {@link java.util.Date}.
+     *
+     * @param format the specify format
+     * @param date   the date {@code String}
+     * @return the new {@link java.util.Date}
      */
-    public static Date parse(String formatStr, String date) {
+    public static Date parse(String format, String date) {
         Date d = null;
         try {
-            d = DateEnum.getFormatByString(formatStr).parse(date);
+            d = DateEnum.getFormatByString(format).parse(date);
         } catch (ParseException e) {
             // ignore
         }
@@ -86,42 +91,43 @@ public class DateUtil {
     }
 
     /**
-     * 指定日期加减 获取字符串日期时间
+     * Get the {@code String} of the specify format through the specify date {@link java.util.Date}
+     * and the specify format {@code String} and the specify date type {@code int} and the specify number {@code int}
      *
-     * @param date  日期
-     * @param formatStr user-defined date format like "yyyy-MM-dd HH:mm:ss"
-     * @param i   <p>年{@link java.util.Calendar#YEAR}</p>
-     *            <p>月{@link java.util.Calendar#MONTH}</p>
-     *            <p>周{@link java.util.Calendar#WEEK_OF_YEAR}</p>
-     *            <p>天{@link java.util.Calendar#DATE}</p>
-     *            <p>小时{@link java.util.Calendar#HOUR}</p>
-     *            <p>分钟{@link java.util.Calendar#MINUTE}</p>
-     *            <p>秒{@link java.util.Calendar#SECOND}</p>
-     * @param j         加减数量
-     * @return 字符串日期时间
+     * @param date   the date {@link java.util.Date}
+     * @param format user-defined date format like "yyyy-MM-dd HH:mm:ss"
+     * @param i      the specify date type {@link java.util.Calendar}
+     * @param j      the specify number
+     * @return the date {@code String}
+     * @see java.util.Calendar#YEAR
+     * @see java.util.Calendar#MONTH
+     * @see java.util.Calendar#WEEK_OF_YEAR
+     * @see java.util.Calendar#DATE
+     * @see java.util.Calendar#HOUR
+     * @see java.util.Calendar#MINUTE
+     * @see java.util.Calendar#SECOND
      */
-    public static String getDateStr(Date date, String formatStr, int i, int j) {
+    public static String getDateStr(Date date, String format, int i, int j) {
         Date newDate = getDateByCalendar(date, i, j);
-        return DateEnum.getFormatByString(formatStr).format(newDate);
+        return DateEnum.getFormatByString(format).format(newDate);
     }
 
     /**
-     * 是否为闰年
+     * whether leap year
      *
-     * @param year 年份
-     * @return <code>boolean</code>
-     * <p>是<code>true</code> 否<code>false</code></p>
+     * @param year the year
+     * @return boolean
      */
     public static boolean isLeapYear(int year) {
         return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
     }
 
     /**
-     * 某月最大天数
+     * Return the max day of a mouth.
      *
-     * @param year  年份
-     * @param month 月份
-     * @return 某月最大天数
+     * @param year  the year
+     * @param month the mouth
+     * @return the max day of the mouth
      */
     public static int maxDayOfMonth(int year, int month) {
         if (month <= 0 || month > 12) {
@@ -148,57 +154,51 @@ public class DateUtil {
     }
 
     /**
-     * 获取当前年份
+     * Get current the year.
      *
-     * @param date   需要计算的日期字符串<code>String</code>
-     * @return 当前年份
+     * @param date the date {@link java.util.Date}
+     * @return the year {@code int}
      */
     public static int year(Date date) {
         return getCurrentCalendar(date).get(Calendar.YEAR);
     }
 
     /**
-     * 获取当前月份
+     * Get the current mouth.
      *
-     * @param date   需要计算的日期字符串<code>String</code>
-     * @return 当前月份
+     * @param date the date {@link java.util.Date}
+     * @return the mouth {@code int}
      */
     public static int month(Date date) {
         return getCurrentCalendar(date).get(Calendar.MONTH) + 1;
     }
 
     /**
-     * 获取当前天数
+     * Get the current day.
      *
-     * @param date   需要计算的日期字符串<code>String</code>
-     * @return 当前天数
+     * @param date the date {@link java.util.Date}
+     * @return the day {@code int}
      */
     public static int day(Date date) {
         return getCurrentCalendar(date).get(Calendar.DATE);
     }
 
     /**
-     * 获取当前类型的数字
+     * Get the number of the specify date type.
      *
-     * @param date   需要计算的日期字符串<code>String</code>
-     * @param i   <p>年{@link java.util.Calendar#YEAR}</p>
-     *               <p>月{@link java.util.Calendar#MONTH}</p>
-     *               <p>周{@link java.util.Calendar#WEEK_OF_YEAR}</p>
-     *               <p>天{@link java.util.Calendar#DATE}</p>
-     *               <p>小时{@link java.util.Calendar#HOUR}</p>
-     *               <p>分钟{@link java.util.Calendar#MINUTE}</p>
-     *               <p>秒{@link java.util.Calendar#SECOND}</p>
-     * @return 当前类型的数字
+     * @param date the date {@link java.util.Date}
+     * @param i    the specify date type {@link java.util.Calendar}
+     * @return the number of the specify date type
      */
     public static int getTimeNumber(Date date, int i) {
         return getCurrentCalendar(date).get(i);
     }
 
     /**
-     * 获取本周第几天
+     * Get the number of today in a week
      *
-     * @param date   需要计算的日期字符串<code>yyyy-MM-dd</code>
-     * @return 获取本周第几天
+     * @param date the date {@link java.util.Date}
+     * @return int
      */
     public static int week(Date date) {
         int week = getCurrentCalendar(date).get(Calendar.DAY_OF_WEEK) - 1;
@@ -209,20 +209,20 @@ public class DateUtil {
     }
 
     /**
-     * 获取当前季度
+     * Get the current quarter of a year
      *
-     * @param date      需要计算的日期字符串<code>yyyy-MM-dd</code>
-     * @return 当前季度
+     * @param date the date {@link java.util.Date}
+     * @return int
      */
     public static int getQuarter(Date date) {
         return (month(date) - 1) / 3 + 1;
     }
 
     /**
-     * 获取当前季度所在的天数
+     * Get the number of days in the current quarter of a year
      *
-     * @param date      需要计算的日期字符串<code>yyyy-MM-dd</code>
-     * @return 当前季度所在的天数
+     * @param date the date {@link java.util.Date}
+     * @return int
      */
     public static int dayOfQuarter(Date date) {
         int month = month(date);
@@ -238,8 +238,8 @@ public class DateUtil {
     /**
      * 返回日期自公元0年开始以来的天数
      *
-     * @param date      需要计算的日期字符串<code>yyyy-MM-dd</code>
-     * @return 日期自公元0年开始以来的天数
+     * @param date the date {@link java.util.Date}
+     * @return int
      */
     public static int days(Date date) {
         int days = 0;
@@ -253,10 +253,10 @@ public class DateUtil {
     }
 
     /**
-     * 获取当天在当年的天数
+     * Get the number of today in a year
      *
-     * @param date      需要计算的日期字符串<code>yyyy-MM-dd</code>
-     * @return 当天在当年的天数
+     * @param date the date {@link java.util.Date}
+     * @return int
      */
     public static int dayOfYear(Date date) {
         int month = month(date);
@@ -270,12 +270,12 @@ public class DateUtil {
     }
 
     /**
-     * 获取月份第一天
-     * 根据指定日期字符串减去<code>n</code>月
+     * Get the {@code String} first day of a mouth
+     * through the date {@link java.util.Date} and the specify number.
      *
-     * @param date      需要计算的日期字符串<code>yyyy-MM-dd</code>
-     * @param n         计算数量
-     * @return 月份第一天
+     * @param date the date {@link java.util.Date}
+     * @param n    the specify number
+     * @return the new {@code String}
      */
     public static String dateRedMonthBegin(Date date, int n) {
         String str = "";
@@ -302,12 +302,12 @@ public class DateUtil {
     }
 
     /**
-     * 获取月份最大天
-     * 根据指定日期字符串减去<code>n</code>月
+     * Get the {@code String} last day of a mouth
+     * through the date {@link java.util.Date} and the specify number.
      *
-     * @param date      需要计算的日期字符串<code>yyyy-MM-dd</code>
-     * @param n         计算数量
-     * @return 月份最大天
+     * @param date the date {@link java.util.Date}
+     * @param n    the specify number
+     * @return int
      */
     public static String dateRedMonthEnd(Date date, int n) {
         String str = "";
@@ -334,18 +334,21 @@ public class DateUtil {
     }
 
     /**
-     * 通过{@link java.util.Calendar}获取日期
+     * Get the new {@link java.util.Date}
+     * through the specify date {@link java.util.Date} and the specify date type {@code int}
+     * and the specify number {@code int}
      *
-     * @param date 需要计算的日期<code>date</code>
-     * @param i    <p>年{@link java.util.Calendar#YEAR}</p>
-     *             <p>月{@link java.util.Calendar#MONTH}</p>
-     *             <p>周{@link java.util.Calendar#WEEK_OF_YEAR}</p>
-     *             <p>天{@link java.util.Calendar#DATE}</p>
-     *             <p>小时{@link java.util.Calendar#HOUR}</p>
-     *             <p>分钟{@link java.util.Calendar#MINUTE}</p>
-     *             <p>秒{@link java.util.Calendar#SECOND}</p>
-     * @param j    加减数量
-     * @return 获取日期
+     * @param date the date {@link java.util.Date}
+     * @param i    the specify date type {@link java.util.Calendar}
+     * @param j    the specify number
+     * @return the new {@link java.util.Date}
+     * @see java.util.Calendar#YEAR
+     * @see java.util.Calendar#MONTH
+     * @see java.util.Calendar#WEEK_OF_YEAR
+     * @see java.util.Calendar#DATE
+     * @see java.util.Calendar#HOUR
+     * @see java.util.Calendar#MINUTE
+     * @see java.util.Calendar#SECOND
      */
     public static Date getDateByCalendar(Date date, int i, int j) {
         Calendar c = getCurrentCalendar(date);
@@ -354,9 +357,10 @@ public class DateUtil {
     }
 
     /**
-     * 获取Calendar
-     * @param date 日期
-     * @return Calendar
+     * {@link java.util.Date} convert {@link Calendar}
+     *
+     * @param date the date {@link java.util.Date}
+     * @return {@link Calendar}
      */
     private static Calendar getCurrentCalendar(Date date) {
         Calendar c = Calendar.getInstance();
@@ -365,39 +369,40 @@ public class DateUtil {
     }
 
     /**
-     * 计算2个日期相差数
-     * @param startDate 开始日期
-     * @param endDate 结束日期
-     * @param time 类型
-     * @see cn.vansky.framework.common.util.DateUtil#SECOND_TIME 秒
-     * @see cn.vansky.framework.common.util.DateUtil#MINUTE_TIME 分钟
-     * @see cn.vansky.framework.common.util.DateUtil#HOUR_TIME 小时
-     * @see cn.vansky.framework.common.util.DateUtil#DAY_TIME 天数
-     * @return 小时数
+     * Calculate two date diff
+     *
+     * @param startDate the start date
+     * @param endDate   the end date
+     * @param time      the time diff
+     * @return the {@code long}
+     * @see #SECOND_TIME
+     * @see #MINUTE_TIME
+     * @see #HOUR_TIME
+     * @see #DAY_TIME
      */
     public static long getBetweenDiff(Date startDate, Date endDate, long time) {
         long startDateTime = startDate.getTime();
         long endDateTime = endDate.getTime();
-        long hours = (endDateTime - startDateTime) / time;
-        return hours;
+        return (endDateTime - startDateTime) / time;
     }
 
     /**
-     * 验证DB默认日期
-     * @param date 日期
-     * @return true：是,false：否
+     * validate date {@link java.util.Date} whether database default date ("1970-01-01 00:00:00)
+     *
+     * @param date the date {@link java.util.Date}
+     * @return boolean
      */
     public static boolean isDBDefaultDate(Date date) {
         if (null == date) {
             return false;
         }
         String dbDefault = format(yyyy_MM_dd_HH_mm_ss, date);
-        if (Constant.DB_DEFAULT_DATE.equals(dbDefault)) {
-            return true;
-        }
-        return false;
+        return Constant.DB_DEFAULT_DATE.equals(dbDefault);
     }
 
+    /**
+     * Date Enum
+     */
     public static enum DateEnum {
         yyyyMMdd(DateUtil.yyyyMMdd, DateUtil.dateFormat),
         yyyy_MM_dd(DateUtil.yyyy_MM_dd, DateUtil.dateFormat2),
@@ -421,14 +426,14 @@ public class DateUtil {
         }
 
         /**
-         * 通过<code>DateEnum</code>获取{@link java.text.SimpleDateFormat}
+         * Get the {@link java.text.SimpleDateFormat} through the specify date {@link java.lang.Enum}
          *
-         * @param formatStr 日期枚举<code>DateEnum</code>
-         * @return <code>SimpleDateFormat</code>
+         * @param format the specify date enum
+         * @return the {@code SimpleDateFormat}
          */
-        public static SimpleDateFormat getFormatByDateEnum(DateEnum formatStr) {
+        public static SimpleDateFormat getFormatByDateEnum(DateEnum format) {
             for (DateEnum dateEnum : DateEnum.values()) {
-                if (dateEnum.getDateEnum().equals(formatStr.dateEnum)) {
+                if (dateEnum.getDateEnum().equals(format.dateEnum)) {
                     return dateEnum.simpleDateFormat;
                 }
             }
@@ -436,14 +441,14 @@ public class DateUtil {
         }
 
         /**
-         * 通过<code>String</code>获取{@link java.text.SimpleDateFormat}
+         * Get the {@link java.text.SimpleDateFormat} through the specify format.
          *
-         * @param formatStr 日期字符串<code>String</code>
-         * @return <code>SimpleDateFormat</code>
+         * @param format the specify format
+         * @return the {@code SimpleDateFormat}
          */
-        public static SimpleDateFormat getFormatByString(String formatStr) {
+        public static SimpleDateFormat getFormatByString(String format) {
             for (DateEnum dateEnum : DateEnum.values()) {
-                if (dateEnum.getDateEnum().equals(formatStr)) {
+                if (dateEnum.getDateEnum().equals(format)) {
                     return dateEnum.simpleDateFormat;
                 }
             }

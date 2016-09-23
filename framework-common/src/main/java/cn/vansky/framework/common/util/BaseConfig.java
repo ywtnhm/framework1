@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Created by IntelliJ IDEA .
+ * The base config by read with operation properties file.
  * Auth: CK
  * Date: 2016/5/3
  */
