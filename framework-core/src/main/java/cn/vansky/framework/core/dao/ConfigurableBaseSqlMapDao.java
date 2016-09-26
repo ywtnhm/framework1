@@ -87,7 +87,7 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
 
     @SuppressWarnings("unchecked")
     public Pagination page(Pagination pagination, SqlMapDao.SqlCallback selectCount, SqlMapDao.SqlCallback select) {
-        int totalCount = getSqlSession().selectOne(selectCount.getSqlId(), selectCount.getParameters());
+        int totalCount = (Integer) getSqlSession().selectOne(selectCount.getSqlId(), selectCount.getParameters());
 
         List dataList = getSqlSession().selectList(select.getSqlId(), select.getParameters());
         pagination.init(totalCount, pagination.getLimit(), pagination.getCurrentPage());
