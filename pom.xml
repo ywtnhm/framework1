@@ -18,6 +18,8 @@
         <module>framework-cache</module>
         <module>framework-ip</module>
         <module>framework-tree</module>
+        <module>framework-filter</module>
+        <module>framework-filter</module>
     </modules>
 
     <properties>

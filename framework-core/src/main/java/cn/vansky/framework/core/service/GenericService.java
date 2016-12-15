@@ -16,7 +16,7 @@ import java.util.List;
  * Author: CK
  * Date: 2015/6/5.
  */
-public interface GenericService<T, ID extends Serializable> {
+public interface GenericService<T, ID > {
     /**
      * 删除对象
      *
