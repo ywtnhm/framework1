@@ -28,6 +28,11 @@
             <version>${logback.version}</version>
         </dependency>
         <dependency>
+            <groupId>cn.vansky</groupId>
+            <artifactId>framework-filter</artifactId>
+            <version>${project-version}</version>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
@@ -53,6 +58,11 @@
         <artifactId>guice</artifactId>
         <version>${guice.version}</version>
     </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>
