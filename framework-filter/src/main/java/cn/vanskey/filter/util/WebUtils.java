@@ -241,9 +241,6 @@ public class WebUtils {
     }
 
 
-
-
-
     /**
      * Decode the given source string with a URLDecoder. The encoding will be taken
      * from the request, falling back to the default "ISO-8859-1".
@@ -305,12 +302,6 @@ public class WebUtils {
      */
 
 
-
-
-
-
-
-
     /**
      * A convenience method that merely casts the incoming <code>ServletRequest</code> to an
      * <code>HttpServletRequest</code>:
@@ -342,7 +333,6 @@ public class WebUtils {
     public static HttpServletResponse toHttp(ServletResponse response) {
         return (HttpServletResponse) response;
     }
-
 
 
     /**
@@ -378,8 +368,6 @@ public class WebUtils {
     public static String getCleanParam(ServletRequest request, String paramName) {
         return StringUtils.clean(request.getParameter(paramName));
     }
-
-
 
 
 }
