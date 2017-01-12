@@ -25,17 +25,17 @@
 package cn.vansky.remoting;
 
 
-import cn.vansky.remoting.RemotingClient;
-import cn.vansky.remoting.RemotingServer;
-import cn.vansky.remoting.exception.RemotingConnectException;
-import cn.vansky.remoting.exception.RemotingSendRequestException;
-import cn.vansky.remoting.exception.RemotingTimeoutException;
-import cn.vansky.remoting.netty.NettyClientConfig;
-import cn.vansky.remoting.netty.NettyRemotingClient;
-import cn.vansky.remoting.netty.NettyRemotingServer;
-import cn.vansky.remoting.netty.NettyRequestProcessor;
-import cn.vansky.remoting.netty.NettyServerConfig;
-import cn.vansky.remoting.protocol.RemotingCommand;
+import cn.vansky.remoting.nettyway.RemotingClient;
+import cn.vansky.remoting.nettyway.RemotingServer;
+import cn.vansky.remoting.nettyway.exception.RemotingConnectException;
+import cn.vansky.remoting.nettyway.exception.RemotingSendRequestException;
+import cn.vansky.remoting.nettyway.exception.RemotingTimeoutException;
+import cn.vansky.remoting.nettyway.netty.NettyClientConfig;
+import cn.vansky.remoting.nettyway.netty.NettyRemotingClient;
+import cn.vansky.remoting.nettyway.netty.NettyRemotingServer;
+import cn.vansky.remoting.nettyway.netty.NettyRequestProcessor;
+import cn.vansky.remoting.nettyway.netty.NettyServerConfig;
+import cn.vansky.remoting.nettyway.protocol.RemotingCommand;
 import io.netty.channel.ChannelHandlerContext;
 import org.junit.Test;
 

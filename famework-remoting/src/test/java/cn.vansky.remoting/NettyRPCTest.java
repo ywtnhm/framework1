@@ -25,18 +25,23 @@
 package cn.vansky.remoting;
 
 
-import cn.vansky.remoting.exception.RemotingCommandException;
-import cn.vansky.remoting.exception.RemotingConnectException;
-import cn.vansky.remoting.exception.RemotingSendRequestException;
-import cn.vansky.remoting.exception.RemotingTimeoutException;
-import cn.vansky.remoting.exception.RemotingTooMuchRequestException;
-import cn.vansky.remoting.netty.NettyClientConfig;
-import cn.vansky.remoting.netty.NettyRemotingClient;
-import cn.vansky.remoting.netty.NettyRemotingServer;
-import cn.vansky.remoting.netty.NettyRequestProcessor;
-import cn.vansky.remoting.netty.NettyServerConfig;
-import cn.vansky.remoting.netty.ResponseFuture;
-import cn.vansky.remoting.protocol.RemotingCommand;
+import cn.vansky.remoting.nettyway.CommandCustomHeader;
+import cn.vansky.remoting.nettyway.InvokeCallback;
+import cn.vansky.remoting.nettyway.RPCHook;
+import cn.vansky.remoting.nettyway.RemotingClient;
+import cn.vansky.remoting.nettyway.RemotingServer;
+import cn.vansky.remoting.nettyway.exception.RemotingCommandException;
+import cn.vansky.remoting.nettyway.exception.RemotingConnectException;
+import cn.vansky.remoting.nettyway.exception.RemotingSendRequestException;
+import cn.vansky.remoting.nettyway.exception.RemotingTimeoutException;
+import cn.vansky.remoting.nettyway.exception.RemotingTooMuchRequestException;
+import cn.vansky.remoting.nettyway.netty.NettyClientConfig;
+import cn.vansky.remoting.nettyway.netty.NettyRemotingClient;
+import cn.vansky.remoting.nettyway.netty.NettyRemotingServer;
+import cn.vansky.remoting.nettyway.netty.NettyRequestProcessor;
+import cn.vansky.remoting.nettyway.netty.NettyServerConfig;
+import cn.vansky.remoting.nettyway.netty.ResponseFuture;
+import cn.vansky.remoting.nettyway.protocol.RemotingCommand;
 import io.netty.channel.ChannelHandlerContext;
 import org.junit.Test;
 
@@ -195,7 +200,7 @@ public class NettyRPCTest {
 
 }
 
-class MyRPCHook implements RPCHook{
+class MyRPCHook implements RPCHook {
 
     public void doBeforeRequest(String remoteAddr, RemotingCommand request) {
         System.out.println("doBeforeRequest remoteAddr:"+remoteAddr+"request:"+request);
