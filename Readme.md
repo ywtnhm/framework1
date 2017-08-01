@@ -50,6 +50,41 @@
 2.对称密钥:AES,DES,3DES
 3.非对称密钥:RSA
 
+##framework-filter
+
+ > **过滤器封装模块**
+1、支持切面过滤
+2、和spring环境集成
+ 配置方式是：
+ web.xml
+     <filter>
+        <filter-name>frameworkFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>frameworkFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    spring 配置文件
+      <bean id="frameworkFilter" class="cn.vanskey.filter.web.FrameworkFilterFactoryBean">
+        <property name="filters"> //过滤器配置
+            <util:map>
+                <entry key="myfilter">
+                    <bean  class="com.zrj.pay.cashier.action.demo.MyFilter"/>
+                </entry>
+            </util:map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /** = myfilter   //过滤器和路径的对应关系
+            </value>
+        </property>
+    </bean>
+
 #项目搭建
 ##maven依赖
 > 地址 http://pan.baidu.com/s/1o7RxCqY

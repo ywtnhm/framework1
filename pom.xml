@@ -18,6 +18,8 @@
         <module>framework-cache</module>
         <module>framework-ip</module>
         <module>framework-tree</module>
+        <module>framework-filter</module>
+        <module>famework-remoting</module>
     </modules>
 
     <properties>
@@ -68,13 +70,14 @@
         <opencsv.version>2.3</opencsv.version>
         <ST4.version>4.0.4</ST4.version>
         <jedis.version>2.0.0</jedis.version>
-        <netty.version>3.6.3.Final</netty.version>
+
         <druid.version>1.0.4</druid.version>
         <dbunit.version>2.4.9</dbunit.version>
         <httpclient.version>4.3.1</httpclient.version>
         <httpcore.version>4.3</httpcore.version>
         <compress.version>1.11</compress.version>
         <log4j.version>1.2.17</log4j.version>
+        <netty-all>4.0.36.Final</netty-all>
     </properties>
 
     <build>
@@ -156,6 +159,11 @@
                 <artifactId>jsp-api</artifactId>
                 <version>${jsp-api.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty-all}</version>
             </dependency>
             <dependency>
                 <groupId>aopalliance</groupId>
