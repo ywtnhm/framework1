@@ -53,6 +53,25 @@ public class ReflectUtil {
     }
 
     /**
+     * 静态方法反射
+     * @param searchType class类型
+     * @param fieldName 字段名
+     * @return 字段
+     */
+    public static Field getFieldByFieldName(Class<?> searchType, String fieldName) {
+        while (!Object.class.equals(searchType) && searchType != null) {
+            Field[] fields = searchType.getDeclaredFields();
+            for (Field field : fields) {
+                if (fieldName.equals(field.getName())) {
+                    return field;
+                }
+            }
+            searchType = searchType.getSuperclass();
+        }
+        return null;
+    }
+
+    /**
      * 获取字段对应的值
      * @param obj 对象
      * @param field 字段{@link java.lang.reflect.Field}
